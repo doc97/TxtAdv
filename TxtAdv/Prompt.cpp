@@ -1,7 +1,8 @@
 #include "Prompt.h"
 #include <iostream>
 
-Prompt::Prompt()
+Prompt::Prompt(IO* io)
+    : m_io(io)
 {
 }
 
@@ -11,8 +12,8 @@ Prompt::~Prompt()
 
 std::string Prompt::PromptInput()
 {
-    std::cout << m_prompt;
-    std::getline(std::cin, m_input);
+    m_io->Write(m_prompt);
+    m_io->GetLine(m_input);
     return m_input;
 }
 

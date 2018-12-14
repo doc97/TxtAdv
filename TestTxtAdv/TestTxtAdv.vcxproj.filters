@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\TxtAdv\ExampleTests.cpp">
+    <ClCompile Include="ExampleTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\TxtAdv\TestMain.cpp">
+    <ClCompile Include="TestMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPrompt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

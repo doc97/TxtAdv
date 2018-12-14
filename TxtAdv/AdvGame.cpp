@@ -1,7 +1,8 @@
 #include "AdvGame.h"
 #include <iostream>
 
-AdvGame::AdvGame()
+AdvGame::AdvGame(IO* io)
+    : m_prompt(io)
 {
 }
 

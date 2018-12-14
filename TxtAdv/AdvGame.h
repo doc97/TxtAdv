@@ -3,11 +3,12 @@
 #include "Game.h"
 #include "Prompt.h"
 #include "InputHandler.h"
+#include "IO.h"
 
 class AdvGame : public Game
 {
 public:
-    AdvGame();
+    AdvGame(IO* io);
     ~AdvGame();
 
     void Init() override;
