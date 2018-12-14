@@ -129,17 +129,21 @@
     <ClCompile Include="AdvGame.cpp" />
     <ClCompile Include="ConsoleIO.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="ResponseHandler.cpp" />
     <ClCompile Include="Prompt.cpp" />
+    <ClCompile Include="Response.cpp" />
+    <ClCompile Include="ResponseSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvGame.h" />
     <ClInclude Include="ConsoleIO.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InputListener.h" />
+    <ClInclude Include="ResponseHandler.h" />
+    <ClInclude Include="ResponseListener.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Prompt.h" />
+    <ClInclude Include="Response.h" />
+    <ClInclude Include="ResponseSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

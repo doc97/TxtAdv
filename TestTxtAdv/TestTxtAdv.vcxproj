@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ExampleTests.cpp" />
+    <ClCompile Include="TestInputHandler.cpp" />
     <ClCompile Include="TestPrompt.cpp" />
     <ClCompile Include="TestMain.cpp" />
   </ItemGroup>

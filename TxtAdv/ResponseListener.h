@@ -1,6 +1,6 @@
 #pragma once
 
-class InputListener
+class ResponseListener
 {
 public:
     virtual void Act() = 0;

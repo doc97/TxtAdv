@@ -2,7 +2,7 @@
 
 #include "Game.h"
 #include "Prompt.h"
-#include "InputHandler.h"
+#include "ResponseSystem.h"
 #include "IO.h"
 
 class AdvGame : public Game
@@ -16,6 +16,6 @@ public:
 
 private:
     Prompt m_prompt;
-    InputHandler m_handler;
+    ResponseSystem m_response;
 };
 

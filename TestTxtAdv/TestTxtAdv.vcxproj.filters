@@ -24,5 +24,8 @@
     <ClCompile Include="TestPrompt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestInputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

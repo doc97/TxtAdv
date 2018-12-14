@@ -18,5 +18,5 @@ void AdvGame::Init()
 void AdvGame::Update()
 {
     std::string input = m_prompt.PromptInput();
-    m_handler.HandleInput(input);
+    m_response.HandleInput(input);
 }
