@@ -1,4 +1,5 @@
 #include "ResponseSystem.h"
+#include <algorithm>
 
 ResponseSystem::ResponseSystem()
 {
@@ -8,23 +9,30 @@ ResponseSystem::~ResponseSystem()
 {
 }
 
-void ResponseSystem::AddHandler(ResponseHandler* handler)
+void ResponseSystem::AddHandler(const ResponseHandler& handler)
 {
-    m_handlers.push_back(handler);
+    m_handlers.push_back(std::make_unique<ResponseHandler>(handler));
 }
 
-void ResponseSystem::RemoveHandler(ResponseHandler* handler)
+void ResponseSystem::RemoveHandler(const std::string& key)
 {
-    std::vector<ResponseHandler*>::iterator it = m_handlers.begin();
-    for (; it != m_handlers.end(); ++it)
-        if ((*it) == handler)
-            it = m_handlers.erase(it);
+    m_handlers.erase(
+        std::remove_if(
+            m_handlers.begin(),
+            m_handlers.end(),
+            [&](const std::unique_ptr<ResponseHandler>& p) { return p->GetKey() == key; }),
+        m_handlers.end());
 }
 
 void ResponseSystem::HandleInput(const std::string& input)
 {
-    for (ResponseHandler* handler : m_handlers)
+    for (auto&& handler : m_handlers)
     {
         handler->HandleInput(input);
     }
+}
+
+unsigned int ResponseSystem::HandlerCount() const
+{
+    return m_handlers.size();
 }

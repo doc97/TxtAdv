@@ -10,10 +10,11 @@ public:
     ResponseSystem();
     ~ResponseSystem();
 
-    void AddHandler(ResponseHandler* handler);
-    void RemoveHandler(ResponseHandler* handler);
+    void AddHandler(const ResponseHandler& handler);
+    void RemoveHandler(const std::string& key);
     void HandleInput(const std::string& input);
+    unsigned int HandlerCount() const;
 private:
-    std::vector<ResponseHandler*> m_handlers;
+    std::vector<std::unique_ptr<ResponseHandler>> m_handlers;
 };
 

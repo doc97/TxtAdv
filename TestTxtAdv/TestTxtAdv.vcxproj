@@ -132,9 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ExampleTests.cpp" />
-    <ClCompile Include="TestInputHandler.cpp" />
+    <ClCompile Include="TestResponseHandler.cpp" />
     <ClCompile Include="TestPrompt.cpp" />
     <ClCompile Include="TestMain.cpp" />
+    <ClCompile Include="TestResponseSystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

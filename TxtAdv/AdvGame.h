@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Game.h"
+#include "IO.h"
 #include "Prompt.h"
 #include "ResponseSystem.h"
-#include "IO.h"
 
 class AdvGame : public Game
 {

@@ -24,7 +24,10 @@
     <ClCompile Include="TestPrompt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestInputHandler.cpp">
+    <ClCompile Include="TestResponseHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestResponseSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
