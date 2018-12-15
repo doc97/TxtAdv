@@ -1,6 +1,31 @@
 #include "catch.hpp"
 #include "GameState.h"
 
+TEST_CASE("has state", "[GameState]")
+{
+    std::string key = "key";
+    GameState state;
+    REQUIRE(!state.HasInt(key));
+    REQUIRE(!state.HasFloat(key));
+    REQUIRE(!state.HasString(key));
+
+    SECTION("integer state")
+    {
+        state.SetInt(key, 1);
+        REQUIRE(state.HasInt(key));
+    }
+    SECTION("float state")
+    {
+        state.SetFloat(key, 1.f);
+        REQUIRE(state.HasFloat(key));
+    }
+    SECTION("string state")
+    {
+        state.SetString(key, "1");
+        REQUIRE(state.HasString(key));
+    }
+}
+
 TEST_CASE("get integer state", "[GameState]")
 {
     std::string key = "key";

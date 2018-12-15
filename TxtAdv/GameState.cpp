@@ -32,21 +32,36 @@ void GameState::SetString(const std::string& key, const std::string& value)
 
 int GameState::GetInt(const std::string& key)
 {
-    if (m_intState.find(key) == m_intState.end())
+    if (!HasInt(key))
         throw std::invalid_argument("No int-state exists with key: " + key);
     return m_intState[key];
 }
 
 float GameState::GetFloat(const std::string& key)
 {
-    if (m_floatState.find(key) == m_floatState.end())
+    if (!HasFloat(key))
         throw std::invalid_argument("No float-state exists with key: " + key);
     return m_floatState[key];
 }
 
 std::string GameState::GetString(const std::string& key)
 {
-    if (m_stringState.find(key) == m_stringState.end())
+    if (!HasString(key))
         throw std::invalid_argument("No string-state exists with key: " + key);
     return m_stringState[key];
+}
+
+bool GameState::HasInt(const std::string& key)
+{
+    return m_intState.find(key) != m_intState.end();
+}
+
+bool GameState::HasFloat(const std::string& key)
+{
+    return m_floatState.find(key) != m_floatState.end();
+}
+
+bool GameState::HasString(const std::string& key)
+{
+    return m_stringState.find(key) != m_stringState.end();
 }

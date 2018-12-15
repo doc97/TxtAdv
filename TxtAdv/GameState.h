@@ -15,6 +15,9 @@ public:
     void SetString(const std::string& key, const std::string& value);
     int GetInt(const std::string& key);
     float GetFloat(const std::string& key);
+    bool HasInt(const std::string& key);
+    bool HasFloat(const std::string& key);
+    bool HasString(const std::string& key);
     std::string GetString(const std::string& key);
 
 private:
