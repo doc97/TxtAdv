@@ -4,13 +4,12 @@
 
 TEST_CASE("ResponseHandlers can be added", "[ResponseSystem]")
 {
-    bool isHandled = false;
     std::string key = "a";
     ResponseSystem sys;
 
-    SECTION("add non-nullpointer ResponseHandler")
+    SECTION("add ResponseHandler as parameter")
     {
-        ResponseHandler handler(key, [&isHandled]() { isHandled = true; });
+        ResponseHandler handler(key, [](){});
         sys.AddHandler(handler);
         REQUIRE(sys.HandlerCount() == 1);
     }
