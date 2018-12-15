@@ -33,6 +33,7 @@ TEST_CASE("get integer state", "[GameState]")
 
     SECTION("get non-existent state")
     {
+        REQUIRE(!state.HasInt(key));
         try
         {
             state.GetInt(key);
@@ -45,6 +46,7 @@ TEST_CASE("get integer state", "[GameState]")
     SECTION("get existing state")
     {
         state.SetInt(key, 1);
+        REQUIRE(state.HasInt(key));
         REQUIRE(state.GetInt(key) == 1);
     }
 }
@@ -59,6 +61,7 @@ TEST_CASE("set integer state", "[GameState]")
         SECTION("value " + std::to_string(i))
         {
             state.SetInt(key, i);
+            REQUIRE(state.HasInt(key));
             REQUIRE(state.GetInt(key) == i);
         }
     }
@@ -78,6 +81,7 @@ TEST_CASE("get float state", "[GameState]")
 
     SECTION("get non-existent state")
     {
+        REQUIRE(!state.HasFloat(key));
         try
         {
             state.GetFloat(key);
@@ -90,6 +94,7 @@ TEST_CASE("get float state", "[GameState]")
     SECTION("get existing state")
     {
         state.SetFloat(key, 1.5f);
+        REQUIRE(state.HasFloat(key));
         REQUIRE(state.GetFloat(key) == 1.5f);
     }
 }
@@ -104,6 +109,7 @@ TEST_CASE("set float state", "[GameState]")
         SECTION("value " + std::to_string(i))
         {
             state.SetFloat(key, i);
+            REQUIRE(state.HasFloat(key));
             REQUIRE(state.GetFloat(key) == i);
         }
     }
@@ -123,6 +129,7 @@ TEST_CASE("get string state", "[GameState]")
 
     SECTION("get non-existent state")
     {
+        REQUIRE(!state.HasString(key));
         try
         {
             state.GetString(key);
@@ -135,6 +142,7 @@ TEST_CASE("get string state", "[GameState]")
     SECTION("get existing state")
     {
         state.SetString(key, "a");
+        REQUIRE(state.HasString(key));
         REQUIRE(state.GetString(key) == "a");
     }
 }
@@ -150,6 +158,7 @@ TEST_CASE("set string state", "[GameState]")
         SECTION("value " + value)
         {
             state.SetString(key, value);
+            REQUIRE(state.HasString(key));
             REQUIRE(state.GetString(key) == value);
         }
     }
@@ -166,6 +175,9 @@ TEST_CASE("reset state", "[GameState]")
     state.SetString(sKey, "1");
 
     state.Reset();
+    REQUIRE(!state.HasInt(iKey));
+    REQUIRE(!state.HasFloat(fKey));
+    REQUIRE(!state.HasString(sKey));
 
     try
     {
