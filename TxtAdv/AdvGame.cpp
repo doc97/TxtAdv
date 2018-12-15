@@ -13,8 +13,14 @@ AdvGame::~AdvGame()
 void AdvGame::Init()
 {
     m_prompt.SetPrompt("> ");
-    m_response.AddHandler("exit", [this]() { this->Exit(); });
-    m_response.AddHandler("hello", [this]() { this->GetIO()->WriteLine("world"); });
+    m_response.AddHandler(
+        [](const std::string& input) { return input == "exit"; },
+        [this]() { this->Exit(); }
+    );
+    m_response.AddHandler(
+        [](const std::string& input) { return input == "hello"; },
+        [this]() { this->GetIO()->WriteLine("world"); }
+    );
 }
 
 void AdvGame::Update()

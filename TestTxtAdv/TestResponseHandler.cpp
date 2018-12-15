@@ -4,9 +4,10 @@
 
 TEST_CASE("InputHandler")
 {
+    std::string key = "key";
     bool isHandled = false;
-    std::string key = "a";
-    ResponseHandler handler(key, [&isHandled]() { isHandled = true; });
+    std::function<bool(const std::string&)> matcher = [key](const std::string& input) { return input == key; };
+    ResponseHandler handler(matcher, [&isHandled]() { isHandled = true; });
 
     SECTION("matching key")
     {

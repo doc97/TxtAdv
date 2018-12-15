@@ -7,13 +7,13 @@
 class ResponseHandler
 {
 public:
-    ResponseHandler(const std::string& key, const std::function<void()>& func);
+    ResponseHandler(const std::function<bool(const std::string&)>& matcher, const std::function<void()>& func);
     ~ResponseHandler();
 
     void HandleInput(const std::string& input);
-    std::string GetKey() const;
+    std::function<bool(const std::string&)> GetMatcher() const;
 private:
-    std::string m_key;
+    std::function<bool(const std::string&)> m_matcher;
     std::function<void()> m_func;
 };
 
