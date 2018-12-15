@@ -26,6 +26,26 @@ TEST_CASE("has state", "[GameState]")
     }
 }
 
+TEST_CASE("read integer state", "[GameState]")
+{
+    std::string key = "key";
+    GameState state;
+
+    SECTION("read non-existent state")
+    {
+        REQUIRE(state.ReadInt(key, -1) == -1);
+        REQUIRE(state.ReadInt(key, 0) == 0);
+        REQUIRE(state.ReadInt(key, 1) == 1);
+    }
+    SECTION("read existing value")
+    {
+        state.SetInt(key, 1);
+        REQUIRE(state.ReadInt(key, -1) == 1);
+        state.SetInt(key, 2);
+        REQUIRE(state.ReadInt(key, -1) == 2);
+    }
+}
+
 TEST_CASE("get integer state", "[GameState]")
 {
     std::string key = "key";
@@ -74,6 +94,26 @@ TEST_CASE("set integer state", "[GameState]")
     }
 }
 
+TEST_CASE("read float state", "[GameState]")
+{
+    std::string key = "key";
+    GameState state;
+
+    SECTION("read non-existent state")
+    {
+        REQUIRE(state.ReadFloat(key, -1.f) == -1.f);
+        REQUIRE(state.ReadFloat(key, 0.f) == 0.f);
+        REQUIRE(state.ReadFloat(key, 1.f) == 1.f);
+    }
+    SECTION("read existing state")
+    {
+        state.SetFloat(key, 1.f);
+        REQUIRE(state.ReadFloat(key, -1.f) == 1.f);
+        state.SetFloat(key, 2.f);
+        REQUIRE(state.ReadFloat(key, -1.f) == 2.f);
+    }
+}
+
 TEST_CASE("get float state", "[GameState]")
 {
     std::string key = "a";
@@ -119,6 +159,26 @@ TEST_CASE("set float state", "[GameState]")
         state.SetFloat(key, 1.5f);
         state.SetFloat(key, 2.5f);
         REQUIRE(state.GetFloat(key) == 2.5f);
+    }
+}
+
+TEST_CASE("read string state", "[GameState]")
+{
+    std::string key = "key";
+    GameState state;
+
+    SECTION("read non-existent state")
+    {
+        REQUIRE(state.ReadString(key, "a") == "a");
+        REQUIRE(state.ReadString(key, "b") == "b");
+        REQUIRE(state.ReadString(key, "c") == "c");
+    }
+    SECTION("read existing value")
+    {
+        state.SetString(key, "d");
+        REQUIRE(state.ReadString(key, "a") == "d");
+        state.SetString(key, "e");
+        REQUIRE(state.ReadString(key, "a") == "e");
     }
 }
 

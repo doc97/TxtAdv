@@ -51,6 +51,27 @@ std::string GameState::GetString(const std::string& key)
     return m_stringState[key];
 }
 
+int GameState::ReadInt(const std::string& key, int defValue)
+{
+    if (HasInt(key))
+        return m_intState[key];
+    return defValue;
+}
+
+float GameState::ReadFloat(const std::string& key, float defValue)
+{
+    if (HasFloat(key))
+        return m_floatState[key];
+    return defValue;
+}
+
+std::string GameState::ReadString(const std::string& key, const std::string& defValue)
+{
+    if (HasString(key))
+        return m_stringState[key];
+    return defValue;
+}
+
 bool GameState::HasInt(const std::string& key)
 {
     return m_intState.find(key) != m_intState.end();

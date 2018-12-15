@@ -15,10 +15,13 @@ public:
     void SetString(const std::string& key, const std::string& value);
     int GetInt(const std::string& key);
     float GetFloat(const std::string& key);
+    std::string GetString(const std::string& key);
+    int ReadInt(const std::string& key, int defValue);
+    float ReadFloat(const std::string& key, float defValue);
+    std::string ReadString(const std::string& key, const std::string& defValue);
     bool HasInt(const std::string& key);
     bool HasFloat(const std::string& key);
     bool HasString(const std::string& key);
-    std::string GetString(const std::string& key);
 
 private:
     std::unordered_map<std::string, int> m_intState;
