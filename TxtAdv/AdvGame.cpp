@@ -13,6 +13,7 @@ AdvGame::~AdvGame()
 void AdvGame::Init()
 {
     m_prompt.SetPrompt("> ");
+    m_response.AddHandler("exit", [this]() { this->Exit(); });
 }
 
 void AdvGame::Update()

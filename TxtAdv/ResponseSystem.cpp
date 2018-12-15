@@ -14,6 +14,12 @@ void ResponseSystem::AddHandler(const ResponseHandler& handler)
     m_handlers.push_back(std::make_unique<ResponseHandler>(handler));
 }
 
+void ResponseSystem::AddHandler(const std::string& key, const std::function<void()>& func)
+{
+    ResponseHandler handler(key, func);
+    AddHandler(handler);
+}
+
 void ResponseSystem::RemoveHandler(const std::string& key)
 {
     m_handlers.erase(

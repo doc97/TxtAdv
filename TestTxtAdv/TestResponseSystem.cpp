@@ -13,6 +13,11 @@ TEST_CASE("ResponseHandlers can be added", "[ResponseSystem]")
         sys.AddHandler(handler);
         REQUIRE(sys.HandlerCount() == 1);
     }
+    SECTION("add ResponseHandler by parameters")
+    {
+        sys.AddHandler(key, [](){});
+        REQUIRE(sys.HandlerCount() == 1);
+    }
 }
 
 TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
