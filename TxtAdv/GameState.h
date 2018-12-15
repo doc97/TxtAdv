@@ -13,6 +13,9 @@ public:
     void SetInt(const std::string& key, int value);
     void SetFloat(const std::string& key, float value);
     void SetString(const std::string& key, const std::string& value);
+    void UpdateInt(const std::string& key, int value);
+    void UpdateFloat(const std::string& key, float value);
+    void UpdateString(const std::string& key, const std::string& value);
     int GetInt(const std::string& key);
     float GetFloat(const std::string& key);
     std::string GetString(const std::string& key);

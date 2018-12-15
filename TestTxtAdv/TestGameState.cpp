@@ -71,6 +71,37 @@ TEST_CASE("get integer state", "[GameState]")
     }
 }
 
+TEST_CASE("update integer state", "[GameState]")
+{
+    std::string key = key;
+    GameState state;
+
+    SECTION("update non-existent state")
+    {
+        try
+        {
+            state.UpdateInt(key, 1);
+            FAIL("Trying to update non-existent state should throw std::invalid_argument");
+        }
+        catch (std::invalid_argument) {}
+    }
+    SECTION("update existing state")
+    {
+        state.SetInt(key, 1);
+        try
+        {
+            state.UpdateInt(key, 2);
+            REQUIRE(state.GetInt(key) == 2);
+            state.UpdateInt(key, 3);
+            REQUIRE(state.GetInt(key) == 3);
+        }
+        catch (std::invalid_argument)
+        {
+            FAIL("Updating existing state should NOT throw std::invalid_argument");
+        }
+    }
+}
+
 TEST_CASE("set integer state", "[GameState]")
 {
     std::string key = "key";
@@ -139,6 +170,37 @@ TEST_CASE("get float state", "[GameState]")
     }
 }
 
+TEST_CASE("update float state", "[GameState]")
+{
+    std::string key = "key";
+    GameState state;
+
+    SECTION("update non-existent state")
+    {
+        try
+        {
+            state.UpdateFloat(key, 1.f);
+            FAIL("Trying to update non-existent state should throw std::invalid_argument");
+        }
+        catch (std::invalid_argument) {}
+    }
+    SECTION("update existing state")
+    {
+        state.SetFloat(key, 1.f);
+        try
+        {
+            state.UpdateFloat(key, 2.f);
+            REQUIRE(state.GetFloat(key) == 2.f);
+            state.UpdateFloat(key, 3.f);
+            REQUIRE(state.GetFloat(key) == 3.f);
+        }
+        catch (std::invalid_argument)
+        {
+            FAIL("Updating existing state should NOT throw std::invalid_argument");
+        }
+    }
+}
+
 TEST_CASE("set float state", "[GameState]")
 {
     std::string key = "key";
@@ -204,6 +266,37 @@ TEST_CASE("get string state", "[GameState]")
         state.SetString(key, "a");
         REQUIRE(state.HasString(key));
         REQUIRE(state.GetString(key) == "a");
+    }
+}
+
+TEST_CASE("update string state", "[GameState]")
+{
+    std::string key = "key";
+    GameState state;
+
+    SECTION("update non-existent state")
+    {
+        try
+        {
+            state.UpdateString(key, "a");
+            FAIL("Trying to update non-existent state should throw std::invalid_argument");
+        }
+        catch (std::invalid_argument) {}
+    }
+    SECTION("update existing state")
+    {
+        state.SetString(key, "a");
+        try
+        {
+            state.UpdateString(key, "b");
+            REQUIRE(state.GetString(key) == "b");
+            state.UpdateString(key, "c");
+            REQUIRE(state.GetString(key) == "c");
+        }
+        catch (std::invalid_argument)
+        {
+            FAIL("Updating existing state should NOT throw std::invalid_argument");
+        }
     }
 }
 
