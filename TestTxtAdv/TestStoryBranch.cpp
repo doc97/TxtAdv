@@ -1,0 +1,127 @@
+#include "catch.hpp"
+#include "StoryBranch.h"
+
+TEST_CASE("get current point", "[StoryBranch]")
+{
+    StoryBranch branch;
+
+    SECTION("nullpointer point")
+    {
+        REQUIRE(branch.GetHead() == nullptr);
+    }
+    SECTION("one point")
+    {
+        StoryPoint point;
+        point.SetText("text");
+        branch.AddPoint(point);
+        REQUIRE(branch.GetHead()->GetText() == point.GetText());
+
+        SECTION("another point")
+        {
+            StoryPoint point2;
+            point2.SetText("text2");
+            branch.AddPoint(point2);
+            REQUIRE(branch.GetHead()->GetText() == point.GetText());
+        }
+    }
+}
+
+TEST_CASE("add points", "[StoryBranch]")
+{
+    StoryBranch branch;
+    REQUIRE(branch.Length() == 0);
+    REQUIRE(branch.Empty());
+
+    SECTION("add one point")
+    {
+        StoryPoint point;
+        point.SetText("text");
+        branch.AddPoint(point);
+        REQUIRE(branch.Length() == 1);
+        REQUIRE(branch.GetPointAt(0)->GetText() == point.GetText());
+
+        SECTION("add another point")
+        {
+            StoryPoint point2;
+            point2.SetText("text2");
+            branch.AddPoint(point2);
+            REQUIRE(branch.Length() == 2);
+            REQUIRE(branch.GetPointAt(0)->GetText() == point.GetText());
+            REQUIRE(branch.GetPointAt(1)->GetText() == point2.GetText());
+        }
+    }
+    SECTION("add point by parameters")
+    {
+        std::string text1 = "text";
+        branch.AddPoint(text1);
+        REQUIRE(branch.Length() == 1);
+        REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+
+        SECTION("add another point")
+        {
+            std::string text2 = "text2";
+            branch.AddPoint(text2);
+            REQUIRE(branch.Length() == 2);
+            REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+            REQUIRE(branch.GetPointAt(1)->GetText() == text2);
+        }
+    }
+}
+
+TEST_CASE("next point", "[StoryBranch]")
+{
+    StoryBranch branch;
+    branch.AddPoint("1");
+    branch.AddPoint("2");
+    branch.AddPoint("3");
+
+    REQUIRE(branch.GetHead()->GetText() == "1");
+    branch.Next();
+    REQUIRE(branch.GetHead()->GetText() == "2");
+    branch.Next();
+    REQUIRE(branch.GetHead()->GetText() == "3");
+    branch.Next();
+    REQUIRE(branch.GetHead()->GetText() == "3");
+}
+
+TEST_CASE("previous point", "[StoryBranch]")
+{
+    StoryBranch branch;
+    branch.AddPoint("1");
+    branch.AddPoint("2");
+    branch.AddPoint("3");
+    branch.Next();
+    branch.Next();
+
+    REQUIRE(branch.GetHead()->GetText() == "3");
+    branch.Prev();
+    REQUIRE(branch.GetHead()->GetText() == "2");
+    branch.Prev();
+    REQUIRE(branch.GetHead()->GetText() == "1");
+    branch.Prev();
+    REQUIRE(branch.GetHead()->GetText() == "1");
+
+}
+
+TEST_CASE("set current point", "[StoryBranch]")
+{
+    StoryBranch branch;
+    branch.AddPoint("1");
+    branch.AddPoint("2");
+    branch.AddPoint("3");
+
+    SECTION("normal")
+    {
+        branch.SetCurrentPoint(1);
+        REQUIRE(branch.GetHead()->GetText() == "2");
+    }
+    SECTION("out of range")
+    {
+        try
+        {
+            branch.SetCurrentPoint(3);
+            FAIL("Trying to set index out of range should throw std::out_of_range");
+        }
+        catch (std::out_of_range) {}
+    }
+}
