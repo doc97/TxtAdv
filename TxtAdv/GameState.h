@@ -16,15 +16,15 @@ public:
     void UpdateInt(const std::string& key, int value);
     void UpdateFloat(const std::string& key, float value);
     void UpdateString(const std::string& key, const std::string& value);
-    int GetInt(const std::string& key);
-    float GetFloat(const std::string& key);
-    std::string GetString(const std::string& key);
-    int ReadInt(const std::string& key, int defValue);
-    float ReadFloat(const std::string& key, float defValue);
-    std::string ReadString(const std::string& key, const std::string& defValue);
-    bool HasInt(const std::string& key);
-    bool HasFloat(const std::string& key);
-    bool HasString(const std::string& key);
+    int GetInt(const std::string& key) const;
+    float GetFloat(const std::string& key) const;
+    std::string GetString(const std::string& key) const;
+    int ReadInt(const std::string& key, int defValue) const;
+    float ReadFloat(const std::string& key, float defValue) const;
+    std::string ReadString(const std::string& key, const std::string& defValue) const;
+    bool HasInt(const std::string& key) const;
+    bool HasFloat(const std::string& key) const;
+    bool HasString(const std::string& key) const;
 
 private:
     std::unordered_map<std::string, int> m_intState;
