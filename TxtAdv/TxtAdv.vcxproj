@@ -134,6 +134,7 @@
     <ClCompile Include="Prompt.cpp" />
     <ClCompile Include="Response.cpp" />
     <ClCompile Include="ResponseSystem.cpp" />
+    <ClCompile Include="StoryPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvGame.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Prompt.h" />
     <ClInclude Include="Response.h" />
     <ClInclude Include="ResponseSystem.h" />
+    <ClInclude Include="StoryPoint.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
