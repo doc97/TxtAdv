@@ -39,6 +39,16 @@ void StoryBranch::SetCurrentPoint(unsigned int index)
     m_head = index;
 }
 
+void StoryBranch::SetParentBranch(const StoryBranch& parent)
+{
+    m_parent = std::make_shared<StoryBranch>(parent);
+}
+
+void StoryBranch::UnsetParentBranch()
+{
+    m_parent = nullptr;
+}
+
 std::shared_ptr<StoryPoint> StoryBranch::GetPointAt(unsigned int index) const
 {
     return m_points.at(index);
@@ -49,6 +59,11 @@ std::shared_ptr<StoryPoint> StoryBranch::GetHead() const
     if (m_points.empty())
         return nullptr;
     return m_points.at(m_head);
+}
+
+std::shared_ptr<StoryBranch> StoryBranch::GetParentBranch() const
+{
+    return m_parent;
 }
 
 unsigned int StoryBranch::Length() const

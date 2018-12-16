@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "StoryBranch.h"
 
-TEST_CASE("get current point", "[StoryBranch]")
+TEST_CASE("get head", "[StoryBranch]")
 {
     StoryBranch branch;
 
@@ -23,6 +23,29 @@ TEST_CASE("get current point", "[StoryBranch]")
             branch.AddPoint(point2);
             REQUIRE(branch.GetHead()->GetText() == point.GetText());
         }
+    }
+}
+
+TEST_CASE("set head", "[StoryBranch]")
+{
+    StoryBranch branch;
+    branch.AddPoint("1");
+    branch.AddPoint("2");
+    branch.AddPoint("3");
+
+    SECTION("normal")
+    {
+        branch.SetCurrentPoint(1);
+        REQUIRE(branch.GetHead()->GetText() == "2");
+    }
+    SECTION("out of range")
+    {
+        try
+        {
+            branch.SetCurrentPoint(3);
+            FAIL("Trying to set index out of range should throw std::out_of_range");
+        }
+        catch (std::out_of_range) {}
     }
 }
 
@@ -103,25 +126,13 @@ TEST_CASE("previous point", "[StoryBranch]")
 
 }
 
-TEST_CASE("set current point", "[StoryBranch]")
+TEST_CASE("parent branch", "[StoryBranch]")
 {
+    StoryBranch parent;
     StoryBranch branch;
-    branch.AddPoint("1");
-    branch.AddPoint("2");
-    branch.AddPoint("3");
-
-    SECTION("normal")
-    {
-        branch.SetCurrentPoint(1);
-        REQUIRE(branch.GetHead()->GetText() == "2");
-    }
-    SECTION("out of range")
-    {
-        try
-        {
-            branch.SetCurrentPoint(3);
-            FAIL("Trying to set index out of range should throw std::out_of_range");
-        }
-        catch (std::out_of_range) {}
-    }
+    REQUIRE(branch.GetParentBranch() == nullptr);
+    branch.SetParentBranch(parent);
+    REQUIRE(branch.GetParentBranch() != nullptr);
+    branch.UnsetParentBranch();
+    REQUIRE(branch.GetParentBranch() == nullptr);
 }
