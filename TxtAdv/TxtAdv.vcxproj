@@ -132,7 +132,6 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="ResponseHandler.cpp" />
     <ClCompile Include="Prompt.cpp" />
-    <ClCompile Include="Response.cpp" />
     <ClCompile Include="ResponseSystem.cpp" />
     <ClCompile Include="StoryBranch.cpp" />
     <ClCompile Include="StoryPoint.cpp" />
@@ -146,7 +145,6 @@
     <ClInclude Include="ResponseListener.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Prompt.h" />
-    <ClInclude Include="Response.h" />
     <ClInclude Include="ResponseSystem.h" />
     <ClInclude Include="StoryBranch.h" />
     <ClInclude Include="StoryPoint.h" />
