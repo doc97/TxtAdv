@@ -1,12 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "StoryPoint.h"
 
 class StoryBranch
 {
 public:
     StoryBranch();
+    StoryBranch(const std::string& name);
     ~StoryBranch();
 
     void AddPoint(const StoryPoint& point);
@@ -16,6 +18,7 @@ public:
     void SetCurrentPoint(unsigned int index);
     void SetParentBranch(const StoryBranch& parent);
     void UnsetParentBranch();
+    std::string GetName() const;
     std::shared_ptr<StoryPoint> GetPointAt(unsigned int index) const;
     std::shared_ptr<StoryPoint> GetHead() const;
     std::shared_ptr<StoryBranch> GetParentBranch() const;
@@ -24,6 +27,7 @@ public:
 private:
     std::vector<std::shared_ptr<StoryPoint>> m_points;
     std::shared_ptr<StoryBranch> m_parent;
+    std::string m_name;
     unsigned int m_head;
 };
 

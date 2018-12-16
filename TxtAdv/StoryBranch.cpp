@@ -4,6 +4,11 @@ StoryBranch::StoryBranch()
 {
 }
 
+StoryBranch::StoryBranch(const std::string& name)
+    : m_name(name)
+{
+}
+
 StoryBranch::~StoryBranch()
 {
 }
@@ -47,6 +52,11 @@ void StoryBranch::SetParentBranch(const StoryBranch& parent)
 void StoryBranch::UnsetParentBranch()
 {
     m_parent = nullptr;
+}
+
+std::string StoryBranch::GetName() const
+{
+    return m_name;
 }
 
 std::shared_ptr<StoryPoint> StoryBranch::GetPointAt(unsigned int index) const

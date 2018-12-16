@@ -136,3 +136,17 @@ TEST_CASE("parent branch", "[StoryBranch]")
     branch.UnsetParentBranch();
     REQUIRE(branch.GetParentBranch() == nullptr);
 }
+
+TEST_CASE("branch name", "[StoryBranch]")
+{
+    SECTION("empty name")
+    {
+        StoryBranch branch;
+        REQUIRE(branch.GetName() == "");
+    }
+    SECTION("non-empty name")
+    {
+        StoryBranch branch("a");
+        REQUIRE(branch.GetName() == "a");
+    }
+}
