@@ -73,7 +73,7 @@ TEST_CASE("add points", "[StoryBranch]")
             REQUIRE(branch.GetPointAt(1)->GetText() == point2.GetText());
         }
     }
-    SECTION("add point by parameters")
+    SECTION("add point by text")
     {
         std::string text1 = "text";
         branch.AddPoint(text1);
@@ -87,6 +87,32 @@ TEST_CASE("add points", "[StoryBranch]")
             REQUIRE(branch.Length() == 2);
             REQUIRE(branch.GetPointAt(0)->GetText() == text1);
             REQUIRE(branch.GetPointAt(1)->GetText() == text2);
+        }
+    }
+    SECTION("add point by parameters")
+    {
+        ResponseHandler handler1([](const std::string& input) { return true; }, []() {});
+        std::vector<ResponseHandler*> handlers1;
+        handlers1.push_back(&handler1);
+        std::string text1 = "text";
+        branch.AddPoint(text1, handlers1);
+        REQUIRE(branch.Length() == 1);
+        REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+        REQUIRE(branch.GetPointAt(0)->GetHandlers().size() == handlers1.size());
+
+        SECTION("add another point")
+        {
+            ResponseHandler handler2([](const std::string& input) { return false; }, []() {});
+            std::vector<ResponseHandler*> handlers2;
+            handlers2.push_back(&handler1);
+            handlers2.push_back(&handler2);
+            std::string text2 = "text2";
+            branch.AddPoint(text2, handlers2);
+            REQUIRE(branch.Length() == 2);
+            REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+            REQUIRE(branch.GetPointAt(0)->GetHandlers().size() == handlers1.size());
+            REQUIRE(branch.GetPointAt(1)->GetText() == text2);
+            REQUIRE(branch.GetPointAt(1)->GetHandlers().size() == handlers2.size());
         }
     }
 }
