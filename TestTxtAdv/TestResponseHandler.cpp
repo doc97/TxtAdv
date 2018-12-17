@@ -6,8 +6,10 @@ typedef std::function<ResponseMatch(const std::string&)> MatchFunc;
 
 TEST_CASE("matcher function", "[ResponseHandler]")
 {
-    ResponseHandler trueHandler([](const std::string& input) { return ResponseMatch(true); }, []() {});
-    ResponseHandler falseHandler([](const std::string& input) { return ResponseMatch(false); }, []() {});
+    ResponseHandler trueHandler([](const std::string& input) { return ResponseMatch(true); },
+        [](const ResponseMatch& match) {});
+    ResponseHandler falseHandler([](const std::string& input) { return ResponseMatch(false); },
+        [](const ResponseMatch& match) {});
     REQUIRE(trueHandler.GetMatcher()("").IsMatch());
     REQUIRE(!falseHandler.GetMatcher()("").IsMatch());
 }
@@ -17,7 +19,7 @@ TEST_CASE("action function", "[ResponseHandler]")
     std::string key = "key";
     bool isHandled = false;
     MatchFunc matcher = [&key](const std::string& input) { return input == key; };
-    std::function<void()> action = [&isHandled]() { isHandled = true; };
+    std::function<void(const ResponseMatch&)> action = [&isHandled](const ResponseMatch& match) { isHandled = true; };
     ResponseHandler handler(matcher, action);
 
     SECTION("matching key")

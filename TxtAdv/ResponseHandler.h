@@ -8,13 +8,13 @@ class ResponseHandler
 {
 public:
     ResponseHandler(const std::function<ResponseMatch(const std::string&)>& matcher,
-        const std::function<void()>& func);
+        const std::function<void(const ResponseMatch&)>& func);
     ~ResponseHandler();
 
     void HandleInput(const std::string& input);
     std::function<ResponseMatch(const std::string&)> GetMatcher();
 private:
     std::function<ResponseMatch(const std::string&)> m_matcher;
-    std::function<void()> m_func;
+    std::function<void(const ResponseMatch&)> m_func;
 };
 

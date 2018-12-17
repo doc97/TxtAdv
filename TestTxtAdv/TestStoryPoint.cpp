@@ -58,8 +58,8 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
 TEST_CASE("get/set handlers", "[StoryPoint]")
 {
     std::vector<ResponseHandler> handlers;
-    handlers.emplace_back([](const std::string& input) { return true; }, []() {});
-    handlers.emplace_back([](const std::string& input) { return false; }, []() {});
+    handlers.emplace_back([](const std::string& input) { return true; }, [](const ResponseMatch& match) {});
+    handlers.emplace_back([](const std::string& input) { return false; }, [](const ResponseMatch& match) {});
 
     StoryPoint point;
     REQUIRE(point.GetHandlerCount() == 0);
@@ -74,8 +74,10 @@ TEST_CASE("notify handlers", "[StoryPoint]")
     unsigned int flag = 0;
     std::string message = "msg";
     std::vector<ResponseHandler> handlers;
-    handlers.emplace_back([](const std::string& input) { return true; }, [&flag]() { ++flag; });
-    handlers.emplace_back([](const std::string& input) { return true; }, [&flag]() { ++flag; });
+    handlers.emplace_back([](const std::string& input) { return true; },
+        [&flag](const ResponseMatch& match) { ++flag; });
+    handlers.emplace_back([](const std::string& input) { return true; },
+        [&flag](const ResponseMatch& match) { ++flag; });
 
     StoryPoint point;
     point.NotifyHandlers(message);

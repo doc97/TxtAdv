@@ -14,7 +14,8 @@ void ResponseSystem::AddHandler(const ResponseHandler& handler)
     m_handlers.push_back(std::make_unique<ResponseHandler>(handler));
 }
 
-void ResponseSystem::AddHandler(const std::function<ResponseMatch(const std::string&)> matcher, const std::function<void()>& func)
+void ResponseSystem::AddHandler(const std::function<ResponseMatch(const std::string&)> matcher,
+    const std::function<void(const ResponseMatch& match)>& func)
 {
     ResponseHandler handler(matcher, func);
     AddHandler(handler);

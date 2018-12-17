@@ -11,7 +11,8 @@ public:
     ~ResponseSystem();
 
     void AddHandler(const ResponseHandler& handler);
-    void AddHandler(const std::function<bool(const std::string&)> matcher, const std::function<void()>& func);
+    void AddHandler(const std::function<ResponseMatch(const std::string&)> matcher,
+        const std::function<void(const ResponseMatch&)>& func);
     void AddHandlers(const std::vector<ResponseHandler>& handlers);
     void RemoveHandler(const std::string& key);
     void ClearHandlers();
