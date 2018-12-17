@@ -9,13 +9,13 @@ TEST_CASE("ResponseHandlers can be added", "[ResponseSystem]")
 
     SECTION("add ResponseHandler as parameter")
     {
-        ResponseHandler handler([key](const std::string& input) { return input == key; }, []() {});
+        ResponseHandler handler([&key](const std::string& input) { return input == key; }, []() {});
         sys.AddHandler(handler);
         REQUIRE(sys.HandlerCount() == 1);
     }
     SECTION("add ResponseHandler by parameters")
     {
-        sys.AddHandler([key](const std::string& input) { return input == key; }, []() {});
+        sys.AddHandler([&key](const std::string& input) { return input == key; }, []() {});
         REQUIRE(sys.HandlerCount() == 1);
     }
 }
@@ -24,7 +24,7 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
 {
     std::string key = "a";
     ResponseSystem sys;
-    ResponseHandler handler([key](const std::string& input) { return input == key; }, []() {});
+    ResponseHandler handler([&key](const std::string& input) { return input == key; }, []() {});
 
     SECTION("remove from empty ResponseSystem")
     {
