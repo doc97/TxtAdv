@@ -1,5 +1,6 @@
 #include "AdvGame.h"
 #include <iostream>
+#include <regex>
 
 AdvGame::AdvGame(IO* io)
     : m_io(io), m_prompt(m_io)
@@ -44,18 +45,23 @@ void AdvGame::InitPointTwo()
         [this](const ResponseMatch& match) { this->Exit(); }
     );
     handlers.emplace_back(
-        [](const std::string& input) { return ResponseMatch(input.find("set name") != std::string::npos); },
+        [](const std::string& input)
+        {
+            std::smatch match;
+            std::regex rgx("(.*)=(.*)");
+            std::vector<std::string> captures;
+            if (std::regex_match(input, match, rgx))
+                return ResponseMatch(true, { match.str(1), match.str(2) });
+            return ResponseMatch(false);
+        },
         [this](const ResponseMatch& match)
         {
-            std::string name;
-            this->GetIO()->Write("Name: ");
-            this->GetIO()->GetLine(name);
-            this->GetState().SetString("name", name);
+            this->GetState().SetString(match.GetCapture(0), match.GetCapture(1));
         }
     );
     std::vector<std::function<std::string()>> markup;
     markup.emplace_back([this]() { return this->GetState().ReadString("name", "<unknown>"); });
-    m_branch.AddPoint("This is you: $0", markup, handlers);
+    m_branch.AddPoint("Your name: $0\n", markup, handlers);
 }
 
 void AdvGame::Update()
