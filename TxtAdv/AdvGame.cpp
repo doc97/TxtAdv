@@ -1,6 +1,7 @@
 #include "AdvGame.h"
 #include <iostream>
 #include <regex>
+#include <sstream>
 
 AdvGame::AdvGame(IO* io)
     : m_io(io), m_prompt(m_io)
@@ -48,20 +49,60 @@ void AdvGame::InitPointTwo()
         [](const std::string& input)
         {
             std::smatch match;
-            std::regex rgx("(.*)=(.*)");
+            std::regex rgx("(\\w*) ?(\\w+)\\s*=\\s*(\\w*)");
             std::vector<std::string> captures;
             if (std::regex_match(input, match, rgx))
-                return ResponseMatch(true, { match.str(1), match.str(2) });
+            {
+                std::vector<std::string> captures;
+                for (size_t i = 1; i <= match.size(); ++i)
+                    captures.push_back(match.str(i));
+                return ResponseMatch(true, captures);
+            }
             return ResponseMatch(false);
         },
         [this](const ResponseMatch& match)
         {
-            this->GetState().SetString(match.GetCapture(0), match.GetCapture(1));
+            std::string type = match.GetCapture(0);
+            std::string key = match.GetCapture(1);
+            std::string val = match.GetCapture(2);
+            try
+            {
+                if (type == "int")
+                    this->GetState().SetInt(key, std::stoi(val, nullptr, 10));
+                else if (type == "float")
+                    this->GetState().SetFloat(key, std::stof(val));
+                else
+                    this->GetState().SetString(key, val);
+            }
+            catch (std::invalid_argument)
+            {
+                this->GetIO()->WriteLine("Invalid type!\n---");
+            }
         }
     );
     std::vector<std::function<std::string()>> markup;
-    markup.emplace_back([this]() { return this->GetState().ReadString("name", "<unknown>"); });
-    m_branch.AddPoint("Your name: $0\n", markup, handlers);
+    markup.emplace_back([this]()
+    {
+        std::unordered_map<std::string, int> intMap = this->GetState().GetAllInts();
+        std::unordered_map<std::string, float> floatMap = this->GetState().GetAllFloats();
+        std::unordered_map<std::string, std::string> strMap = this->GetState().GetAllStrings();
+        std::unordered_map<std::string, int>::iterator iIt = intMap.begin();
+        std::unordered_map<std::string, float>::iterator fIt = floatMap.begin();
+        std::unordered_map<std::string, std::string>::iterator sIt = strMap.begin();
+        std::stringstream ss;
+
+        ss << "(ints)" << std::endl;
+        for (; iIt != intMap.end(); ++iIt)
+            ss << iIt->first << ": " << iIt->second << std::endl;
+        ss << "(floats)" << std::endl;
+        for (; fIt != floatMap.end(); ++fIt)
+            ss << fIt->first << ": " << fIt->second << std::endl;
+        ss << "(strings)" << std::endl;
+        for (; sIt != strMap.end(); ++sIt)
+            ss << sIt->first << ": " << sIt->second << std::endl;
+        return ss.str();
+    });
+    m_branch.AddPoint("Current state:\n$0", markup, handlers);
 }
 
 void AdvGame::Update()
