@@ -12,6 +12,7 @@ public:
 
     void SetText(const std::string& text);
     void SetHandlers(const std::vector<ResponseHandler>& handlers);
+    void NotifyHandlers(const std::string& message);
     std::string GetText() const;
     size_t GetHandlerCount() const;
 private:

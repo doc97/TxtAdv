@@ -21,3 +21,19 @@ TEST_CASE("get/set handlers", "[StoryPoint]")
     point.SetHandlers(handlers);
     REQUIRE(point.GetHandlerCount() == handlers.size());
 }
+
+TEST_CASE("notify handlers", "[StoryPoint]")
+{
+    unsigned int flag = 0;
+    std::string message = "msg";
+    std::vector<ResponseHandler> handlers;
+    handlers.emplace_back([](const std::string& input) { return true; }, [&flag]() { ++flag; });
+    handlers.emplace_back([](const std::string& input) { return true; }, [&flag]() { ++flag; });
+
+    StoryPoint point;
+    point.NotifyHandlers(message);
+    REQUIRE(flag == 0);
+    point.SetHandlers(handlers);
+    point.NotifyHandlers(message);
+    REQUIRE(flag == 2);
+}
