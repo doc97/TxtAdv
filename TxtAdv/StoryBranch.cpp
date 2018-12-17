@@ -25,10 +25,26 @@ void StoryBranch::AddPoint(const std::string& text)
     AddPoint(point);
 }
 
+void StoryBranch::AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr)
+{
+    StoryPoint point;
+    point.SetMarkup(text, expr);
+    AddPoint(point);
+}
+
 void StoryBranch::AddPoint(const std::string& text, const std::vector<ResponseHandler>& handlers)
 {
     StoryPoint point;
     point.SetText(text);
+    point.SetHandlers(handlers);
+    AddPoint(point);
+}
+
+void StoryBranch::AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
+    const std::vector<ResponseHandler>& handlers)
+{
+    StoryPoint point;
+    point.SetMarkup(text, expr);
     point.SetHandlers(handlers);
     AddPoint(point);
 }

@@ -13,7 +13,10 @@ public:
 
     void AddPoint(const StoryPoint& point);
     void AddPoint(const std::string& text);
+    void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr);
     void AddPoint(const std::string& text, const std::vector<ResponseHandler>& handlers);
+    void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
+        const std::vector<ResponseHandler>& handlers);
     void Next();
     void Prev();
     void SetCurrentPoint(unsigned int index);

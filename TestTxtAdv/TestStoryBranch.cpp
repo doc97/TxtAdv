@@ -89,7 +89,20 @@ TEST_CASE("add points", "[StoryBranch]")
             REQUIRE(branch.GetPointAt(1)->GetText() == text2);
         }
     }
-    SECTION("add point by parameters")
+    SECTION("add point by markup")
+    {
+        std::vector<std::function<std::string()>> expr;
+        expr.emplace_back([]() { return "A"; });
+        expr.emplace_back([]() { return "B"; });
+
+        branch.AddPoint("text $0", expr);
+        REQUIRE(branch.Length() == 1);
+        REQUIRE(branch.GetPointAt(0)->GetText() == "text A");
+        branch.AddPoint("text $1", expr);
+        REQUIRE(branch.Length() == 2);
+        REQUIRE(branch.GetPointAt(1)->GetText() == "text B");
+    }
+    SECTION("add point by text and handlers")
     {
         std::vector<ResponseHandler> handlers1;
         handlers1.emplace_back([](const std::string& input) { return true; }, []() {});
@@ -111,6 +124,23 @@ TEST_CASE("add points", "[StoryBranch]")
             REQUIRE(branch.GetPointAt(1)->GetText() == text2);
             REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == handlers2.size());
         }
+    }
+    SECTION("add point by markup and handlers")
+    {
+        std::vector<std::function<std::string()>> expr;
+        expr.emplace_back([]() { return "A"; });
+        expr.emplace_back([]() { return "B"; });
+        std::vector<ResponseHandler> handlers;
+        handlers.emplace_back([](const std::string& input) { return false; }, []() {});
+
+        branch.AddPoint("text $0", expr, handlers);
+        REQUIRE(branch.Length() == 1);
+        REQUIRE(branch.GetPointAt(0)->GetText() == "text A");
+        REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == 1);
+        branch.AddPoint("text $1", expr, handlers);
+        REQUIRE(branch.Length() == 2);
+        REQUIRE(branch.GetPointAt(1)->GetText() == "text B");
+        REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == 1);
     }
 }
 
