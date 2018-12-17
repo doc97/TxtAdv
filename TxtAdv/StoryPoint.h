@@ -11,11 +11,11 @@ public:
     ~StoryPoint();
 
     void SetText(const std::string& text);
-    void SetHandlers(const std::vector<ResponseHandler*>& handlers);
+    void SetHandlers(const std::vector<ResponseHandler>& handlers);
     std::string GetText() const;
-    std::vector<ResponseHandler*> GetHandlers() const;
+    size_t GetHandlerCount() const;
 private:
     std::string m_text;
-    std::vector<ResponseHandler*> m_handlers;
+    std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
 };
 

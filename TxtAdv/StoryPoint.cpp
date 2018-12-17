@@ -13,9 +13,11 @@ void StoryPoint::SetText(const std::string& text)
     m_text = text;
 }
 
-void StoryPoint::SetHandlers(const std::vector<ResponseHandler*>& handlers)
+void StoryPoint::SetHandlers(const std::vector<ResponseHandler>& handlers)
 {
-    m_handlers = handlers;
+    m_handlers.clear();
+    for (const ResponseHandler& handler : handlers)
+        m_handlers.emplace_back(std::make_shared<ResponseHandler>(handler));
 }
 
 std::string StoryPoint::GetText() const
@@ -23,7 +25,7 @@ std::string StoryPoint::GetText() const
     return m_text;
 }
 
-std::vector<ResponseHandler*> StoryPoint::GetHandlers() const
+size_t StoryPoint::GetHandlerCount() const
 {
-    return m_handlers;
+    return m_handlers.size();
 }

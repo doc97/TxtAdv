@@ -13,12 +13,11 @@ TEST_CASE("get/set text", "[StoryPoint]")
 
 TEST_CASE("get/set handlers", "[StoryPoint]")
 {
-    ResponseHandler handler([](const std::string& input) { return true; }, []() {});
-    std::vector<ResponseHandler*> handlers;
-    handlers.push_back(&handler);
+    std::vector<ResponseHandler> handlers;
+    handlers.emplace_back([](const std::string& input) { return true; }, []() {});
 
     StoryPoint point;
-    REQUIRE(point.GetHandlers().empty());
+    REQUIRE(point.GetHandlerCount() == 0);
     point.SetHandlers(handlers);
-    REQUIRE(point.GetHandlers().size() == handlers.size());
+    REQUIRE(point.GetHandlerCount() == handlers.size());
 }

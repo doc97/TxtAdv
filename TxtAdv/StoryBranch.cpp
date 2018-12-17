@@ -25,7 +25,7 @@ void StoryBranch::AddPoint(const std::string& text)
     AddPoint(point);
 }
 
-void StoryBranch::AddPoint(const std::string& text, const std::vector<ResponseHandler*>& handlers)
+void StoryBranch::AddPoint(const std::string& text, const std::vector<ResponseHandler>& handlers)
 {
     StoryPoint point;
     point.SetText(text);
