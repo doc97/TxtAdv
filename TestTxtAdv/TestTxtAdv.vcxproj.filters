@@ -39,5 +39,8 @@
     <ClCompile Include="TestStoryBranch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestResponseMatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
