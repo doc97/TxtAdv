@@ -2,7 +2,7 @@
 #include "ResponseHandler.h"
 #include <string>
 
-TEST_CASE("InputHandler")
+TEST_CASE("ResponseHandler")
 {
     std::string key = "key";
     bool isHandled = false;
