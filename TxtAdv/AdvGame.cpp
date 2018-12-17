@@ -1,5 +1,6 @@
 #include "AdvGame.h"
 #include <iostream>
+#include <regex>
 
 AdvGame::AdvGame(IO* io)
     : m_io(io), m_prompt(m_io)
@@ -40,11 +41,11 @@ void AdvGame::InitPointTwo()
 {
     std::vector<ResponseHandler> handlers;
     handlers.emplace_back(
-        [](const std::string& input) { return input == "exit"; },
+        [](const std::string& input) { return ResponseMatch(input == "exit"); },
         [this]() { this->Exit(); }
     );
     handlers.emplace_back(
-        [](const std::string& input) { return input.find("set name") != std::string::npos; },
+        [](const std::string& input) { return ResponseMatch(input.find("set name") != std::string::npos); },
         [this]()
         {
             std::string name;

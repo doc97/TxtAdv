@@ -143,7 +143,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="ResponseHandler.h" />
-    <ClInclude Include="ResponseListener.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Prompt.h" />
     <ClInclude Include="ResponseMatch.h" />

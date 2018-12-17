@@ -59,9 +59,6 @@
     <ClInclude Include="IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResponseListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ResponseSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -3,7 +3,6 @@
 #include <functional>
 #include <string>
 #include "ResponseMatch.h"
-#include "ResponseListener.h"
 
 class ResponseHandler
 {
