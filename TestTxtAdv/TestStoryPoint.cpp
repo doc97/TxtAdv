@@ -65,8 +65,8 @@ TEST_CASE("get/set handlers", "[StoryPoint]")
     REQUIRE(point.GetHandlerCount() == 0);
     point.SetHandlers(handlers);
     REQUIRE(point.GetHandlerCount() == handlers.size());
-    REQUIRE(point.GetHandlers().at(0).GetMatcher()(""));
-    REQUIRE(!point.GetHandlers().at(1).GetMatcher()(""));
+    REQUIRE(point.GetHandlers()[0].GetMatcher()("").IsMatch());
+    REQUIRE(!point.GetHandlers()[1].GetMatcher()("").IsMatch());
 }
 
 TEST_CASE("notify handlers", "[StoryPoint]")

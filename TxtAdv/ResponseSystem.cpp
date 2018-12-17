@@ -14,7 +14,7 @@ void ResponseSystem::AddHandler(const ResponseHandler& handler)
     m_handlers.push_back(std::make_unique<ResponseHandler>(handler));
 }
 
-void ResponseSystem::AddHandler(const std::function<bool(const std::string&)> matcher, const std::function<void()>& func)
+void ResponseSystem::AddHandler(const std::function<ResponseMatch(const std::string&)> matcher, const std::function<void()>& func)
 {
     ResponseHandler handler(matcher, func);
     AddHandler(handler);
@@ -32,7 +32,7 @@ void ResponseSystem::RemoveHandler(const std::string& key)
         std::remove_if(
             m_handlers.begin(),
             m_handlers.end(),
-            [&](const std::unique_ptr<ResponseHandler>& p) { return p->GetMatcher()(key); }),
+            [&](const std::unique_ptr<ResponseHandler>& p) { return p->GetMatcher()(key).IsMatch(); }),
         m_handlers.end());
 }
 
