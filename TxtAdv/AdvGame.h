@@ -5,6 +5,7 @@
 #include "Prompt.h"
 #include "ResponseSystem.h"
 #include "StoryBranch.h"
+#include "GameState.h"
 
 class AdvGame : public Game
 {
@@ -16,6 +17,7 @@ public:
     void Update() override;
     void StoryNext();
     void StoryPrev();
+    GameState& GetState();
     IO* GetIO() const;
 
 private:
@@ -23,6 +25,7 @@ private:
     Prompt m_prompt;
     ResponseSystem m_response;
     StoryBranch m_branch;
+    GameState m_state;
 
     void InitStory();
     void InitPointOne();

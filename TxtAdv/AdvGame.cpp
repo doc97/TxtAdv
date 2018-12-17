@@ -13,15 +13,6 @@ AdvGame::~AdvGame()
 void AdvGame::Init()
 {
     m_prompt.SetPrompt("> ");
-    m_response.AddHandler(
-        [](const std::string& input) { return input == "exit"; },
-        [this]() { this->Exit(); }
-    );
-    m_response.AddHandler(
-        [](const std::string& input) { return input == "hello"; },
-        [this]() { this->GetIO()->WriteLine("world"); }
-    );
-
     InitStory();
 }
 
@@ -52,7 +43,19 @@ void AdvGame::InitPointTwo()
         [](const std::string& input) { return input == "exit"; },
         [this]() { this->Exit(); }
     );
-    m_branch.AddPoint("This is you: ...", handlers);
+    handlers.emplace_back(
+        [](const std::string& input) { return input.find("set name") != std::string::npos; },
+        [this]()
+        {
+            std::string name;
+            this->GetIO()->Write("Name: ");
+            this->GetIO()->GetLine(name);
+            this->GetState().SetString("name", name);
+        }
+    );
+    std::vector<std::function<std::string()>> markup;
+    markup.emplace_back([this]() { return this->GetState().ReadString("name", "<unknown>"); });
+    m_branch.AddPoint("This is you: $0", markup, handlers);
 }
 
 void AdvGame::Update()
@@ -73,6 +76,11 @@ void AdvGame::StoryNext()
 void AdvGame::StoryPrev()
 {
     m_branch.Prev();
+}
+
+GameState& AdvGame::GetState()
+{
+    return m_state;
 }
 
 IO* AdvGame::GetIO() const
