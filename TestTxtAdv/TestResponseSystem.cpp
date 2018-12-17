@@ -38,3 +38,18 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
         REQUIRE(sys.HandlerCount() == 0);
     }
 }
+
+TEST_CASE("Remove all ResponseHandlers")
+{
+    ResponseSystem sys;
+    ResponseHandler handlerA([](const std::string& input) { return input == "a"; }, []() {});
+    ResponseHandler handlerB([](const std::string& input) { return input == "b"; }, []() {});
+
+    sys.ClearHandlers();
+    REQUIRE(sys.HandlerCount() == 0);
+    sys.AddHandler(handlerA);
+    sys.AddHandler(handlerB);
+    REQUIRE(sys.HandlerCount() == 2);
+    sys.ClearHandlers();
+    REQUIRE(sys.HandlerCount() == 0);
+}
