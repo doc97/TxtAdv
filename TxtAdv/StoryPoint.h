@@ -15,8 +15,9 @@ public:
     void NotifyHandlers(const std::string& message);
     std::string GetText() const;
     size_t GetHandlerCount() const;
+    std::vector<ResponseHandler> GetHandlers() const;
 private:
     std::string m_text;
-    std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
+    std::vector<ResponseHandler> m_handlers;
 };
 
