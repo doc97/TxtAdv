@@ -93,6 +93,21 @@ std::string GameState::ReadString(const std::string& key, const std::string& def
     return defValue;
 }
 
+std::unordered_map<std::string, int> GameState::GetAllInts() const
+{
+    return m_intState;
+}
+
+std::unordered_map<std::string, float> GameState::GetAllFloats() const
+{
+    return m_floatState;
+}
+
+std::unordered_map<std::string, std::string> GameState::GetAllStrings() const
+{
+    return m_stringState;
+}
+
 bool GameState::HasInt(const std::string& key) const
 {
     return m_intState.find(key) != m_intState.end();

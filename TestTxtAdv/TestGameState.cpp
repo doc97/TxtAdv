@@ -71,6 +71,20 @@ TEST_CASE("get integer state", "[GameState]")
     }
 }
 
+TEST_CASE("get all integer states", "[GameState]")
+{
+    size_t count = 10;
+    GameState state;
+    REQUIRE(state.GetAllInts().size() == 0);
+    for (size_t i = 0; i < count; ++i)
+        state.SetInt(std::to_string(i), i);
+
+    std::unordered_map<std::string, int> map = state.GetAllInts();
+    REQUIRE(map.size() == count);
+    for (size_t i = 0; i < count; ++i)
+        REQUIRE(map[std::to_string(i)] == i);
+}
+
 TEST_CASE("update integer state", "[GameState]")
 {
     std::string key = key;
@@ -170,6 +184,20 @@ TEST_CASE("get float state", "[GameState]")
     }
 }
 
+TEST_CASE("get all float states", "[GameState]")
+{
+    size_t count = 10;
+    GameState state;
+    REQUIRE(state.GetAllFloats().size() == 0);
+    for (size_t i = 0; i < count; ++i)
+        state.SetFloat(std::to_string(i), (float) i);
+
+    std::unordered_map<std::string, float> map = state.GetAllFloats();
+    REQUIRE(map.size() == count);
+    for (size_t i = 0; i < count; ++i)
+        REQUIRE(map[std::to_string(i)] == (float) i);
+}
+
 TEST_CASE("update float state", "[GameState]")
 {
     std::string key = "key";
@@ -267,6 +295,20 @@ TEST_CASE("get string state", "[GameState]")
         REQUIRE(state.HasString(key));
         REQUIRE(state.GetString(key) == "a");
     }
+}
+
+TEST_CASE("get all string states", "[GameState]")
+{
+    size_t count = 10;
+    GameState state;
+    REQUIRE(state.GetAllStrings().size() == 0);
+    for (size_t i = 0; i < count; ++i)
+        state.SetString(std::to_string(i), std::to_string(i));
+
+    std::unordered_map<std::string, std::string> map = state.GetAllStrings();
+    REQUIRE(map.size() == count);
+    for (size_t i = 0; i < count; ++i)
+        REQUIRE(map[std::to_string(i)] == std::to_string(i));
 }
 
 TEST_CASE("update string state", "[GameState]")

@@ -22,6 +22,9 @@ public:
     int ReadInt(const std::string& key, int defValue) const;
     float ReadFloat(const std::string& key, float defValue) const;
     std::string ReadString(const std::string& key, const std::string& defValue) const;
+    std::unordered_map<std::string, int> GetAllInts() const;
+    std::unordered_map<std::string, float> GetAllFloats() const;
+    std::unordered_map<std::string, std::string> GetAllStrings() const;
     bool HasInt(const std::string& key) const;
     bool HasFloat(const std::string& key) const;
     bool HasString(const std::string& key) const;
