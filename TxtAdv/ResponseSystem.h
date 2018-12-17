@@ -14,7 +14,7 @@ public:
     void AddHandler(const std::function<bool(const std::string&)> matcher, const std::function<void()>& func);
     void RemoveHandler(const std::string& key);
     void HandleInput(const std::string& input);
-    unsigned int HandlerCount() const;
+    size_t HandlerCount() const;
 private:
     std::vector<std::unique_ptr<ResponseHandler>> m_handlers;
 };

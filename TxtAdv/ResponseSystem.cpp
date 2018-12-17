@@ -38,7 +38,7 @@ void ResponseSystem::HandleInput(const std::string& input)
     }
 }
 
-unsigned int ResponseSystem::HandlerCount() const
+size_t ResponseSystem::HandlerCount() const
 {
     return m_handlers.size();
 }

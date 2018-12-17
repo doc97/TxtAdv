@@ -76,7 +76,7 @@ std::shared_ptr<StoryBranch> StoryBranch::GetParentBranch() const
     return m_parent;
 }
 
-unsigned int StoryBranch::Length() const
+size_t StoryBranch::Length() const
 {
     return m_points.size();
 }

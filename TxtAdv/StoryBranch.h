@@ -22,7 +22,7 @@ public:
     std::shared_ptr<StoryPoint> GetPointAt(unsigned int index) const;
     std::shared_ptr<StoryPoint> GetHead() const;
     std::shared_ptr<StoryBranch> GetParentBranch() const;
-    unsigned int Length() const;
+    size_t Length() const;
     bool Empty() const;
 private:
     std::vector<std::shared_ptr<StoryPoint>> m_points;
