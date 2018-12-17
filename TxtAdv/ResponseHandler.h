@@ -11,7 +11,7 @@ public:
     ~ResponseHandler();
 
     void HandleInput(const std::string& input);
-    std::function<bool(const std::string&)> GetMatcher() const;
+    std::function<bool(const std::string&)> GetMatcher();
 private:
     std::function<bool(const std::string&)> m_matcher;
     std::function<void()> m_func;

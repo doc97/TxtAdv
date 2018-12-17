@@ -15,7 +15,7 @@ void ResponseHandler::HandleInput(const std::string& input)
         m_func();
 }
 
-std::function<bool(const std::string&)> ResponseHandler::GetMatcher() const
+std::function<bool(const std::string&)> ResponseHandler::GetMatcher()
 {
     return m_matcher;
 }
