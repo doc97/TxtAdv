@@ -18,6 +18,14 @@ TEST_CASE("ResponseHandlers can be added", "[ResponseSystem]")
         sys.AddHandler([&key](const std::string& input) { return input == key; }, []() {});
         REQUIRE(sys.HandlerCount() == 1);
     }
+    SECTION("add multiple ResponseHandlers")
+    {
+        std::vector<ResponseHandler> handlers;
+        handlers.emplace_back([](const std::string& input) { return false; }, []() {});
+        handlers.emplace_back([](const std::string& input) { return false; }, []() {});
+        sys.AddHandlers(handlers);
+        REQUIRE(sys.HandlerCount() == 2);
+    }
 }
 
 TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")

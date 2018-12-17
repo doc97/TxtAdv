@@ -20,6 +20,12 @@ void ResponseSystem::AddHandler(const std::function<bool(const std::string&)> ma
     AddHandler(handler);
 }
 
+void ResponseSystem::AddHandlers(const std::vector<ResponseHandler>& handlers)
+{
+    for (const ResponseHandler& handler : handlers)
+        AddHandler(handler);
+}
+
 void ResponseSystem::RemoveHandler(const std::string& key)
 {
     m_handlers.erase(
