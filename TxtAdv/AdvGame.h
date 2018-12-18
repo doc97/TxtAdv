@@ -13,13 +13,13 @@ public:
     AdvGame(IO* io);
     ~AdvGame();
 
-    void Init() override;
-    void Update() override;
     void StoryNext();
     void StoryPrev();
     GameState& GetState();
     IO* GetIO() const;
-
+protected:
+    void Init() override;
+    void Update() override;
 private:
     IO* m_io;
     Prompt m_prompt;
