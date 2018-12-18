@@ -10,15 +10,15 @@ public:
     ResponseSystem();
     ~ResponseSystem();
 
-    void AddHandler(const ResponseHandler& handler);
-    void AddHandler(const std::function<ResponseMatch(const std::string&)> matcher,
+    void AddHandler(std::shared_ptr<InputHandler> handler);
+    void AddHandlers(const std::vector<std::shared_ptr<InputHandler>>& handlers);
+    void AddResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
         const std::function<void(const ResponseMatch&)>& func);
-    void AddHandlers(const std::vector<ResponseHandler>& handlers);
     void RemoveHandler(const std::string& key);
     void ClearHandlers();
     void HandleInput(const std::string& input);
     size_t HandlerCount() const;
 private:
-    std::vector<std::unique_ptr<ResponseHandler>> m_handlers;
+    std::vector<std::shared_ptr<InputHandler>> m_handlers;
 };
 

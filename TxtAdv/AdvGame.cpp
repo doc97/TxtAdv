@@ -26,26 +26,26 @@ void AdvGame::InitStory()
 
 void AdvGame::InitPointOne()
 {
-    std::vector<ResponseHandler> handlers;
-    handlers.emplace_back(
+    std::vector<std::shared_ptr<InputHandler>> handlers;
+    handlers.emplace_back(std::make_shared<ResponseHandler>(
         [](const std::string& input) { return input == "exit"; },
         [this](const ResponseMatch& match) { this->Exit(); }
-    );
-    handlers.emplace_back(
+    ));
+    handlers.emplace_back(std::make_shared<ResponseHandler>(
         [](const std::string& input) { return input == "start"; },
         [this](const ResponseMatch& match) { this->StoryNext(); }
-    );
+    ));
     m_branch.AddPoint("Welcome to TxtAdv!", handlers);
 }
 
 void AdvGame::InitPointTwo()
 {
-    std::vector<ResponseHandler> handlers;
-    handlers.emplace_back(
+    std::vector<std::shared_ptr<InputHandler>> handlers;
+    handlers.emplace_back(std::make_shared<ResponseHandler>(
         [](const std::string& input) { return ResponseMatch(input == "exit"); },
         [this](const ResponseMatch& match) { this->Exit(); }
-    );
-    handlers.emplace_back(
+    ));
+    handlers.emplace_back(std::make_shared<ResponseHandler>(
         [](const std::string& input)
         {
             std::smatch match;
@@ -79,7 +79,7 @@ void AdvGame::InitPointTwo()
                 this->GetIO()->WriteLine("Invalid type!\n---");
             }
         }
-    );
+    ));
     std::vector<std::function<std::string()>> markup;
     markup.emplace_back([this]()
     {

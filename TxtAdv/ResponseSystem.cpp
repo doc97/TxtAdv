@@ -9,22 +9,21 @@ ResponseSystem::~ResponseSystem()
 {
 }
 
-void ResponseSystem::AddHandler(const ResponseHandler& handler)
+void ResponseSystem::AddHandler(std::shared_ptr<InputHandler> handler)
 {
-    m_handlers.push_back(std::make_unique<ResponseHandler>(handler));
+    m_handlers.emplace_back(std::move(handler));
 }
 
-void ResponseSystem::AddHandler(const std::function<ResponseMatch(const std::string&)> matcher,
+void ResponseSystem::AddHandlers(const std::vector<std::shared_ptr<InputHandler>>& handlers)
+{
+    for (const std::shared_ptr<InputHandler>& ptr : handlers)
+        AddHandler(ptr);
+}
+
+void ResponseSystem::AddResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
     const std::function<void(const ResponseMatch& match)>& func)
 {
-    ResponseHandler handler(matcher, func);
-    AddHandler(handler);
-}
-
-void ResponseSystem::AddHandlers(const std::vector<ResponseHandler>& handlers)
-{
-    for (const ResponseHandler& handler : handlers)
-        AddHandler(handler);
+    m_handlers.push_back(std::make_unique<ResponseHandler>(matcher, func));
 }
 
 void ResponseSystem::RemoveHandler(const std::string& key)
@@ -33,7 +32,7 @@ void ResponseSystem::RemoveHandler(const std::string& key)
         std::remove_if(
             m_handlers.begin(),
             m_handlers.end(),
-            [&](const std::unique_ptr<ResponseHandler>& p) { return p->Matches(key); }),
+            [&](const std::shared_ptr<InputHandler>& p) { return p->Matches(key); }),
         m_handlers.end());
 }
 

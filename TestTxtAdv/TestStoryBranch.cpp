@@ -104,8 +104,11 @@ TEST_CASE("add points", "[StoryBranch]")
     }
     SECTION("add point by text and handlers")
     {
-        std::vector<ResponseHandler> handlers1;
-        handlers1.emplace_back([](const std::string& input) { return true; }, [](const ResponseMatch& match) {});
+        std::vector<std::shared_ptr<InputHandler>> handlers1;
+        handlers1.emplace_back(std::make_shared<ResponseHandler>(
+            [](const std::string& input) { return true; },
+            [](const ResponseMatch& match) {}
+        ));
         std::string text1 = "text";
         branch.AddPoint(text1, handlers1);
         REQUIRE(branch.Length() == 1);
@@ -114,9 +117,11 @@ TEST_CASE("add points", "[StoryBranch]")
 
         SECTION("add another point")
         {
-            std::vector<ResponseHandler> handlers2;
-            handlers2.emplace_back([](const std::string& input) { return false; },
-                [](const ResponseMatch& match) {});
+            std::vector<std::shared_ptr<InputHandler>> handlers2;
+            handlers2.emplace_back(std::make_shared<ResponseHandler>(
+                [](const std::string& input) { return false; },
+                [](const ResponseMatch& match) {}
+            ));
             std::string text2 = "text2";
             branch.AddPoint(text2, handlers2);
             REQUIRE(branch.Length() == 2);
@@ -131,8 +136,11 @@ TEST_CASE("add points", "[StoryBranch]")
         std::vector<std::function<std::string()>> expr;
         expr.emplace_back([]() { return "A"; });
         expr.emplace_back([]() { return "B"; });
-        std::vector<ResponseHandler> handlers;
-        handlers.emplace_back([](const std::string& input) { return false; }, [](const ResponseMatch& match) {});
+        std::vector<std::shared_ptr<InputHandler>> handlers;
+        handlers.emplace_back(std::make_shared<ResponseHandler>(
+            [](const std::string& input) { return false; },
+            [](const ResponseMatch& match) {}
+        ));
 
         branch.AddPoint("text $0", expr, handlers);
         REQUIRE(branch.Length() == 1);

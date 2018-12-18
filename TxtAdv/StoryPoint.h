@@ -12,14 +12,14 @@ public:
 
     void SetText(const std::string& text);
     void SetMarkup(const std::string& text, const std::vector<std::function<std::string()>>& expr);
-    void SetHandlers(const std::vector<ResponseHandler>& handlers);
+    void SetHandlers(const std::vector<std::shared_ptr<InputHandler>>& handlers);
     void NotifyHandlers(const std::string& message);
     std::string GetText() const;
     size_t GetHandlerCount() const;
-    std::vector<ResponseHandler> GetHandlers() const;
+    std::vector<std::shared_ptr<InputHandler>> GetHandlers() const;
 private:
     std::string m_text;
-    std::vector<ResponseHandler> m_handlers;
+    std::vector<std::shared_ptr<InputHandler>> m_handlers;
     std::vector<std::function<std::string()>> m_expressions;
 
     std::string ParseText(const std::string& text, const std::vector<std::function<std::string()>>& expr) const;

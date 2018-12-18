@@ -1,32 +1,27 @@
 #include "catch.hpp"
 #include "ResponseSystem.h"
-#include <utility>
 
 TEST_CASE("ResponseHandlers can be added", "[ResponseSystem]")
 {
     std::string key = "a";
     ResponseSystem sys;
 
-    SECTION("add ResponseHandler as parameter")
-    {
-        ResponseHandler handler([&key](const std::string& input) { return input == key; },
-            [](const ResponseMatch& match) {});
-        sys.AddHandler(handler);
-        REQUIRE(sys.HandlerCount() == 1);
-    }
     SECTION("add ResponseHandler by parameters")
     {
-        sys.AddHandler([&key](const std::string& input) { return input == key; },
-            [](const ResponseMatch& match) {});
+        sys.AddResponseHandler(
+            [&key](const std::string& input) { return ResponseMatch(input == key); },
+            [](const ResponseMatch& match) {}
+        );
         REQUIRE(sys.HandlerCount() == 1);
     }
-    SECTION("add multiple ResponseHandlers")
+    SECTION("add Handler by pointer")
     {
-        std::vector<ResponseHandler> handlers;
-        handlers.emplace_back([](const std::string& input) { return false; }, [](const ResponseMatch& match) {});
-        handlers.emplace_back([](const std::string& input) { return false; }, [](const ResponseMatch& match) {});
-        sys.AddHandlers(handlers);
-        REQUIRE(sys.HandlerCount() == 2);
+        ResponseHandler handler(
+            [&key](const std::string& input) { return ResponseMatch(input == key); },
+            [](const ResponseMatch& match) {}
+        );
+        sys.AddHandler(std::make_shared<ResponseHandler>(handler));
+        REQUIRE(sys.HandlerCount() == 1);
     }
 }
 
@@ -34,8 +29,6 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
 {
     std::string key = "a";
     ResponseSystem sys;
-    ResponseHandler handler([&key](const std::string& input) { return input == key; },
-        [](const ResponseMatch& match) {});
 
     SECTION("remove from empty ResponseSystem")
     {
@@ -44,24 +37,33 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
     }
     SECTION("remove from non-empty ResponseSystem")
     {
-        sys.AddHandler(handler);
+        sys.AddResponseHandler(
+            [&key](const std::string& input) { return input == key; },
+            [](const ResponseMatch& match) {}
+        );
+        sys.AddResponseHandler(
+            [&key](const std::string& input) { return input != key; },
+            [](const ResponseMatch& match) {}
+        );
         sys.RemoveHandler(key);
-        REQUIRE(sys.HandlerCount() == 0);
+        REQUIRE(sys.HandlerCount() == 1);
     }
 }
 
 TEST_CASE("Remove all ResponseHandlers")
 {
     ResponseSystem sys;
-    ResponseHandler handlerA([](const std::string& input) { return input == "a"; },
-        [](const ResponseMatch& match) {});
-    ResponseHandler handlerB([](const std::string& input) { return input == "b"; },
-        [](const ResponseMatch& match) {});
 
     sys.ClearHandlers();
     REQUIRE(sys.HandlerCount() == 0);
-    sys.AddHandler(handlerA);
-    sys.AddHandler(handlerB);
+    sys.AddResponseHandler(
+        [](const std::string& input) { return input == "a"; },
+        [](const ResponseMatch& match) {}
+    );
+    sys.AddResponseHandler(
+        [](const std::string& input) { return input == "b"; },
+        [](const ResponseMatch& match) {}
+    );
     REQUIRE(sys.HandlerCount() == 2);
     sys.ClearHandlers();
     REQUIRE(sys.HandlerCount() == 0);
