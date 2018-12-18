@@ -12,7 +12,7 @@ public:
     ~ResponseHandler();
 
     void HandleInput(const std::string& input);
-    std::function<ResponseMatch(const std::string&)> GetMatcher();
+    bool Matches(const std::string&) const;
 private:
     std::function<ResponseMatch(const std::string&)> m_matcher;
     std::function<void(const ResponseMatch&)> m_func;

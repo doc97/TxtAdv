@@ -33,7 +33,7 @@ void ResponseSystem::RemoveHandler(const std::string& key)
         std::remove_if(
             m_handlers.begin(),
             m_handlers.end(),
-            [&](const std::unique_ptr<ResponseHandler>& p) { return p->GetMatcher()(key).IsMatch(); }),
+            [&](const std::unique_ptr<ResponseHandler>& p) { return p->Matches(key); }),
         m_handlers.end());
 }
 

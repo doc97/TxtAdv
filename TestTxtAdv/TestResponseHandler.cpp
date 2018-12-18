@@ -10,8 +10,8 @@ TEST_CASE("matcher function", "[ResponseHandler]")
         [](const ResponseMatch& match) {});
     ResponseHandler falseHandler([](const std::string& input) { return ResponseMatch(false); },
         [](const ResponseMatch& match) {});
-    REQUIRE(trueHandler.GetMatcher()("").IsMatch());
-    REQUIRE(!falseHandler.GetMatcher()("").IsMatch());
+    REQUIRE(trueHandler.Matches(""));
+    REQUIRE(!falseHandler.Matches(""));
 }
 
 TEST_CASE("action function", "[ResponseHandler]")
