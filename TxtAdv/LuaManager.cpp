@@ -41,17 +41,57 @@ void LuaManager::Init()
     luaL_openlibs(L);
 }
 
-bool LuaManager::Exec(const char* filename, const char* funcname)
+void LuaManager::GetError(std::string& error)
+{
+    const char* msg = lua_tostring(L, -1);
+    lua_pop(L, 1);
+    if (msg)
+        error.assign(msg);
+}
+
+bool LuaManager::Exec(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
+    std::string& error)
 {
     if (luaL_dofile(L, filename) != LUA_OK)
+    {
+        GetError(error);
         return false;
+    }
 
     // Push function onto the stack
     lua_getglobal(L, funcname);
     if (!lua_isfunction(L, -1))
+    {
         lua_pop(L, 1); // Pop it back manually
+        error = std::string("ERROR: '" + std::string(funcname) + "' is not the name of any known function!");
+        return false;
+    }
 
-    // No parameters, no return values
+    LoadParams(params);
+
     // Pops stack automatically
-    return lua_pcall(L, 0, 0, 0) != LUA_OK;
+    if (lua_pcall(L, params.size(), 0, 0) != LUA_OK)
+    {
+        GetError(error);
+        return false;
+    }
+}
+
+void LuaManager::LoadParams(const std::vector<LuaParam>& params)
+{
+    for (const LuaParam& p : params)
+        LoadParam(p);
+}
+
+void LuaManager::LoadParam(const LuaParam& param)
+{
+    if (param.GetType() == LuaParam::Bool)
+        lua_pushboolean(L, bit_cast<int>(param.GetValue()) == 0);
+    if (param.GetType() == LuaParam::Int)
+        lua_pushinteger(L, bit_cast<int>(param.GetValue()));
+    if (param.GetType() == LuaParam::Float)
+        lua_pushnumber(L, bit_cast<double>(param.GetValue()));
+    else if (param.GetType() == LuaParam::String)
+        lua_pushstring(L, bit_cast<char*>(param.GetValue()));
+
 }

@@ -163,6 +163,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
+    <ClCompile Include="LuaParam.cpp" />
     <ClCompile Include="ResponseHandler.cpp" />
     <ClCompile Include="Prompt.cpp" />
     <ClCompile Include="ResponseMatch.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LuaManager.h" />
+    <ClInclude Include="LuaParam.h" />
     <ClInclude Include="ResponseHandler.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Prompt.h" />

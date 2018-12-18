@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 
 #ifdef __cplusplus
 #include <lua.hpp>
@@ -9,6 +10,7 @@
 #endif
 
 #include "Callback.h"
+#include "LuaManager.h"
 
 void print_error(lua_State* L)
 {
@@ -69,7 +71,14 @@ void exec_fn(const char* filename, const char* funcname)
 
 int main()
 {
-    execute("LUA/hello.lua");
-    exec_fn("LUA/functions.lua", "funcA");
+    LuaManager manager;
+
+    std::string err;
+    std::vector<LuaParam> params;
+    params.emplace_back(LuaParam::Int, (void*)2);
+    params.emplace_back(LuaParam::Int, (void*)3);
+    if (!manager.Exec("LUA/functions.lua", "funcB", params, err))
+        std::cout << err << std::endl;
+
     getchar();
 }
