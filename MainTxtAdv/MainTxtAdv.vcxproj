@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LUA\callback.lua" />
+    <None Include="LUA\functions.lua" />
     <None Include="LUA\hello.lua" />
   </ItemGroup>
   <ItemGroup>

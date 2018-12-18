@@ -32,6 +32,9 @@
     <None Include="LUA\callback.lua">
       <Filter>LUA</Filter>
     </None>
+    <None Include="LUA\functions.lua">
+      <Filter>LUA</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Callback.h">

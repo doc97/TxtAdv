@@ -27,24 +27,49 @@ void execute(const char* filename)
     // Register C functions
     lua_register(L, "hey", hey);
 
-    int result = luaL_loadfile(L, filename);
-    if (result != LUA_OK)
+    if (luaL_loadfile(L, filename) != LUA_OK)
     {
         print_error(L);
         return;
     }
 
-    result = lua_pcall(L, 0, LUA_MULTRET, 0);
-    if (result != LUA_OK)
+    // LUA_MULTRET => All return values are pushed onto the stack
+    if (lua_pcall(L, 0, LUA_MULTRET, 0) != LUA_OK)
     {
         print_error(L);
         return;
     }
 }
 
+void exec_fn(const char* filename, const char* funcname)
+{
+    lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+
+    if (luaL_dofile(L, filename) != LUA_OK)
+    {
+        print_error(L);
+        return;
+    }
+
+    // Push function onto the stack
+    lua_getglobal(L, funcname);
+    if (!lua_isfunction(L, -1))
+    {
+        // Pop it back manually
+        lua_pop(L, 1);
+        return;
+    }
+
+    // No parameters, no return values
+    // Pops stack automatically
+    if (lua_pcall(L, 0, 0, 0) != LUA_OK)
+        print_error(L);
+}
+
 int main()
 {
     execute("LUA/hello.lua");
-    execute("LUA/callback.lua");
+    exec_fn("LUA/functions.lua", "funcA");
     getchar();
 }
