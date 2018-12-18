@@ -75,6 +75,7 @@ bool LuaManager::Exec(const char* filename, const char* funcname, const std::vec
         GetError(error);
         return false;
     }
+    return true;
 }
 
 void LuaManager::LoadParams(const std::vector<LuaParam>& params)
