@@ -1,7 +1,9 @@
 #include <iostream>
 #include "LuaManager.h"
+#include "AdvGame.h"
+#include "ConsoleIO.h"
 
-void exampleLua()
+void runExampleLua()
 {
     LuaManager manager;
 
@@ -15,7 +17,14 @@ void exampleLua()
     getchar();
 }
 
+void runExampleGame()
+{
+    ConsoleIO io;
+    AdvGame game(&io);
+    game.Run();
+}
+
 int main()
 {
-    exampleLua();
+    runExampleLua();
 }
