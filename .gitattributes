@@ -1,0 +1,3 @@
+*.sln             merge=union
+*.vcxproj         merge=union
+*.vcxproj.filters merge=union
