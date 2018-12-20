@@ -1,2 +1,1 @@
-b = LuaStoryBranch()
-b:hello()
+branch:hello()

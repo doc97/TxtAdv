@@ -31,6 +31,9 @@ void runExampleLuna()
 
     Luna<LuaStoryBranch>::Register(L);
 
+    LuaStoryBranch branch;
+    Luna<LuaStoryBranch>::new_global(L, &branch, "branch");
+
     if (luaL_dofile(L, "LUA/luna.lua") != LUA_OK)
     {
         const char* msg = lua_tostring(L, -1);
