@@ -9,6 +9,7 @@
 #endif
 
 LuaManager::LuaManager()
+    : L(nullptr)
 {
     Init();
 }
@@ -50,7 +51,7 @@ void LuaManager::GetError(std::string& error)
 }
 
 bool LuaManager::Exec(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
-    std::string& error)
+    std::vector<LuaParam>& retValues, std::string& error)
 {
     if (luaL_dofile(L, filename) != LUA_OK)
     {
@@ -70,10 +71,45 @@ bool LuaManager::Exec(const char* filename, const char* funcname, const std::vec
     LoadParams(params);
 
     // Pops stack automatically
-    if (lua_pcall(L, params.size(), 0, 0) != LUA_OK)
+    if (lua_pcall(L, params.size(), retValues.size(), 0) != LUA_OK)
     {
         GetError(error);
         return false;
+    }
+    for (size_t i = 0; i < retValues.size(); ++i)
+    {
+        bool isCorrectType = false;
+        LuaParam param = { LuaParam::Bool, false };
+        param.type = retValues[i].type;
+        switch (retValues[i].type)
+        {
+        case LuaParam::Bool:
+            isCorrectType = lua_isboolean(L, -1);
+            retValues[i] = { LuaParam::Bool, static_cast<bool>(lua_toboolean(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        case LuaParam::Int:
+            isCorrectType = lua_isinteger(L, -1);
+            retValues[i] = { LuaParam::Int, static_cast<long long>(lua_tointeger(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        case LuaParam::Double:
+            isCorrectType = lua_isnumber(L, -1);
+            retValues[i] = { LuaParam::Double, static_cast<double>(lua_tonumber(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        case LuaParam::String:
+            isCorrectType = lua_isstring(L, -1);
+            retValues[i] = { LuaParam::String, static_cast<const char*>(lua_tostring(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        }
+
+        if (!isCorrectType)
+        {
+            error = "ERROR: Lua function returned an unknown type (index " + std::to_string(i) + ")";
+            return false;
+        }
     }
     return true;
 }

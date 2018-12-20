@@ -16,7 +16,7 @@ public:
 
     void Reset();
     bool Exec(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
-        std::string& error);
+        std::vector<LuaParam>& retValues, std::string& error);
 private:
     void Init();
     void GetError(std::string& error);
