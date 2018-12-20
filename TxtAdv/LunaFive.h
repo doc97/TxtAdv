@@ -188,7 +188,7 @@ public:
         lua_rawget(L, -2);      // Get the index
 
         if (lua_isnumber(L, -1)) { // Check if we got a valid index
-            int _index = lua_tonumber(L, -1);
+            int _index = static_cast<int>(lua_tonumber(L, -1));
             T** obj = static_cast<T**>(lua_touserdata(L, 1));
 
             lua_pushvalue(L, 3);
@@ -224,7 +224,7 @@ public:
 
         if (lua_isnumber(L, -1)) // Check if we got a valid index
         {
-            int _index = lua_tonumber(L, -1);
+            int _index = static_cast<int>(lua_tonumber(L, -1));
             T** obj = static_cast<T**>(lua_touserdata(L, 1));
 
             if(!obj || !(*obj))
@@ -236,7 +236,7 @@ public:
             if(_index >> 8) // Try to set a func
             {
                 char c[128];
-                sprintf(c, "Trying to set the method [%s] of class [%s]" ,
+                sprintf_s(c, "Trying to set the method [%s] of class [%s]" ,
                     (*obj)->T::methods[_index ^ ( 1 << 8 )].name , T::className);
                 luaL_error(L, c);
                 return 0;
@@ -258,7 +258,7 @@ public:
     */
     static int function_dispatch(lua_State* L)
     {
-        int i = (int) lua_tonumber(L, lua_upvalueindex(1));
+        int i = static_cast<int>(lua_tonumber(L, lua_upvalueindex(1)));
         T** obj = static_cast<T**>(lua_touserdata(L, lua_upvalueindex(2)));
         return ((*obj)->*(T::methods[i].func)) (L);
     }
