@@ -13,11 +13,15 @@
 /*
 Source: http://lua-users.org/wiki/LunaFive 20.12.2018
 Edited: Spacing, indentation, includes by Daniel Riissanen 20.12.2018
+Edited: Combine with some of Lunar's code: http://lua-users.org/wiki/CppBindingWithLunar 21.12.2018
+        Modify and customize functions
 */
 
 template<class T>
 class Luna
 {
+    // private by default
+    typedef struct { T* pT; } userdataType;
 public:
     struct PropertyType
     {
@@ -177,6 +181,117 @@ public:
     }
 
     /*
+      @ new_global
+      Arguments:
+        * L - Lua State
+        * obj - Pointer to object
+        * name - The name of the variable that will hold the pointer in the global namespace
+        bool - Whether or not to delete the object when the userdata gc event occurs
+    */
+    static int new_global(lua_State* L, T* obj, const char* name, bool gc = false)
+    {
+        if (!obj)
+        {
+            lua_pushnil(L);
+            return 0;
+        }
+
+        luaL_getmetatable(L, T::className);
+        if (lua_isnil(L, -1))
+            luaL_error(L, "%s missing metatable", T::className);
+
+        int mt = lua_gettop(L);
+        subtable(L, mt, "userdata", "v");
+        userdataType* data = static_cast<userdataType*>(pushuserdata(L, obj, sizeof(userdataType)));
+        if (data)
+        {
+            data->pT = obj;  // store pointer to object in userdata
+            lua_pushvalue(L, mt);
+            lua_setmetatable(L, -2);
+            if (!gc)
+            {
+                lua_checkstack(L, 3);
+                subtable(L, mt, "do not trash", "k");
+                lua_pushvalue(L, -2);
+                lua_pushboolean(L, 1);
+                lua_settable(L, -3);
+                lua_pop(L, 1);
+            }
+        }
+        lua_replace(L, mt);
+        lua_settop(L, mt);
+
+        // Add global variable
+        lua_pushvalue(L, mt);
+        lua_setglobal(L, name);
+
+        return mt;
+    }
+
+    /*
+      @ pushuserdata
+      Arguments:
+        * L - Lua State
+        * key - Light userdata
+        size_t - The size of new full userdata if lookup[key] = nil
+    */
+    static void* pushuserdata(lua_State* L, void* key, size_t size)
+    {
+        void* data = NULL;
+        lua_pushlightuserdata(L, key);
+        lua_gettable(L, -2);  // lookup[key]
+        if (lua_isnil(L, -1))
+        {
+            lua_pop(L, 1);  // drop nil
+            lua_checkstack(L, 3);
+            data = lua_newuserdata(L, size);  // create new userdata
+            lua_pushlightuserdata(L, key);
+            lua_pushvalue(L, -2); // duplicate userdata
+            lua_settable(L, -4);  // lookup[key] = userdata
+        }
+        return data;
+    }
+
+    /*
+      @ weaktable
+      Arguments:
+        * L - Lua State
+        *mode - Metatable __mode field
+    */
+    static void weaktable(lua_State* L, const char* mode)
+    {
+        lua_newtable(L);
+        lua_pushvalue(L, -1); // table as its own metatable
+        lua_setmetatable(L, -2);
+        lua_pushliteral(L, "__mode");
+        lua_pushstring(L, mode);
+        lua_settable(L, -3);  // metatable.__mode = mode
+    }
+
+    /*
+      @ subtable
+      Arguments:
+        * L - Lua State
+        tindex - Table index
+        *name - Name of the subtable
+        *mode - Metatable __mode field
+    */
+    static void subtable(lua_State* L, int tindex, const char* name, const char* mode)
+    {
+        lua_pushstring(L, name);
+        lua_gettable(L, tindex);
+        if (lua_isnil(L, -1))
+        {
+            lua_pop(L, 1);
+            lua_checkstack(L, 3);
+            weaktable(L, mode);
+            lua_pushstring(L, name);
+            lua_pushvalue(L, -2);
+            lua_settable(L, tindex);
+        }
+    }
+
+    /*
       @ property_getter (internal)
       Arguments:
         * L - Lua State
@@ -270,6 +385,13 @@ public:
     */
     static int gc_obj(lua_State* L)
     {
+        if (luaL_getmetafield(L, 1, "do not trash"))
+        {
+            lua_pushvalue(L, 1); // duplicate userdata
+            lua_gettable(L, -2);
+            if (!lua_isnil(L, -1))
+                return 0;
+        }
         T** obj = static_cast<T**>(lua_touserdata(L, -1));
         if (obj && *obj)
             delete(*obj);
