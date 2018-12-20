@@ -86,13 +86,11 @@ void LuaManager::LoadParams(const std::vector<LuaParam>& params)
 
 void LuaManager::LoadParam(const LuaParam& param)
 {
-    if (param.GetType() == LuaParam::Bool)
-        lua_pushboolean(L, bit_cast<int>(param.GetValue()) == 0);
-    if (param.GetType() == LuaParam::Int)
-        lua_pushinteger(L, bit_cast<int>(param.GetValue()));
-    if (param.GetType() == LuaParam::Float)
-        lua_pushnumber(L, bit_cast<double>(param.GetValue()));
-    else if (param.GetType() == LuaParam::String)
-        lua_pushstring(L, bit_cast<char*>(param.GetValue()));
-
+    switch (param.type)
+    {
+    case LuaParam::Bool: lua_pushboolean(L, param.data.b); break;
+    case LuaParam::Int: lua_pushinteger(L, param.data.i); break;
+    case LuaParam::Double: lua_pushnumber(L, param.data.d); break;
+    case LuaParam::String: lua_pushstring(L, param.data.s); break;
+    }
 }
