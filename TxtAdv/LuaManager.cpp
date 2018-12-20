@@ -50,6 +50,17 @@ void LuaManager::GetError(std::string& error)
         error.assign(msg);
 }
 
+void LuaManager::Register(const char* funcname, lua_CFunction func)
+{
+    lua_register(L, funcname, func);
+}
+
+void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[])
+{
+    luaL_newlib(L, lib);
+    lua_setglobal(L, libname);
+}
+
 bool LuaManager::Exec(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
     std::vector<LuaParam>& retValues, std::string& error)
 {
