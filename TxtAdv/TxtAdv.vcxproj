@@ -164,6 +164,7 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaResponseHandler.cpp" />
+    <ClCompile Include="LuaStoryBranch.cpp" />
     <ClCompile Include="ResponseHandler.cpp" />
     <ClCompile Include="Prompt.cpp" />
     <ClCompile Include="ResponseMatch.cpp" />
@@ -180,6 +181,8 @@
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaParam.h" />
     <ClInclude Include="LuaResponseHandler.h" />
+    <ClInclude Include="LuaStoryBranch.h" />
+    <ClInclude Include="LunaFive.h" />
     <ClInclude Include="ResponseHandler.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Prompt.h" />

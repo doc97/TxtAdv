@@ -2,6 +2,7 @@
 #include "LuaManager.h"
 #include "AdvGame.h"
 #include "ConsoleIO.h"
+#include "LuaStoryBranch.h"
 
 void runExampleLua()
 {
@@ -23,7 +24,24 @@ void runExampleGame()
     game.Run();
 }
 
+void runExampleLuna()
+{
+    lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+
+    Luna<LuaStoryBranch>::Register(L);
+
+    if (luaL_dofile(L, "LUA/luna.lua") != LUA_OK)
+    {
+        const char* msg = lua_tostring(L, -1);
+        lua_pop(L, 1);
+        printf_s(msg);
+    }
+    lua_close(L);
+    getchar();
+}
+
 int main()
 {
-    runExampleLua();
+    runExampleLuna();
 }

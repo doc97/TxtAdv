@@ -1,0 +1,2 @@
+b = LuaStoryBranch()
+b:hello()
