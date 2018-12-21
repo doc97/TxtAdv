@@ -26,21 +26,15 @@ void runExampleGame()
 
 void runExampleLuna()
 {
-    lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
+    LuaManager manager;
 
-    Luna<LuaStoryBranch>::Register(L);
+    manager.RegisterClass<LuaStoryBranch>();
+    manager.PushObject(new LuaStoryBranch, "branch", true);
 
-    LuaStoryBranch branch;
-    Luna<LuaStoryBranch>::new_global(L, &branch, "branch");
+    std::string err;
+    if (!manager.ExecFile("LUA/luna.lua", err))
+        std::cout << err << std::endl;
 
-    if (luaL_dofile(L, "LUA/luna.lua") != LUA_OK)
-    {
-        const char* msg = lua_tostring(L, -1);
-        lua_pop(L, 1);
-        printf_s(msg);
-    }
-    lua_close(L);
     getchar();
 }
 

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "LuaParam.h"
+#include "LunaFive.h"
 
 struct lua_State;
 struct luaL_Reg;
@@ -22,6 +23,17 @@ public:
     bool ExecFile(const char* filename, std::string& error);
     bool ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
         std::vector<LuaParam>& retValues, std::string& error);
+
+    template<typename T>
+    void RegisterClass()
+    {
+        Luna<T>::Register(L);
+    }
+    template<typename T>
+    void PushObject(T* obj, const std::string& name, bool gc = false)
+    {
+        Luna<T>::new_global(L, obj, name.c_str(), gc);
+    }
 private:
     void Init();
     void GetError(std::string& error);
