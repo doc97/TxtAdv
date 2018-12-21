@@ -5,10 +5,13 @@ const Luna<LuaGameState>::FunctionType LuaGameState::methods[] =
 {
     { "setStr", &LuaGameState::setStr },
     { "getStr", &LuaGameState::getStr },
+    { "hasStr", &LuaGameState::hasStr },
     { "setFloat", &LuaGameState::setFloat },
     { "getFloat", &LuaGameState::getFloat },
+    { "hasFloat", &LuaGameState::hasFloat },
     { "setInt", &LuaGameState::setInt },
     { "getInt", &LuaGameState::getInt },
+    { "hasInt", &LuaGameState::hasInt },
     {NULL, NULL}
 };
 const Luna<LuaGameState>::PropertyType LuaGameState::properties[] =
@@ -59,6 +62,21 @@ int LuaGameState::GetInt(const std::string& key)
     return m_state->ReadInt(key, 0);
 }
 
+bool LuaGameState::HasStr(const std::string& key)
+{
+    return m_state->HasString(key);
+}
+
+bool LuaGameState::HasFloat(const std::string& key)
+{
+    return m_state->HasFloat(key);
+}
+
+bool LuaGameState::HasInt(const std::string& key)
+{
+    return m_state->HasInt(key);
+}
+
 /*** LUA INTERFACE ***/
 
 int LuaGameState::setStr(lua_State* L)
@@ -76,6 +94,15 @@ int LuaGameState::getStr(lua_State* L)
     const char* key = luaL_checkstring(L, 2);
     const char* val = s->GetStr(key).c_str();
     lua_pushstring(L, val);
+    return 1;
+}
+
+int LuaGameState::hasStr(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    bool exists     = s->HasStr(key);
+    lua_pushboolean(L, (int)exists);
     return 1;
 }
 
@@ -97,6 +124,15 @@ int LuaGameState::getFloat(lua_State* L)
     return 1;
 }
 
+int LuaGameState::hasFloat(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    bool exists     = s->HasFloat(key);
+    lua_pushboolean(L, (int)exists);
+    return 1;
+}
+
 int LuaGameState::setInt(lua_State* L)
 {
     LuaGameState* s = GetObj(L, 1);
@@ -112,6 +148,15 @@ int LuaGameState::getInt(lua_State* L)
     const char* key = luaL_checkstring(L, 2);
     int value       = s->GetInt(key);
     lua_pushinteger(L, (long long)value);
+    return 1;
+}
+
+int LuaGameState::hasInt(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    bool exists     = s->HasInt(key);
+    lua_pushboolean(L, (int)exists);
     return 1;
 }
 
