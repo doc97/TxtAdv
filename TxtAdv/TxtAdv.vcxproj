@@ -162,6 +162,7 @@
     <ClCompile Include="ConsoleIO.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="LuaGameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaResponseHandler.cpp" />
     <ClCompile Include="LuaStoryBranch.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="LuaGameState.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaParam.h" />
     <ClInclude Include="LuaResponseHandler.h" />
