@@ -23,9 +23,9 @@ static const luaL_Reg testlib[] =
 
 TEST_CASE("lua matcher function", "[LuaResponseHandler]")
 {
-    std::shared_ptr<LuaManager> manager = std::make_shared<LuaManager>();
-    LuaResponseHandler trueHandler(manager, "LUA/true.lua");
-    LuaResponseHandler falseHandler(manager, "LUA/false.lua");
+    LuaManager manager;
+    LuaResponseHandler trueHandler(&manager, "LUA/true.lua");
+    LuaResponseHandler falseHandler(&manager, "LUA/false.lua");
     REQUIRE(trueHandler.Matches(""));
     REQUIRE(!falseHandler.Matches(""));
 }
@@ -34,9 +34,9 @@ TEST_CASE("lua action function", "[LuaResponseHandler]")
 {
     luaValue = 0;
     std::string key = "key";
-    std::shared_ptr<LuaManager> manager = std::make_shared<LuaManager>();
-    LuaResponseHandler handler(manager, "LUA/action.lua");
-    manager->RegisterFunc("handle", &luaApply);
+    LuaManager manager;
+    LuaResponseHandler handler(&manager, "LUA/action.lua");
+    manager.RegisterFunc("handle", &luaApply);
 
     SECTION("matching key")
     {
@@ -54,9 +54,9 @@ TEST_CASE("lua action lib function", "[LuaResponseHandler]")
 {
     luaValue = 0;
     std::string key = "key";
-    std::shared_ptr<LuaManager> manager = std::make_shared<LuaManager>();
-    LuaResponseHandler handler(manager, "LUA/actionlib.lua");
-    manager->RegisterLib("test", testlib, 1);
+    LuaManager manager;
+    LuaResponseHandler handler(&manager, "LUA/actionlib.lua");
+    manager.RegisterLib("test", testlib, 1);
 
     SECTION("matching key")
     {

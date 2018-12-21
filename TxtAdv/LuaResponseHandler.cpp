@@ -1,6 +1,6 @@
 #include "LuaResponseHandler.h"
 
-LuaResponseHandler::LuaResponseHandler(std::shared_ptr<LuaManager> manager, const std::string& filename)
+LuaResponseHandler::LuaResponseHandler(LuaManager* manager, const std::string& filename)
     : m_manager(manager), m_filename(filename)
 {
 }
