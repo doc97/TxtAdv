@@ -16,7 +16,8 @@ void LuaResponseHandler::HandleInput(const std::string& input)
         std::string err;
         std::vector<LuaParam> params = { { LuaParam::String, input.c_str() } };
         std::vector<LuaParam> retVal = {};
-        m_manager->ExecFunc(m_filename.c_str(), "action", params, retVal, err);
+        if (!m_manager->ExecFunc(m_filename.c_str(), "action", params, retVal, err))
+            throw std::runtime_error(err);
     }
 }
 
@@ -26,6 +27,6 @@ bool LuaResponseHandler::Matches(const std::string& input)
     std::vector<LuaParam> params = { { LuaParam::String, input.c_str() } };
     std::vector<LuaParam> retVal = { { LuaParam::Bool, false } };
     if (!m_manager->ExecFunc(m_filename.c_str(), "matches", params, retVal, err))
-        return false;
+        throw std::runtime_error(err);
     return retVal[0].data.b;
 }

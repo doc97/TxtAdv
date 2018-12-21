@@ -62,8 +62,6 @@ void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[], size_t n
     lua_setglobal(L, libname);
 }
 
-
-
 bool LuaManager::ExecFile(const char* filename, std::string& error)
 {
     if (luaL_dofile(L, filename) != LUA_OK)
