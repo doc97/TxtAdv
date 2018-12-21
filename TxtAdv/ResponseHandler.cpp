@@ -17,7 +17,7 @@ void ResponseHandler::HandleInput(const std::string& input)
         m_func(match);
 }
 
-bool ResponseHandler::Matches(const std::string& input) const
+bool ResponseHandler::Matches(const std::string& input)
 {
     return m_matcher(input).IsMatch();
 }
