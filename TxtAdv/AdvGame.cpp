@@ -16,6 +16,7 @@ void AdvGame::Init()
 {
     m_prompt.SetPrompt("> ");
     InitStory();
+    m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
 }
 
 void AdvGame::InitStory()
@@ -107,9 +108,6 @@ void AdvGame::InitPointTwo()
 
 void AdvGame::Update()
 {
-    m_response.ClearHandlers();
-    m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
-
     m_io->WriteLine(m_branch.GetHead()->GetText());
     std::string input = m_prompt.PromptInput();
     m_response.HandleInput(input);
@@ -118,11 +116,15 @@ void AdvGame::Update()
 void AdvGame::StoryNext()
 {
     m_branch.Next();
+    m_response.ClearHandlers();
+    m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
 }
 
 void AdvGame::StoryPrev()
 {
     m_branch.Prev();
+    m_response.ClearHandlers();
+    m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
 }
 
 GameState& AdvGame::GetState()

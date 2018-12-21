@@ -14,7 +14,7 @@ void runExampleLua()
     if (!manager.ExecFunc("LUA/functions.lua", "funcB", params, retVal, err))
         std::cout << err << std::endl;
 
-    getchar();
+    std::cin.get();
 }
 
 void runExampleGame()
@@ -35,7 +35,7 @@ void runExampleLuna()
     if (!manager.ExecFile("LUA/luna.lua", err))
         std::cout << err << std::endl;
 
-    getchar();
+    std::cin.get();
 }
 
 int main()
