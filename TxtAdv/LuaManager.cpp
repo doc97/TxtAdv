@@ -50,25 +50,35 @@ void LuaManager::GetError(std::string& error)
         error.assign(msg);
 }
 
-void LuaManager::Register(const char* funcname, lua_CFunction func)
+void LuaManager::RegisterFunc(const char* funcname, lua_CFunction func)
 {
     lua_register(L, funcname, func);
 }
 
-void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[])
+void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[], size_t nlib)
 {
-    luaL_newlib(L, lib);
+    lua_createtable(L, 0, nlib);
+    luaL_setfuncs(L, lib, 0);
     lua_setglobal(L, libname);
 }
 
-bool LuaManager::Exec(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
-    std::vector<LuaParam>& retValues, std::string& error)
+
+
+bool LuaManager::ExecFile(const char* filename, std::string& error)
 {
     if (luaL_dofile(L, filename) != LUA_OK)
     {
         GetError(error);
         return false;
     }
+    return true;
+}
+
+bool LuaManager::ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
+    std::vector<LuaParam>& retValues, std::string& error)
+{
+    if (!ExecFile(filename, error))
+        return false;
 
     // Push function onto the stack
     lua_getglobal(L, funcname);

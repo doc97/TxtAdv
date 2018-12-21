@@ -36,7 +36,7 @@ TEST_CASE("lua action function", "[LuaResponseHandler]")
     std::string key = "key";
     std::shared_ptr<LuaManager> manager = std::make_shared<LuaManager>();
     LuaResponseHandler handler(manager, "LUA/action.lua");
-    manager->Register("handle", &luaApply);
+    manager->RegisterFunc("handle", &luaApply);
 
     SECTION("matching key")
     {
@@ -56,7 +56,7 @@ TEST_CASE("lua action lib function", "[LuaResponseHandler]")
     std::string key = "key";
     std::shared_ptr<LuaManager> manager = std::make_shared<LuaManager>();
     LuaResponseHandler handler(manager, "LUA/actionlib.lua");
-    manager->RegisterLib("test", testlib);
+    manager->RegisterLib("test", testlib, 1);
 
     SECTION("matching key")
     {
