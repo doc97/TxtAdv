@@ -6,9 +6,10 @@
 class LuaStoryBranch
 {
 public:
-    LuaStoryBranch();
+    LuaStoryBranch(StoryBranch* branch);
     ~LuaStoryBranch();
-    void hello();
+    void Next();
+    void Prev();
 
     // Lua interface
     static const char* className;
@@ -19,6 +20,11 @@ public:
     bool isPrecious = false;
 
     LuaStoryBranch(lua_State* L);
-    int hello(lua_State* L);
+    int next(lua_State* L);
+    int prev(lua_State* L);
+private:
+    StoryBranch* m_branch = nullptr;
+
+    static LuaStoryBranch* GetObj(lua_State* L, int index);
 };
 

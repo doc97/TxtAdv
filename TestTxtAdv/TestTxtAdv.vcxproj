@@ -136,6 +136,7 @@
     <ClCompile Include="TestLuaGameState.cpp" />
     <ClCompile Include="TestLuaResponseHandler.cpp" />
     <ClCompile Include="TestLambdaResponseHandler.cpp" />
+    <ClCompile Include="TestLuaStoryBranch.cpp" />
     <ClCompile Include="TestPrompt.cpp" />
     <ClCompile Include="TestMain.cpp" />
     <ClCompile Include="TestResponseMatch.cpp" />

@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "LuaGameState.h"
 
-TEST_CASE("configuration", "[LuaGameState]")
+TEST_CASE("LuaGameState configuration", "[LuaGameState]")
 {
     REQUIRE(LuaGameState::className == "LuaGameState");
     GameState state;
