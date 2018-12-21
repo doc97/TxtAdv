@@ -5,6 +5,7 @@
 #include "LambdaResponseHandler.h"
 #include "LuaResponseHandler.h"
 #include "LuaGameState.h"
+#include "LuaStoryBranch.h"
 
 AdvGame::AdvGame(IO* io)
     : m_io(io), m_prompt(m_io)
@@ -26,7 +27,9 @@ void AdvGame::Init()
 void AdvGame::InitLua()
 {
     m_manager.RegisterClass<LuaGameState>();
+    m_manager.RegisterClass<LuaStoryBranch>();
     m_manager.PushObject(new LuaGameState(&m_state), "state", true);
+    m_manager.PushObject(new LuaStoryBranch(&m_branch), "story", true);
 }
 
 void AdvGame::InitMisc()
