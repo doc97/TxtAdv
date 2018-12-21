@@ -32,8 +32,8 @@ LuaManager& LuaManager::operator=(const LuaManager& other)
 
 void LuaManager::Reset()
 {
-    lua_close(L);
-    Init();
+    // Clear stack
+    lua_settop(L, 0);
 }
 
 void LuaManager::Init()
