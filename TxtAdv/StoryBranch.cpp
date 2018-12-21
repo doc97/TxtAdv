@@ -1,4 +1,5 @@
 #include "StoryBranch.h"
+#include "LambdaResponseHandler.h"
 
 StoryBranch::StoryBranch()
 {

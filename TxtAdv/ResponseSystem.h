@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "ResponseHandler.h"
+#include "LambdaResponseHandler.h"
 
 class ResponseSystem
 {
@@ -12,7 +12,7 @@ public:
 
     void AddHandler(std::shared_ptr<InputHandler> handler);
     void AddHandlers(const std::vector<std::shared_ptr<InputHandler>>& handlers);
-    void AddResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
+    void AddLambdaResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
         const std::function<void(const ResponseMatch&)>& func);
     void RemoveHandler(const std::string& key);
     void ClearHandlers();

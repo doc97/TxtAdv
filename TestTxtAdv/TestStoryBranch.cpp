@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "StoryBranch.h"
+#include "LambdaResponseHandler.h"
 
 TEST_CASE("get head", "[StoryBranch]")
 {
@@ -105,7 +106,7 @@ TEST_CASE("add points", "[StoryBranch]")
     SECTION("add point by text and handlers")
     {
         std::vector<std::shared_ptr<InputHandler>> handlers1;
-        handlers1.emplace_back(std::make_shared<ResponseHandler>(
+        handlers1.emplace_back(std::make_shared<LambdaResponseHandler>(
             [](const std::string& input) { return true; },
             [](const ResponseMatch& match) {}
         ));
@@ -118,7 +119,7 @@ TEST_CASE("add points", "[StoryBranch]")
         SECTION("add another point")
         {
             std::vector<std::shared_ptr<InputHandler>> handlers2;
-            handlers2.emplace_back(std::make_shared<ResponseHandler>(
+            handlers2.emplace_back(std::make_shared<LambdaResponseHandler>(
                 [](const std::string& input) { return false; },
                 [](const ResponseMatch& match) {}
             ));
@@ -137,7 +138,7 @@ TEST_CASE("add points", "[StoryBranch]")
         expr.emplace_back([]() { return "A"; });
         expr.emplace_back([]() { return "B"; });
         std::vector<std::shared_ptr<InputHandler>> handlers;
-        handlers.emplace_back(std::make_shared<ResponseHandler>(
+        handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
             [](const std::string& input) { return false; },
             [](const ResponseMatch& match) {}
         ));

@@ -134,7 +134,7 @@
     <ClCompile Include="ExampleTests.cpp" />
     <ClCompile Include="TestGameState.cpp" />
     <ClCompile Include="TestLuaResponseHandler.cpp" />
-    <ClCompile Include="TestResponseHandler.cpp" />
+    <ClCompile Include="TestLambdaResponseHandler.cpp" />
     <ClCompile Include="TestPrompt.cpp" />
     <ClCompile Include="TestMain.cpp" />
     <ClCompile Include="TestResponseMatch.cpp" />

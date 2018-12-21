@@ -20,10 +20,10 @@ void ResponseSystem::AddHandlers(const std::vector<std::shared_ptr<InputHandler>
         AddHandler(ptr);
 }
 
-void ResponseSystem::AddResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
+void ResponseSystem::AddLambdaResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
     const std::function<void(const ResponseMatch& match)>& func)
 {
-    m_handlers.push_back(std::make_unique<ResponseHandler>(matcher, func));
+    m_handlers.push_back(std::make_unique<LambdaResponseHandler>(matcher, func));
 }
 
 void ResponseSystem::RemoveHandler(const std::string& key)

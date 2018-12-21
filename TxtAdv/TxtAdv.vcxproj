@@ -166,7 +166,7 @@
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaResponseHandler.cpp" />
     <ClCompile Include="LuaStoryBranch.cpp" />
-    <ClCompile Include="ResponseHandler.cpp" />
+    <ClCompile Include="LambdaResponseHandler.cpp" />
     <ClCompile Include="Prompt.cpp" />
     <ClCompile Include="ResponseMatch.cpp" />
     <ClCompile Include="ResponseSystem.cpp" />
@@ -185,7 +185,7 @@
     <ClInclude Include="LuaResponseHandler.h" />
     <ClInclude Include="LuaStoryBranch.h" />
     <ClInclude Include="LunaFive.h" />
-    <ClInclude Include="ResponseHandler.h" />
+    <ClInclude Include="LambdaResponseHandler.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Prompt.h" />
     <ClInclude Include="ResponseMatch.h" />

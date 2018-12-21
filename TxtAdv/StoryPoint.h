@@ -1,8 +1,9 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <vector>
-#include "ResponseHandler.h"
+#include "InputHandler.h"
 
 class StoryPoint
 {

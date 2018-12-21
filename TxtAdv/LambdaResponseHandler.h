@@ -5,12 +5,12 @@
 #include "InputHandler.h"
 #include "ResponseMatch.h"
 
-class ResponseHandler : public InputHandler
+class LambdaResponseHandler : public InputHandler
 {
 public:
-    ResponseHandler(const std::function<ResponseMatch(const std::string&)>& matcher,
+    LambdaResponseHandler(const std::function<ResponseMatch(const std::string&)>& matcher,
         const std::function<void(const ResponseMatch&)>& func);
-    ~ResponseHandler();
+    ~LambdaResponseHandler();
 
     void HandleInput(const std::string& input) override;
     bool Matches(const std::string&) override;

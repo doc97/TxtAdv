@@ -1,26 +1,26 @@
 #include "catch.hpp"
 #include "ResponseSystem.h"
 
-TEST_CASE("ResponseHandlers can be added", "[ResponseSystem]")
+TEST_CASE("LambdaResponseHandlers can be added", "[ResponseSystem]")
 {
     std::string key = "a";
     ResponseSystem sys;
 
-    SECTION("add ResponseHandler by parameters")
+    SECTION("add LambdaResponseHandler by parameters")
     {
-        sys.AddResponseHandler(
+        sys.AddLambdaResponseHandler(
             [&key](const std::string& input) { return ResponseMatch(input == key); },
             [](const ResponseMatch& match) {}
         );
         REQUIRE(sys.HandlerCount() == 1);
     }
-    SECTION("add Handler by pointer")
+    SECTION("add LambdaResponseHandler by pointer")
     {
-        ResponseHandler handler(
+        LambdaResponseHandler handler(
             [&key](const std::string& input) { return ResponseMatch(input == key); },
             [](const ResponseMatch& match) {}
         );
-        sys.AddHandler(std::make_shared<ResponseHandler>(handler));
+        sys.AddHandler(std::make_shared<LambdaResponseHandler>(handler));
         REQUIRE(sys.HandlerCount() == 1);
     }
 }
@@ -37,11 +37,11 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
     }
     SECTION("remove from non-empty ResponseSystem")
     {
-        sys.AddResponseHandler(
+        sys.AddLambdaResponseHandler(
             [&key](const std::string& input) { return input == key; },
             [](const ResponseMatch& match) {}
         );
-        sys.AddResponseHandler(
+        sys.AddLambdaResponseHandler(
             [&key](const std::string& input) { return input != key; },
             [](const ResponseMatch& match) {}
         );
@@ -56,11 +56,11 @@ TEST_CASE("Remove all ResponseHandlers")
 
     sys.ClearHandlers();
     REQUIRE(sys.HandlerCount() == 0);
-    sys.AddResponseHandler(
+    sys.AddLambdaResponseHandler(
         [](const std::string& input) { return input == "a"; },
         [](const ResponseMatch& match) {}
     );
-    sys.AddResponseHandler(
+    sys.AddLambdaResponseHandler(
         [](const std::string& input) { return input == "b"; },
         [](const ResponseMatch& match) {}
     );

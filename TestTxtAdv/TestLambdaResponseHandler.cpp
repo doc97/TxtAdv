@@ -1,26 +1,26 @@
 #include "catch.hpp"
-#include "ResponseHandler.h"
+#include "LambdaResponseHandler.h"
 #include <string>
 
 typedef std::function<ResponseMatch(const std::string&)> MatchFunc;
 
-TEST_CASE("matcher function", "[ResponseHandler]")
+TEST_CASE("matcher function", "[LambdaResponseHandler]")
 {
-    ResponseHandler trueHandler([](const std::string& input) { return ResponseMatch(true); },
+    LambdaResponseHandler trueHandler([](const std::string& input) { return ResponseMatch(true); },
         [](const ResponseMatch& match) {});
-    ResponseHandler falseHandler([](const std::string& input) { return ResponseMatch(false); },
+    LambdaResponseHandler falseHandler([](const std::string& input) { return ResponseMatch(false); },
         [](const ResponseMatch& match) {});
     REQUIRE(trueHandler.Matches(""));
     REQUIRE(!falseHandler.Matches(""));
 }
 
-TEST_CASE("action function", "[ResponseHandler]")
+TEST_CASE("action function", "[LambdaResponseHandler]")
 {
     std::string key = "key";
     bool isHandled = false;
     MatchFunc matcher = [&key](const std::string& input) { return input == key; };
     std::function<void(const ResponseMatch&)> action = [&isHandled](const ResponseMatch& match) { isHandled = true; };
-    ResponseHandler handler(matcher, action);
+    LambdaResponseHandler handler(matcher, action);
 
     SECTION("matching key")
     {
