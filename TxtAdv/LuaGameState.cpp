@@ -1,9 +1,14 @@
 #include "LuaGameState.h"
 
-const char* LuaGameState::className = "LuaStoryBranch";
+const char* LuaGameState::className = "LuaGameState";
 const Luna<LuaGameState>::FunctionType LuaGameState::methods[] =
 {
     { "setStr", &LuaGameState::setStr },
+    { "getStr", &LuaGameState::getStr },
+    { "setFloat", &LuaGameState::setFloat },
+    { "getFloat", &LuaGameState::getFloat },
+    { "setInt", &LuaGameState::setInt },
+    { "getInt", &LuaGameState::getInt },
     {NULL, NULL}
 };
 const Luna<LuaGameState>::PropertyType LuaGameState::properties[] =
@@ -24,18 +29,90 @@ LuaGameState::~LuaGameState()
 {
 }
 
-void LuaGameState::setStr(const std::string& key, const std::string& value)
+void LuaGameState::SetStr(const std::string& key, const std::string& value)
 {
     m_state->SetString(key, value);
 }
+
+std::string LuaGameState::GetStr(const std::string& key)
+{
+    return m_state->ReadString(key, "");
+}
+
+void LuaGameState::SetFloat(const std::string& key, float value)
+{
+    m_state->SetFloat(key, value);
+}
+
+float LuaGameState::GetFloat(const std::string& key)
+{
+    return m_state->ReadFloat(key, 0.f);
+}
+
+void LuaGameState::SetInt(const std::string& key, int value)
+{
+    m_state->SetInt(key, value);
+}
+
+int LuaGameState::GetInt(const std::string& key)
+{
+    return m_state->ReadInt(key, 0);
+}
+
+/*** LUA INTERFACE ***/
 
 int LuaGameState::setStr(lua_State* L)
 {
     LuaGameState* s = GetObj(L, 1);
     const char* key = luaL_checkstring(L, 2);
     const char* val = luaL_checkstring(L, 3);
-    s->setStr(key, val);
+    s->SetStr(key, val);
     return 0;
+}
+
+int LuaGameState::getStr(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    const char* val = s->GetStr(key).c_str();
+    lua_pushstring(L, val);
+    return 1;
+}
+
+int LuaGameState::setFloat(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    double value    = luaL_checknumber(L, 3);
+    s->SetFloat(key, (float)value);
+    return 0;
+}
+
+int LuaGameState::getFloat(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    float value    = s->GetFloat(key);
+    lua_pushnumber(L, (double)value);
+    return 1;
+}
+
+int LuaGameState::setInt(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    long long value = luaL_checkinteger(L, 3);
+    s->SetInt(key, (int)value);
+    return 0;
+}
+
+int LuaGameState::getInt(lua_State* L)
+{
+    LuaGameState* s = GetObj(L, 1);
+    const char* key = luaL_checkstring(L, 2);
+    int value       = s->GetInt(key);
+    lua_pushinteger(L, (long long)value);
+    return 1;
 }
 
 LuaGameState* LuaGameState::GetObj(lua_State* L, int index)
