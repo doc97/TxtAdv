@@ -12,9 +12,6 @@ public:
     ~StoryBranch();
 
     void AddPoint(const StoryPoint& point);
-    void AddPoint(const std::string& text);
-    void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr);
-    void AddPoint(const std::string& text, const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
     void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
         const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
     void Next();
@@ -32,6 +29,6 @@ private:
     std::vector<std::shared_ptr<StoryPoint>> m_points;
     std::shared_ptr<StoryBranch> m_parent;
     std::string m_name;
-    unsigned int m_head;
+    unsigned int m_head = 0;
 };
 

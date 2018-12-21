@@ -52,7 +52,7 @@ void AdvGame::InitPointOne()
         [](const std::string& input) { return input == "next"; },
         [this](const ResponseMatch& match) { this->StoryNext(); }
     ));
-    m_branch.AddPoint("Welcome to TxtAdv!", handlers);
+    m_branch.AddPoint("Welcome to TxtAdv!", {}, handlers);
 }
 
 void AdvGame::InitPointTwo()
