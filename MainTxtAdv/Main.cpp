@@ -40,5 +40,5 @@ void runExampleLuna()
 
 int main()
 {
-    runExampleLuna();
+    runExampleGame();
 }

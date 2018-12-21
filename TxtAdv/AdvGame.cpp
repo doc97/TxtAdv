@@ -2,6 +2,9 @@
 #include <iostream>
 #include <regex>
 #include <sstream>
+#include "ResponseHandler.h"
+#include "LuaResponseHandler.h"
+#include "LuaGameState.h"
 
 AdvGame::AdvGame(IO* io)
     : m_io(io), m_prompt(m_io)
@@ -14,15 +17,28 @@ AdvGame::~AdvGame()
 
 void AdvGame::Init()
 {
-    m_prompt.SetPrompt("> ");
+    InitLua();
+    InitMisc();
     InitStory();
     m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
+}
+
+void AdvGame::InitLua()
+{
+    m_manager.RegisterClass<LuaGameState>();
+    m_manager.PushObject(new LuaGameState(&m_state), "state", true);
+}
+
+void AdvGame::InitMisc()
+{
+    m_prompt.SetPrompt("> ");
 }
 
 void AdvGame::InitStory()
 {
     InitPointOne();
     InitPointTwo();
+    InitPointThree();
 }
 
 void AdvGame::InitPointOne()
@@ -33,7 +49,7 @@ void AdvGame::InitPointOne()
         [this](const ResponseMatch& match) { this->Exit(); }
     ));
     handlers.emplace_back(std::make_shared<ResponseHandler>(
-        [](const std::string& input) { return input == "start"; },
+        [](const std::string& input) { return input == "next"; },
         [this](const ResponseMatch& match) { this->StoryNext(); }
     ));
     m_branch.AddPoint("Welcome to TxtAdv!", handlers);
@@ -45,6 +61,10 @@ void AdvGame::InitPointTwo()
     handlers.emplace_back(std::make_shared<ResponseHandler>(
         [](const std::string& input) { return ResponseMatch(input == "exit"); },
         [this](const ResponseMatch& match) { this->Exit(); }
+    ));
+    handlers.emplace_back(std::make_shared<ResponseHandler>(
+        [](const std::string& input) { return input == "next"; },
+        [this](const ResponseMatch& match) { this->StoryNext(); }
     ));
     handlers.emplace_back(std::make_shared<ResponseHandler>(
         [](const std::string& input)
@@ -104,6 +124,26 @@ void AdvGame::InitPointTwo()
         return ss.str();
     });
     m_branch.AddPoint("Current state:\n$0", markup, handlers);
+}
+
+void AdvGame::InitPointThree()
+{
+    std::vector<std::shared_ptr<InputHandler>> handlers;
+    // Showing that combining response handlers work
+    handlers.emplace_back(std::make_shared<ResponseHandler>(
+        [](const std::string& input) { return ResponseMatch(input == "exit"); },
+        [this](const ResponseMatch& match) { this->Exit(); }
+    ));
+    handlers.emplace_back(std::make_shared<LuaResponseHandler>(
+        &m_manager,
+        "LUA/3.lua"
+    ));
+    std::vector<std::function<std::string()>> markup;
+    markup.emplace_back([this]()
+    {
+        return this->GetState().ReadString("text", "<Default text>");
+    });
+    m_branch.AddPoint("$0", markup, handlers);
 }
 
 void AdvGame::Update()

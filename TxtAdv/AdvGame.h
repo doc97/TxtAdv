@@ -6,6 +6,7 @@
 #include "ResponseSystem.h"
 #include "StoryBranch.h"
 #include "GameState.h"
+#include "LuaManager.h"
 
 class AdvGame : public Game
 {
@@ -26,9 +27,13 @@ private:
     ResponseSystem m_response;
     StoryBranch m_branch;
     GameState m_state;
+    LuaManager m_manager;
 
+    void InitLua();
+    void InitMisc();
     void InitStory();
     void InitPointOne();
     void InitPointTwo();
+    void InitPointThree();
 };
 
