@@ -1,11 +1,10 @@
 #pragma once
 
 #include <functional>
-#include <string>
-#include "InputHandler.h"
+#include "ResponseHandler.h"
 #include "ResponseMatch.h"
 
-class LambdaResponseHandler : public InputHandler
+class LambdaResponseHandler : public ResponseHandler
 {
 public:
     LambdaResponseHandler(const std::function<ResponseMatch(const std::string&)>& matcher,

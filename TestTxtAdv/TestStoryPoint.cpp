@@ -57,7 +57,7 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
 
 TEST_CASE("get/set handlers", "[StoryPoint]")
 {
-    std::vector<std::shared_ptr<InputHandler>> handlers;
+    std::vector<std::shared_ptr<ResponseHandler>> handlers;
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return true; },
         [](const ResponseMatch& match) {}
@@ -79,7 +79,7 @@ TEST_CASE("notify handlers", "[StoryPoint]")
 {
     unsigned int flag = 0;
     std::string message = "msg";
-    std::vector<std::shared_ptr<InputHandler>> handlers;
+    std::vector<std::shared_ptr<ResponseHandler>> handlers;
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return true; },
         [&flag](const ResponseMatch& match) { ++flag; }

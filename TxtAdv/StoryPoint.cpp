@@ -19,7 +19,7 @@ void StoryPoint::SetMarkup(const std::string& text, const std::vector<std::funct
     m_expressions = expr;
 }
 
-void StoryPoint::SetHandlers(const std::vector<std::shared_ptr<InputHandler>>& handlers)
+void StoryPoint::SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
     m_handlers = handlers;
 }
@@ -64,7 +64,7 @@ size_t StoryPoint::GetHandlerCount() const
     return m_handlers.size();
 }
 
-std::vector<std::shared_ptr<InputHandler>> StoryPoint::GetHandlers() const
+std::vector<std::shared_ptr<ResponseHandler>> StoryPoint::GetHandlers() const
 {
     return m_handlers;
 }

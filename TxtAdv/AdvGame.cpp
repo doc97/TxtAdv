@@ -43,7 +43,7 @@ void AdvGame::InitStory()
 
 void AdvGame::InitPointOne()
 {
-    std::vector<std::shared_ptr<InputHandler>> handlers;
+    std::vector<std::shared_ptr<ResponseHandler>> handlers;
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return input == "exit"; },
         [this](const ResponseMatch& match) { this->Exit(); }
@@ -57,7 +57,7 @@ void AdvGame::InitPointOne()
 
 void AdvGame::InitPointTwo()
 {
-    std::vector<std::shared_ptr<InputHandler>> handlers;
+    std::vector<std::shared_ptr<ResponseHandler>> handlers;
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return ResponseMatch(input == "exit"); },
         [this](const ResponseMatch& match) { this->Exit(); }
@@ -128,7 +128,7 @@ void AdvGame::InitPointTwo()
 
 void AdvGame::InitPointThree()
 {
-    std::vector<std::shared_ptr<InputHandler>> handlers;
+    std::vector<std::shared_ptr<ResponseHandler>> handlers;
     // Showing that combining response handlers work
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return ResponseMatch(input == "exit"); },

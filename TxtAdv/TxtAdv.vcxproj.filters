@@ -67,9 +67,6 @@
     <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,6 +104,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LambdaResponseHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResponseHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

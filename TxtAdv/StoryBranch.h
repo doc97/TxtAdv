@@ -14,9 +14,9 @@ public:
     void AddPoint(const StoryPoint& point);
     void AddPoint(const std::string& text);
     void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr);
-    void AddPoint(const std::string& text, const std::vector<std::shared_ptr<InputHandler>>& handlers);
+    void AddPoint(const std::string& text, const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
     void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
-        const std::vector<std::shared_ptr<InputHandler>>& handlers);
+        const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
     void Next();
     void Prev();
     void SetCurrentPoint(unsigned int index);

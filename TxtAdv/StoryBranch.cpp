@@ -33,7 +33,7 @@ void StoryBranch::AddPoint(const std::string& text, const std::vector<std::funct
     AddPoint(point);
 }
 
-void StoryBranch::AddPoint(const std::string& text, const std::vector<std::shared_ptr<InputHandler>>& handlers)
+void StoryBranch::AddPoint(const std::string& text, const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
     StoryPoint point;
     point.SetText(text);
@@ -42,7 +42,7 @@ void StoryBranch::AddPoint(const std::string& text, const std::vector<std::share
 }
 
 void StoryBranch::AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
-    const std::vector<std::shared_ptr<InputHandler>>& handlers)
+    const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
     StoryPoint point;
     point.SetMarkup(text, expr);

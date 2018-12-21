@@ -1,10 +1,10 @@
 #pragma once
 
 #include <string>
-#include "InputHandler.h"
+#include "ResponseHandler.h"
 #include "LuaManager.h"
 
-class LuaResponseHandler : public InputHandler
+class LuaResponseHandler : public ResponseHandler
 {
 public:
     LuaResponseHandler(LuaManager* manager, const std::string& filename);

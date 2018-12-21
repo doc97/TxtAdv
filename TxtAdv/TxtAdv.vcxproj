@@ -178,7 +178,7 @@
     <ClInclude Include="ConsoleIO.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="ResponseHandler.h" />
     <ClInclude Include="LuaGameState.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaParam.h" />

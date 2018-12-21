@@ -9,14 +9,14 @@ ResponseSystem::~ResponseSystem()
 {
 }
 
-void ResponseSystem::AddHandler(std::shared_ptr<InputHandler> handler)
+void ResponseSystem::AddHandler(std::shared_ptr<ResponseHandler> handler)
 {
     m_handlers.emplace_back(std::move(handler));
 }
 
-void ResponseSystem::AddHandlers(const std::vector<std::shared_ptr<InputHandler>>& handlers)
+void ResponseSystem::AddHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
-    for (const std::shared_ptr<InputHandler>& ptr : handlers)
+    for (const std::shared_ptr<ResponseHandler>& ptr : handlers)
         AddHandler(ptr);
 }
 
@@ -32,7 +32,7 @@ void ResponseSystem::RemoveHandler(const std::string& key)
         std::remove_if(
             m_handlers.begin(),
             m_handlers.end(),
-            [&](const std::shared_ptr<InputHandler>& p) { return p->Matches(key); }),
+            [&](const std::shared_ptr<ResponseHandler>& p) { return p->Matches(key); }),
         m_handlers.end());
 }
 

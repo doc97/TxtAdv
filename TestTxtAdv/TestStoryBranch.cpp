@@ -105,7 +105,7 @@ TEST_CASE("add points", "[StoryBranch]")
     }
     SECTION("add point by text and handlers")
     {
-        std::vector<std::shared_ptr<InputHandler>> handlers1;
+        std::vector<std::shared_ptr<ResponseHandler>> handlers1;
         handlers1.emplace_back(std::make_shared<LambdaResponseHandler>(
             [](const std::string& input) { return true; },
             [](const ResponseMatch& match) {}
@@ -118,7 +118,7 @@ TEST_CASE("add points", "[StoryBranch]")
 
         SECTION("add another point")
         {
-            std::vector<std::shared_ptr<InputHandler>> handlers2;
+            std::vector<std::shared_ptr<ResponseHandler>> handlers2;
             handlers2.emplace_back(std::make_shared<LambdaResponseHandler>(
                 [](const std::string& input) { return false; },
                 [](const ResponseMatch& match) {}
@@ -137,7 +137,7 @@ TEST_CASE("add points", "[StoryBranch]")
         std::vector<std::function<std::string()>> expr;
         expr.emplace_back([]() { return "A"; });
         expr.emplace_back([]() { return "B"; });
-        std::vector<std::shared_ptr<InputHandler>> handlers;
+        std::vector<std::shared_ptr<ResponseHandler>> handlers;
         handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
             [](const std::string& input) { return false; },
             [](const ResponseMatch& match) {}
