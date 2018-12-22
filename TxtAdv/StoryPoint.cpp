@@ -1,3 +1,8 @@
+/**********************************************************
+* License: The MIT License
+* https://www.github.com/doc97/TxtAdv/blob/master/LICENSE
+**********************************************************/
+
 #include "StoryPoint.h"
 
 namespace txt

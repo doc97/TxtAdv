@@ -1,3 +1,10 @@
+/*
+Source: http://lua-users.org/wiki/LunaFive 20.12.2018
+Edited: Spacing, indentation, includes by Daniel Riissanen 20.12.2018
+Edited: Combine with some of Lunar's code: http://lua-users.org/wiki/CppBindingWithLunar 21.12.2018
+        Modify and customize functions
+*/
+
 #pragma once
 
 #ifdef __cplusplus
@@ -9,13 +16,6 @@
 #endif
 
 #include <cstring> // For strlen
-
-/*
-Source: http://lua-users.org/wiki/LunaFive 20.12.2018
-Edited: Spacing, indentation, includes by Daniel Riissanen 20.12.2018
-Edited: Combine with some of Lunar's code: http://lua-users.org/wiki/CppBindingWithLunar 21.12.2018
-        Modify and customize functions
-*/
 
 template<class T>
 class Luna

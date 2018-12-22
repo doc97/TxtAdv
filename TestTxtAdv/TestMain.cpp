@@ -1,3 +1,8 @@
+/**********************************************************
+* License: The MIT License
+* https://www.github.com/doc97/TxtAdv/blob/master/LICENSE
+**********************************************************/
+
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 #include <iostream>
