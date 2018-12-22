@@ -151,23 +151,26 @@ void AdvGame::InitPointThree()
 
 void AdvGame::Update()
 {
-    m_io->WriteLine(m_branch.GetHead()->GetText());
+    const std::shared_ptr<StoryPoint> head = m_branch.GetHead();
+    m_io->WriteLine(head->GetText());
     std::string input = m_prompt.PromptInput();
     m_response.HandleInput(input);
+
+    if (head != m_branch.GetHead())
+    {
+        m_response.ClearHandlers();
+        m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
+    }
 }
 
 void AdvGame::StoryNext()
 {
     m_branch.Next();
-    m_response.ClearHandlers();
-    m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
 }
 
 void AdvGame::StoryPrev()
 {
     m_branch.Prev();
-    m_response.ClearHandlers();
-    m_response.AddHandlers(m_branch.GetHead()->GetHandlers());
 }
 
 GameState& AdvGame::GetState()
