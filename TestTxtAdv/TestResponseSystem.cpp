@@ -1,6 +1,9 @@
 #include "catch.hpp"
 #include "ResponseSystem.h"
 
+namespace txt
+{
+
 TEST_CASE("LambdaResponseHandlers can be added", "[ResponseSystem]")
 {
     std::string key = "a";
@@ -68,3 +71,5 @@ TEST_CASE("Remove all ResponseHandlers")
     sys.ClearHandlers();
     REQUIRE(sys.HandlerCount() == 0);
 }
+
+} // namespace txt

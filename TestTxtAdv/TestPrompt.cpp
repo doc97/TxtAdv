@@ -3,6 +3,9 @@
 #include "IO.h"
 #include <sstream>
 
+namespace txt
+{
+
 class TestIO : public IO
 {
 public:
@@ -46,3 +49,5 @@ TEST_CASE("Prompt")
         REQUIRE(io.m_output == "$ ");
     }
 }
+
+} // namespace txt

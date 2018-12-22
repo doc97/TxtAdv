@@ -2,6 +2,9 @@
 #include "StoryBranch.h"
 #include "LambdaResponseHandler.h"
 
+namespace txt
+{
+
 TEST_CASE("get head", "[StoryBranch]")
 {
     StoryBranch branch;
@@ -213,3 +216,5 @@ TEST_CASE("branch name", "[StoryBranch]")
         REQUIRE(branch.GetName() == "a");
     }
 }
+
+} // namespace txt

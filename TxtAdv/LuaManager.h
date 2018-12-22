@@ -5,9 +5,18 @@
 #include "LuaParam.h"
 #include "LunaFive.h"
 
-struct lua_State;
-struct luaL_Reg;
-typedef int (*lua_CFunction) (lua_State *L);
+#ifdef __cplusplus
+#include <lua.hpp>
+#else
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+#endif
+
+namespace txt
+{
+
+typedef int(*lua_CFunction) (lua_State *L);
 
 class LuaManager
 {
@@ -43,3 +52,4 @@ private:
     lua_State* L;
 };
 
+} // namespace txt

@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+namespace txt
+{
+
 class ResponseMatch
 {
 public:
@@ -18,3 +21,4 @@ private:
     std::vector<std::string> m_captures;
 };
 
+} // namespace txt

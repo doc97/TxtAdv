@@ -7,6 +7,9 @@
 #include "LuaGameState.h"
 #include "LuaStoryBranch.h"
 
+namespace txt
+{
+
 AdvGame::AdvGame(IO* io)
     : m_io(io), m_prompt(m_io)
 {
@@ -177,3 +180,5 @@ IO* AdvGame::GetIO() const
 {
     return m_io;
 }
+
+} // namespace txt

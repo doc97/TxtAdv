@@ -3,6 +3,9 @@
 #include <string>
 #include "IO.h"
 
+namespace txt
+{
+
 class Prompt
 {
 public:
@@ -17,3 +20,4 @@ private:
     std::string m_prompt;
 };
 
+} // namespace txt

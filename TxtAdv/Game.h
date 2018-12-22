@@ -1,4 +1,8 @@
 #pragma once
+
+namespace txt
+{
+
 class Game
 {
 public:
@@ -15,3 +19,5 @@ protected:
 private:
     bool m_isRunning;
 };
+
+} // namespace txt

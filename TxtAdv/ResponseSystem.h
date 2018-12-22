@@ -4,6 +4,9 @@
 #include <vector>
 #include "LambdaResponseHandler.h"
 
+namespace txt
+{
+
 class ResponseSystem
 {
 public:
@@ -22,3 +25,4 @@ private:
     std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
 };
 
+} // namespace txt

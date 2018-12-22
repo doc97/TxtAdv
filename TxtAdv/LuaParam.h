@@ -1,5 +1,8 @@
 #pragma once
 
+namespace txt
+{
+
 struct LuaParam
 {
     enum DataType { Bool = 0, Int, Double, String } type;
@@ -17,3 +20,5 @@ struct LuaParam
         Data(const char* _s) : s(_s) {}
     } data;
 };
+
+}

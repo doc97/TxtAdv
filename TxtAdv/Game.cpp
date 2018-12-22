@@ -1,5 +1,8 @@
 #include "Game.h"
 
+namespace txt
+{
+
 Game::Game()
 {
 }
@@ -20,3 +23,5 @@ void Game::Exit()
 {
     m_isRunning = false;
 }
+
+} // namespace txt

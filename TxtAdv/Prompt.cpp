@@ -1,6 +1,9 @@
 #include "Prompt.h"
 #include <iostream>
 
+namespace txt
+{
+
 Prompt::Prompt(IO* io)
     : m_io(io)
 {
@@ -21,3 +24,5 @@ void Prompt::SetPrompt(const std::string& prompt)
 {
     m_prompt = prompt;
 }
+
+} // namespace txt

@@ -5,6 +5,9 @@
 #include <vector>
 #include "ResponseHandler.h"
 
+namespace txt
+{
+
 class StoryPoint
 {
 public:
@@ -27,3 +30,4 @@ private:
     bool IsIllegalText(const std::string& text) const;
 };
 
+} // namespace txt

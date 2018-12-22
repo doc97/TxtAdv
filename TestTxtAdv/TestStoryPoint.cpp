@@ -2,6 +2,9 @@
 #include "StoryPoint.h"
 #include "LambdaResponseHandler.h"
 
+namespace txt
+{
+
 TEST_CASE("get/set text", "[StoryPoint]")
 {
     StoryPoint point;
@@ -96,3 +99,5 @@ TEST_CASE("notify handlers", "[StoryPoint]")
     point.NotifyHandlers(message);
     REQUIRE(flag == 2);
 }
+
+} // namespace txt

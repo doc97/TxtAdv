@@ -9,6 +9,9 @@
 #include <lauxlib.h>
 #endif
 
+namespace txt
+{
+
 int luaValue;
 int luaApply(lua_State* L)
 {
@@ -69,3 +72,5 @@ TEST_CASE("lua action lib function", "[LuaResponseHandler]")
         REQUIRE(luaValue == 0);
     }
 }
+
+} // namespace txt

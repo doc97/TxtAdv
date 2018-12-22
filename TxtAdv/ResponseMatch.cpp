@@ -1,5 +1,8 @@
 #include "ResponseMatch.h"
 
+namespace txt
+{
+
 ResponseMatch::ResponseMatch(bool isMatch, const std::vector<std::string>& captures)
     : m_isMatch(isMatch), m_captures(captures)
 {
@@ -30,3 +33,5 @@ std::string ResponseMatch::GetCapture(size_t index) const
         throw std::out_of_range("index is out of range");
     return m_captures[index];
 }
+
+} // namespace txt

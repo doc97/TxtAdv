@@ -2,11 +2,16 @@
 
 #include <string>
 
-class IO
+namespace txt
 {
-public:
-    virtual ~IO() {}
-    virtual void Write(const std::string& string) = 0;
-    virtual void WriteLine(const std::string& string) = 0;
-    virtual void GetLine(std::string& string) = 0;
-};
+
+    class IO
+    {
+    public:
+        virtual ~IO() {}
+        virtual void Write(const std::string& string) = 0;
+        virtual void WriteLine(const std::string& string) = 0;
+        virtual void GetLine(std::string& string) = 0;
+    };
+
+} // namespace txt

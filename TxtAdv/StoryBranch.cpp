@@ -1,6 +1,9 @@
 #include "StoryBranch.h"
 #include "LambdaResponseHandler.h"
 
+namespace txt
+{
+
 StoryBranch::StoryBranch()
 {
 }
@@ -88,3 +91,5 @@ bool StoryBranch::Empty() const
 {
     return Length() == 0;
 }
+
+} // namespace txt

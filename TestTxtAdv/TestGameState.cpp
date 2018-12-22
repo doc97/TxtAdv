@@ -1,6 +1,9 @@
 #include "catch.hpp"
 #include "GameState.h"
 
+namespace txt
+{
+
 TEST_CASE("has state", "[GameState]")
 {
     std::string key = "key";
@@ -190,12 +193,12 @@ TEST_CASE("get all float states", "[GameState]")
     GameState state;
     REQUIRE(state.GetAllFloats().size() == 0);
     for (size_t i = 0; i < count; ++i)
-        state.SetFloat(std::to_string(i), (float) i);
+        state.SetFloat(std::to_string(i), (float)i);
 
     std::unordered_map<std::string, float> map = state.GetAllFloats();
     REQUIRE(map.size() == count);
     for (size_t i = 0; i < count; ++i)
-        REQUIRE(map[std::to_string(i)] == (float) i);
+        REQUIRE(map[std::to_string(i)] == (float)i);
 }
 
 TEST_CASE("update float state", "[GameState]")
@@ -395,3 +398,5 @@ TEST_CASE("reset state", "[GameState]")
     }
     catch (std::invalid_argument) {}
 }
+
+} // namespace txt

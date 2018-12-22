@@ -1,6 +1,9 @@
 #include "catch.hpp"
 #include "ResponseMatch.h"
 
+namespace txt
+{
+
 TEST_CASE("isMatch", "[ResponseMatch]")
 {
     SECTION("boolean constructor")
@@ -38,3 +41,5 @@ TEST_CASE("captures", "[ResponseMatch]")
     }
     catch (std::out_of_range) {}
 }
+
+} // namespace txt

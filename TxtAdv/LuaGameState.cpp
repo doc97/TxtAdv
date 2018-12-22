@@ -1,5 +1,8 @@
 #include "LuaGameState.h"
 
+namespace txt
+{
+
 const char* LuaGameState::className = "LuaGameState";
 const Luna<LuaGameState>::FunctionType LuaGameState::methods[] =
 {
@@ -171,3 +174,5 @@ LuaGameState* LuaGameState::GetObj(lua_State* L, int index)
     }
     return *(LuaGameState**)data;  // unbox pointer
 }
+
+} // namespace txt

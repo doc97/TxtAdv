@@ -1,6 +1,9 @@
 #include "ConsoleIO.h"
 #include <iostream>
 
+namespace txt
+{
+
 ConsoleIO::ConsoleIO()
 {
 }
@@ -23,3 +26,5 @@ void ConsoleIO::GetLine(std::string& string)
 {
     std::getline(std::cin, string);
 }
+
+} // namespace txt

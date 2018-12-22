@@ -3,6 +3,9 @@
 #include "LunaFive.h"
 #include "StoryBranch.h"
 
+namespace txt
+{
+
 class LuaStoryBranch
 {
 public:
@@ -28,3 +31,4 @@ private:
     static LuaStoryBranch* GetObj(lua_State* L, int index);
 };
 
+} // namespace txt

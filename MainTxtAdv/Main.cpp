@@ -6,11 +6,11 @@
 
 void runExampleLua()
 {
-    LuaManager manager;
+    txt::LuaManager manager;
 
     std::string err;
-    std::vector<LuaParam> params = { { LuaParam::Int, 2LL }, { LuaParam::Int, 2LL } };
-    std::vector<LuaParam> retVal = {};
+    std::vector<txt::LuaParam> params = { { txt::LuaParam::Int, 2LL }, { txt::LuaParam::Int, 2LL } };
+    std::vector<txt::LuaParam> retVal = {};
     if (!manager.ExecFunc("LUA/functions.lua", "funcB", params, retVal, err))
         std::cout << err << std::endl;
 
@@ -19,18 +19,18 @@ void runExampleLua()
 
 void runExampleGame()
 {
-    ConsoleIO io;
-    AdvGame game(&io);
+    txt::ConsoleIO io;
+    txt::AdvGame game(&io);
     game.Run();
 }
 
 void runExampleLuna()
 {
-    LuaManager manager;
-    StoryBranch branch;
+    txt::LuaManager manager;
+    txt::StoryBranch branch;
 
-    manager.RegisterClass<LuaStoryBranch>();
-    manager.PushObject(new LuaStoryBranch(&branch), "branch", true);
+    manager.RegisterClass<txt::LuaStoryBranch>();
+    manager.PushObject(new txt::LuaStoryBranch(&branch), "branch", true);
 
     std::string err;
     if (!manager.ExecFile("LUA/luna.lua", err))

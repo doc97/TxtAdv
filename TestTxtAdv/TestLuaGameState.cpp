@@ -1,6 +1,9 @@
 #include "catch.hpp"
 #include "LuaGameState.h"
 
+namespace txt
+{
+
 TEST_CASE("LuaGameState configuration", "[LuaGameState]")
 {
     REQUIRE(LuaGameState::className == "LuaGameState");
@@ -118,3 +121,5 @@ TEST_CASE("has int", "[LuaGameState]")
     state.SetInt(key, 1);
     REQUIRE(wrapper.HasInt(key));
 }
+
+} // namespace txt

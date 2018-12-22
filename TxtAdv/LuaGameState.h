@@ -3,6 +3,9 @@
 #include "LunaFive.h"
 #include "GameState.h"
 
+namespace txt
+{
+
 class LuaGameState
 {
 public:
@@ -42,3 +45,4 @@ private:
     static LuaGameState* GetObj(lua_State* L, int index);
 };
 
+}

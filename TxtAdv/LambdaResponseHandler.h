@@ -4,6 +4,9 @@
 #include "ResponseHandler.h"
 #include "ResponseMatch.h"
 
+namespace txt
+{
+
 class LambdaResponseHandler : public ResponseHandler
 {
 public:
@@ -18,3 +21,4 @@ private:
     std::function<void(const ResponseMatch&)> m_func;
 };
 
+}

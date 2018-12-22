@@ -1,6 +1,9 @@
 #include "catch.hpp"
 #include "LuaStoryBranch.h"
 
+namespace txt
+{
+
 TEST_CASE("LuaStoryBranch configuration", "[LuaStoryBranch]")
 {
     REQUIRE(LuaStoryBranch::className == "LuaStoryBranch");
@@ -54,3 +57,5 @@ TEST_CASE("next/prev", "[LuaStoryBranch]")
         REQUIRE(branch.GetHead()->GetText() == "1");
     }
 }
+
+} // namespace txt

@@ -4,6 +4,9 @@
 #include "ResponseHandler.h"
 #include "LuaManager.h"
 
+namespace txt
+{
+
 class LuaResponseHandler : public ResponseHandler
 {
 public:
@@ -17,3 +20,4 @@ private:
     std::string m_filename;
 };
 
+} // namespace txt

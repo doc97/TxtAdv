@@ -1,5 +1,8 @@
 #include "LuaResponseHandler.h"
 
+namespace txt
+{
+
 LuaResponseHandler::LuaResponseHandler(LuaManager* manager, const std::string& filename)
     : m_manager(manager), m_filename(filename)
 {
@@ -30,3 +33,5 @@ bool LuaResponseHandler::Matches(const std::string& input)
         throw std::runtime_error(err);
     return retVal[0].data.b;
 }
+
+} // namespace txt

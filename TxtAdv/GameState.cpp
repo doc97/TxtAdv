@@ -1,5 +1,8 @@
 #include "GameState.h"
 
+namespace txt
+{
+
 GameState::GameState()
 {
 }
@@ -122,3 +125,5 @@ bool GameState::HasString(const std::string& key) const
 {
     return m_stringState.find(key) != m_stringState.end();
 }
+
+} // namespace txt

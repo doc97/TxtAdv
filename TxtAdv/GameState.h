@@ -3,6 +3,9 @@
 #include <unordered_map>
 #include <string>
 
+namespace txt
+{
+
 class GameState
 {
 public:
@@ -35,3 +38,4 @@ private:
     std::unordered_map<std::string, std::string> m_stringState;
 };
 
+} // namespace txt

@@ -1,6 +1,9 @@
 #include "ResponseSystem.h"
 #include <algorithm>
 
+namespace txt
+{
+
 ResponseSystem::ResponseSystem()
 {
 }
@@ -53,3 +56,5 @@ size_t ResponseSystem::HandlerCount() const
 {
     return m_handlers.size();
 }
+
+} // namespace txt

@@ -2,6 +2,9 @@
 
 #include <string>
 
+namespace txt
+{
+
 class ResponseHandler
 {
 public:
@@ -10,3 +13,4 @@ public:
     virtual bool Matches(const std::string& input) = 0;
 };
 
+} // namespace txt

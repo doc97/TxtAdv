@@ -1,5 +1,8 @@
 #include "LambdaResponseHandler.h"
 
+namespace txt
+{
+
 LambdaResponseHandler::LambdaResponseHandler(const std::function<ResponseMatch(const std::string&)>& matcher,
     const std::function<void(const ResponseMatch&)>& func)
     : m_matcher(matcher), m_func(func)
@@ -21,3 +24,5 @@ bool LambdaResponseHandler::Matches(const std::string& input)
 {
     return m_matcher(input).IsMatch();
 }
+
+} // namespace txt

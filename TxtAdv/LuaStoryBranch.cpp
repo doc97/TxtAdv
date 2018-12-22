@@ -1,5 +1,8 @@
 #include "LuaStoryBranch.h"
 
+namespace txt
+{
+
 const char* LuaStoryBranch::className = "LuaStoryBranch";
 const Luna<LuaStoryBranch>::FunctionType LuaStoryBranch::methods[] =
 {
@@ -62,3 +65,5 @@ LuaStoryBranch* LuaStoryBranch::GetObj(lua_State* L, int index)
     }
     return *(LuaStoryBranch**)data;  // unbox pointer
 }
+
+} // namespace txt

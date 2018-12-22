@@ -2,6 +2,9 @@
 
 #include "IO.h"
 
+namespace txt
+{
+
 class ConsoleIO : public IO
 {
 public:
@@ -13,3 +16,4 @@ public:
     void GetLine(std::string& string) override;
 };
 
+} // namespace txt

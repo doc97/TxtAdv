@@ -8,6 +8,9 @@
 #include "GameState.h"
 #include "LuaManager.h"
 
+namespace txt
+{
+
 class AdvGame : public Game
 {
 public:
@@ -36,3 +39,4 @@ private:
     void InitPointThree();
 };
 
+} // namespace txt

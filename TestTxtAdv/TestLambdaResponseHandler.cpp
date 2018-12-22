@@ -2,6 +2,9 @@
 #include "LambdaResponseHandler.h"
 #include <string>
 
+namespace txt
+{
+
 typedef std::function<ResponseMatch(const std::string&)> MatchFunc;
 
 TEST_CASE("matcher function", "[LambdaResponseHandler]")
@@ -34,3 +37,5 @@ TEST_CASE("action function", "[LambdaResponseHandler]")
         REQUIRE(!isHandled);
     }
 }
+
+} // namespace txt

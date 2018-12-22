@@ -4,6 +4,9 @@
 #include <string>
 #include "StoryPoint.h"
 
+namespace txt
+{
+
 class StoryBranch
 {
 public:
@@ -32,3 +35,4 @@ private:
     unsigned int m_head = 0;
 };
 
+} // namespace txt

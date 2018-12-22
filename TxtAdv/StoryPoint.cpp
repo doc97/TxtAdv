@@ -1,5 +1,8 @@
 #include "StoryPoint.h"
 
+namespace txt
+{
+
 StoryPoint::StoryPoint()
 {
 }
@@ -68,3 +71,5 @@ std::vector<std::shared_ptr<ResponseHandler>> StoryPoint::GetHandlers() const
 {
     return m_handlers;
 }
+
+} // namespace txt

@@ -1,12 +1,7 @@
 #include "LuaManager.h"
 
-#ifdef __cplusplus
-#include <lua.hpp>
-#else
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-#endif
+namespace txt
+{
 
 LuaManager::LuaManager()
     : L(nullptr)
@@ -149,3 +144,5 @@ void LuaManager::LoadParam(const LuaParam& param)
     case LuaParam::String: lua_pushstring(L, param.data.s); break;
     }
 }
+
+} // namespace txt
