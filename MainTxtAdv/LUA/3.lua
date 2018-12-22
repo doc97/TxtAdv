@@ -4,4 +4,5 @@ end
 
 function action(s)
     state:setStr("text", s)
+    story:prev()
 end

@@ -53,7 +53,7 @@ void AdvGame::InitPointOne()
     ));
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return input == "next"; },
-        [this](const ResponseMatch& match) { this->StoryNext(); }
+        [this](const ResponseMatch& match) { this->GetStory().Next(); }
     ));
     m_branch.AddPoint("Welcome to TxtAdv!", {}, handlers);
 }
@@ -67,7 +67,7 @@ void AdvGame::InitPointTwo()
     ));
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input) { return input == "next"; },
-        [this](const ResponseMatch& match) { this->StoryNext(); }
+        [this](const ResponseMatch& match) { this->GetStory().Next(); }
     ));
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
         [](const std::string& input)
@@ -163,19 +163,14 @@ void AdvGame::Update()
     }
 }
 
-void AdvGame::StoryNext()
-{
-    m_branch.Next();
-}
-
-void AdvGame::StoryPrev()
-{
-    m_branch.Prev();
-}
-
 GameState& AdvGame::GetState()
 {
     return m_state;
+}
+
+StoryBranch& AdvGame::GetStory()
+{
+    return m_branch;
 }
 
 IO* AdvGame::GetIO() const

@@ -14,9 +14,8 @@ public:
     AdvGame(IO* io);
     ~AdvGame();
 
-    void StoryNext();
-    void StoryPrev();
     GameState& GetState();
+    StoryBranch& GetStory();
     IO* GetIO() const;
 protected:
     void Init() override;
