@@ -33,7 +33,7 @@ public:
 
     void Reset();
     void RegisterFunc(const char* funcname, lua_CFunction func);
-    void RegisterLib(const char* libname, const luaL_Reg lib[], size_t nlib);
+    void RegisterLib(const char* libname, const luaL_Reg lib[], int nlib);
     bool ExecFile(const char* filename, std::string& error);
     bool ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
         std::vector<LuaParam>& retValues, std::string& error);

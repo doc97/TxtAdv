@@ -85,7 +85,7 @@ TEST_CASE("get all integer states", "[GameState]")
     GameState state;
     REQUIRE(state.GetAllInts().size() == 0);
     for (size_t i = 0; i < count; ++i)
-        state.SetInt(std::to_string(i), i);
+        state.SetInt(std::to_string(i), (int)i);
 
     std::unordered_map<std::string, int> map = state.GetAllInts();
     REQUIRE(map.size() == count);

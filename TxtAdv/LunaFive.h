@@ -133,7 +133,7 @@ public:
         for (size_t i = 0; T::properties[i].name; ++i)
         {
             lua_pushstring(L, T::properties[i].name);   // Having some string associated with them
-            lua_pushnumber(L, i);                       // And a number indexing which property it is
+            lua_pushnumber(L, (lua_Number)i);           // And a number indexing which property it is
             lua_settable(L, metatable);
         }
 
@@ -166,7 +166,7 @@ public:
       @ createNew
       Arguments:
         * L - Lua State
-        T*	- Instance to push
+        T*  - Instance to push
 
       Description:
         Loads an instance of the class into the Lua stack, and provides you a pointer so you can modify it.

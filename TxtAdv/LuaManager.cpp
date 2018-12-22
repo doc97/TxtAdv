@@ -55,7 +55,7 @@ void LuaManager::RegisterFunc(const char* funcname, lua_CFunction func)
     lua_register(L, funcname, func);
 }
 
-void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[], size_t nlib)
+void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[], int nlib)
 {
     lua_createtable(L, 0, nlib);
     luaL_setfuncs(L, lib, 0);
@@ -90,7 +90,7 @@ bool LuaManager::ExecFunc(const char* filename, const char* funcname, const std:
     LoadParams(params);
 
     // Pops stack automatically
-    if (lua_pcall(L, params.size(), retValues.size(), 0) != LUA_OK)
+    if (lua_pcall(L, (int)params.size(), retValues.size(), 0) != LUA_OK)
     {
         GetError(error);
         return false;
