@@ -27,9 +27,10 @@ void runExampleGame()
 void runExampleLuna()
 {
     LuaManager manager;
+    StoryBranch branch;
 
     manager.RegisterClass<LuaStoryBranch>();
-    manager.PushObject(new LuaStoryBranch, "branch", true);
+    manager.PushObject(new LuaStoryBranch(&branch), "branch", true);
 
     std::string err;
     if (!manager.ExecFile("LUA/luna.lua", err))
