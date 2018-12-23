@@ -17,7 +17,7 @@ your ideas.
 
 ## Documentation
 
-The API has been documented with [NaturalDocs](https://www.naturaldocs.org/)]
+The API has been documented with [NaturalDocs](https://www.naturaldocs.org/)
 and can be found under the `Docs/`-folder. Please download the files and open
 the `index.html` file in your browser.
 
@@ -29,7 +29,7 @@ and execute
 C:\> NaturalDocs.exe TxtAdv\.NDConfig
 ```
 
-and open the `index.html` found under the TxtAdv/Docs folder.
+and open the generated `index.html` file found under the TxtAdv/Docs folder.
 
 In the future I will write documentation on how to use the framework on the
 Wiki. For now, if you're interested, you can take a look at
