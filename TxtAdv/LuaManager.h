@@ -64,12 +64,13 @@ public:
      *
      *    filename - The name of the file
      *    error - Any error message is stored in this parameter
+     *    checkChache - Whether to skip execution if the previously executed filename equals the filename given
      *
      * Returns:
      *
      *    If an error occurred return false, otherwise true
      */
-    bool ExecFile(const char* filename, std::string& error);
+    bool ExecFile(const std::string& filename, std::string& error, bool checkCache);
 
     /* Function: ExecFunc
      * Loads a Lua chunk (file) and executes a function from it.
@@ -86,7 +87,7 @@ public:
      *
      *    If an error occurred return false, otherwise true
      */
-    bool ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
+    bool ExecFunc(const std::string& filename, const char* funcname, const std::vector<LuaParam>& params,
         std::vector<LuaParam>& retVals, std::string& error);
 
     /* Function: RegisterClass
@@ -138,6 +139,7 @@ private:
     bool CollectResults(std::vector<LuaParam>& retVals, std::string& error);
 
     lua_State* L = nullptr;
+    std::string m_prevFile;
 };
 
 } // namespace txt

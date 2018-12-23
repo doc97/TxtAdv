@@ -61,20 +61,24 @@ void LuaManager::RegisterLib(const char* libname, const luaL_Reg lib[], int nlib
     lua_setglobal(L, libname);
 }
 
-bool LuaManager::ExecFile(const char* filename, std::string& error)
+bool LuaManager::ExecFile(const std::string& filename, std::string& error, bool checkCache)
 {
-    if (luaL_dofile(L, filename) != LUA_OK)
+    if (checkCache && m_prevFile == filename)
+        return true;
+
+    if (luaL_dofile(L, filename.c_str()) != LUA_OK)
     {
         GetError(error);
         return false;
     }
+    m_prevFile = filename;
     return true;
 }
 
-bool LuaManager::ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
+bool LuaManager::ExecFunc(const std::string& filename, const char* funcname, const std::vector<LuaParam>& params,
     std::vector<LuaParam>& retVals, std::string& error)
 {
-    if (!ExecFile(filename, error))
+    if (!ExecFile(filename, error, true))
         return false;
 
     if (!PushFunc(funcname, error))
