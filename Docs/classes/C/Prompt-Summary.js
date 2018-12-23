@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:Prompt","Prompt");NDSummary.OnSummaryLoaded("CClass:Prompt",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[113,0,0,"Prompt"],[114,0,2,"Functions","Functions"],[115,0,1,"Prompt","Prompt"],[164,0,1,"PromptInput","PromptInput"],[117,0,1,"SetPrompt","SetPrompt"]]);

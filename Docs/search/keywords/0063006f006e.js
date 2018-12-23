@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("con",["Class"],[["ConsoleIO",,[[,,,,0,"File:ConsoleIO.h:ConsoleIO","CClass:ConsoleIO"]]]]);

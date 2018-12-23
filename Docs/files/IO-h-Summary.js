@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:IO.h","IO.h");NDSummary.OnSummaryLoaded("File:IO.h",[["C/C++","C"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[50,0,2,"IO","IO"],[51,0,1,"Functions","IO.Functions"],[52,0,0,"Write","IO.Write"],[53,0,0,"WriteLine","IO.WriteLine"],[54,0,0,"GetLine","IO.GetLine"]]);

@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("int",["Constant"],[["Int",,[["LuaParam",,,,0,"File:LuaParam.h:LuaParam.Int","CClass:LuaParam:Int"]]]]);

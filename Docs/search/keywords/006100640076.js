@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("adv",["Class"],[["AdvGame",,[[,,,,0,"File:AdvGame.h:AdvGame","CClass:AdvGame"]]]]);

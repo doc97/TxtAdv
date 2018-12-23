@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("gam",["Interface","Class"],[["Game",,[[,,,,0,"File:Game.h:Game","CClass:Game"]]],["GameState",,[[,,,,1,"File:GameState.h:GameState","CClass:GameState"]]]]);

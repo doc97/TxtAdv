@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("dat",["Variable","Enumeration"],[["data",,[["LuaParam",,,,0,"File:LuaParam.h:LuaParam.data","CClass:LuaParam:data"]]],["DataType",,[["LuaParam",,,,1,"File:LuaParam.h:LuaParam.DataType","CClass:LuaParam:DataType"]]]]);

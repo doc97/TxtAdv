@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:Game.h","Game.h");NDSummary.OnSummaryLoaded("File:Game.h",[["C/C++","C"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[55,0,2,"Game","Game"],[56,0,1,"Functions","Game.Functions"],[57,0,0,"Run","Game.Run"],[58,0,0,"Exit","Game.Exit"],[59,0,0,"Init","Game.Init"],[60,0,0,"Init","Game.Init(2)"]]);

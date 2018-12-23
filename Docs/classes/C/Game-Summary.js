@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:Game","Game");NDSummary.OnSummaryLoaded("CClass:Game",[["C/C++","C"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[55,0,2,"Game"],[56,0,1,"Functions","Functions"],[57,0,0,"Run","Run"],[58,0,0,"Exit","Exit"],[59,0,0,"Init","Init"],[60,0,0,"Init","Init(2)"]]);

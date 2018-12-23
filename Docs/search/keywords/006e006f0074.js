@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("not",["Function"],[["NotifyHandlers",,[["StoryPoint",,,,0,"File:StoryPoint.h:StoryPoint.NotifyHandlers","CClass:StoryPoint:NotifyHandlers"]]]]);

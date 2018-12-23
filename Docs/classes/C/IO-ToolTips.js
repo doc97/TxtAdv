@@ -1,0 +1,1 @@
+NDContentPage.OnToolTipsLoaded({61:"<div class=\"NDToolTip TClass LC\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype61\"><div class=\"CPEntry TClass Current\"><div class=\"CPName\">ConsoleIO</div></div></div><div class=\"TTSummary\">Handles input from stdin and output to stdout.</div></div>"});

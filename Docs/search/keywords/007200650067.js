@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("reg",["Function"],[["RegisterClass",,[[,,,,0,"File:LuaManager.h:RegisterClass"]]],["RegisterFunc",,[[,,,,0,"File:LuaManager.h:RegisterFunc"]]],["RegisterLib",,[[,,,,0,"File:LuaManager.h:RegisterLib"]]]]);

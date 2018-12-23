@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:IO","IO");NDSummary.OnSummaryLoaded("CClass:IO",[["C/C++","C"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[50,0,2,"IO"],[51,0,1,"Functions","Functions"],[52,0,0,"Write","Write"],[53,0,0,"WriteLine","WriteLine"],[54,0,0,"GetLine","GetLine"]]);

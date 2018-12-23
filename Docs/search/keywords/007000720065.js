@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("pre",["Function"],[["Prev",,[["LuaStoryBranch","prev",,,0,"File:LuaStoryBranch.h:LuaStoryBranch.prev","CClass:LuaStoryBranch:prev"],["LuaStoryBranch",,,,0,"File:LuaStoryBranch.h:LuaStoryBranch.Prev","CClass:LuaStoryBranch:Prev"],["StoryBranch",,,,0,"File:StoryBranch.h:StoryBranch.Prev","CClass:StoryBranch:Prev"]]]]);

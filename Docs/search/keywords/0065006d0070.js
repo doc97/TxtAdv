@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("emp",["Function"],[["Empty",,[["StoryBranch",,,,0,"File:StoryBranch.h:StoryBranch.Empty","CClass:StoryBranch:Empty"]]]]);

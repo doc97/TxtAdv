@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("ini",["Function"],[["Init",,[["AdvGame",,,,0,"File:AdvGame.h:AdvGame.Init","CClass:AdvGame:Init"],["Game",,,,0,"File:Game.h:Game.Init","CClass:Game:Init"]]]]);
