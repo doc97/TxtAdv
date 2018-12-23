@@ -72,64 +72,32 @@ bool LuaManager::ExecFile(const char* filename, std::string& error)
 }
 
 bool LuaManager::ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
-    std::vector<LuaParam>& retValues, std::string& error)
+    std::vector<LuaParam>& retVals, std::string& error)
 {
     if (!ExecFile(filename, error))
         return false;
 
-    // Push function onto the stack
-    lua_getglobal(L, funcname);
-    if (!lua_isfunction(L, -1))
-    {
-        lua_pop(L, 1); // Pop it back manually
-        error = std::string("ERROR: '" + std::string(funcname) + "' is not the name of any known function!");
+    if (!PushFunc(funcname, error))
         return false;
-    }
 
     LoadParams(params);
 
-    // Pops stack automatically
-    if (lua_pcall(L, (int)params.size(), retValues.size(), 0) != LUA_OK)
-    {
-        GetError(error);
+    if (!CallFunc(params.size(), retVals.size(), error))
         return false;
-    }
-    for (size_t i = 0; i < retValues.size(); ++i)
-    {
-        bool isCorrectType = false;
-        LuaParam param = { LuaParam::Bool, false };
-        param.type = retValues[i].type;
-        switch (retValues[i].type)
-        {
-        case LuaParam::Bool:
-            isCorrectType = lua_isboolean(L, -1);
-            retValues[i] = { LuaParam::Bool, static_cast<bool>(lua_toboolean(L, -1)) };
-            lua_pop(L, 1);
-            break;
-        case LuaParam::Int:
-            isCorrectType = lua_isinteger(L, -1);
-            retValues[i] = { LuaParam::Int, static_cast<long long>(lua_tointeger(L, -1)) };
-            lua_pop(L, 1);
-            break;
-        case LuaParam::Double:
-            isCorrectType = lua_isnumber(L, -1);
-            retValues[i] = { LuaParam::Double, static_cast<double>(lua_tonumber(L, -1)) };
-            lua_pop(L, 1);
-            break;
-        case LuaParam::String:
-            isCorrectType = lua_isstring(L, -1);
-            retValues[i] = { LuaParam::String, static_cast<const char*>(lua_tostring(L, -1)) };
-            lua_pop(L, 1);
-            break;
-        }
 
-        if (!isCorrectType)
-        {
-            error = "ERROR: Lua function returned an unknown type (index " + std::to_string(i) + ")";
-            return false;
-        }
-    }
+    if (!CollectResults(retVals, error))
+        return false;
     return true;
+}
+
+bool LuaManager::PushFunc(const char* funcname, std::string& error)
+{
+    lua_getglobal(L, funcname);
+    if (lua_isfunction(L, -1))
+        return true;
+    lua_pop(L, 1); // Pop it back manually
+    error = std::string("ERROR: '" + std::string(funcname) + "' is not the name of any known function!");
+    return false;
 }
 
 void LuaManager::LoadParams(const std::vector<LuaParam>& params)
@@ -147,6 +115,54 @@ void LuaManager::LoadParam(const LuaParam& param)
     case LuaParam::Double: lua_pushnumber(L, param.data.d); break;
     case LuaParam::String: lua_pushstring(L, param.data.s); break;
     }
+}
+
+bool LuaManager::CallFunc(size_t nparam, size_t nret, std::string& error)
+{
+    if (lua_pcall(L, (int)nparam, (int)nret, 0) == LUA_OK)
+        return true;
+    GetError(error);
+    return false;
+}
+
+bool LuaManager::CollectResults(std::vector<LuaParam>& retVals, std::string& error)
+{
+    for (size_t i = 0; i < retVals.size(); ++i)
+    {
+        bool isCorrectType = false;
+        LuaParam param = { LuaParam::Bool, false };
+        param.type = retVals[i].type;
+        switch (retVals[i].type)
+        {
+        case LuaParam::Bool:
+            isCorrectType = lua_isboolean(L, -1);
+            retVals[i] = { LuaParam::Bool, static_cast<bool>(lua_toboolean(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        case LuaParam::Int:
+            isCorrectType = lua_isinteger(L, -1);
+            retVals[i] = { LuaParam::Int, static_cast<long long>(lua_tointeger(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        case LuaParam::Double:
+            isCorrectType = lua_isnumber(L, -1);
+            retVals[i] = { LuaParam::Double, static_cast<double>(lua_tonumber(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        case LuaParam::String:
+            isCorrectType = lua_isstring(L, -1);
+            retVals[i] = { LuaParam::String, static_cast<const char*>(lua_tostring(L, -1)) };
+            lua_pop(L, 1);
+            break;
+        }
+
+        if (!isCorrectType)
+        {
+            error = "ERROR: Lua function returned an unknown type (index " + std::to_string(i) + ")";
+            return false;
+        }
+    }
+    return true;
 }
 
 } // namespace txt

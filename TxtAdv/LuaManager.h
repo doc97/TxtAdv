@@ -87,7 +87,7 @@ public:
      *    If an error occurred return false, otherwise true
      */
     bool ExecFunc(const char* filename, const char* funcname, const std::vector<LuaParam>& params,
-        std::vector<LuaParam>& retValues, std::string& error);
+        std::vector<LuaParam>& retVals, std::string& error);
 
     /* Function: RegisterClass
      * Registers a class to Lua.
@@ -131,8 +131,11 @@ public:
 private:
     void Init();
     void GetError(std::string& error);
+    bool PushFunc(const char* funcname, std::string& error);
     void LoadParams(const std::vector<LuaParam>& params);
     void LoadParam(const LuaParam& param);
+    bool CallFunc(size_t nparam, size_t nret, std::string& error);
+    bool CollectResults(std::vector<LuaParam>& retVals, std::string& error);
 
     lua_State* L = nullptr;
 };
