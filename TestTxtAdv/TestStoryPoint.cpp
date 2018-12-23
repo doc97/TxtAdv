@@ -10,7 +10,7 @@
 namespace txt
 {
 
-TEST_CASE("get/set text", "[StoryPoint]")
+TEST_CASE("StoryPoint - get/set text", "[StoryPoint]")
 {
     StoryPoint point;
     REQUIRE(point.GetText() == "");
@@ -20,7 +20,7 @@ TEST_CASE("get/set text", "[StoryPoint]")
     REQUIRE(point.GetText() == "b");
 }
 
-TEST_CASE("get/set markup text", "[StoryPoint]")
+TEST_CASE("StoryPoint - get/set markup text", "[StoryPoint]")
 {
     StoryPoint point;
 
@@ -67,7 +67,7 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
     }
 }
 
-TEST_CASE("get/set handlers", "[StoryPoint]")
+TEST_CASE("StoryPoint - get/set handlers", "[StoryPoint]")
 {
     std::vector<std::shared_ptr<ResponseHandler>> handlers;
     handlers.emplace_back(std::make_shared<LambdaResponseHandler>(

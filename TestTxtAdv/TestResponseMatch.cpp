@@ -9,7 +9,7 @@
 namespace txt
 {
 
-TEST_CASE("isMatch", "[ResponseMatch]")
+TEST_CASE("ResponseMatch - isMatch", "[ResponseMatch]")
 {
     SECTION("boolean constructor")
     {
@@ -27,7 +27,7 @@ TEST_CASE("isMatch", "[ResponseMatch]")
     }
 }
 
-TEST_CASE("captures", "[ResponseMatch]")
+TEST_CASE("ResponseMatch - captures", "[ResponseMatch]")
 {
     ResponseMatch match(true, {});
     REQUIRE(match.CaptureCount() == 0);

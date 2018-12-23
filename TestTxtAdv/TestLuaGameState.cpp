@@ -9,12 +9,12 @@
 namespace txt
 {
 
-TEST_CASE("LuaGameState configuration", "[LuaGameState]")
+TEST_CASE("LuaGameState - configuration", "[LuaGameState]")
 {
     REQUIRE(LuaGameState::className == "LuaGameState");
 }
 
-TEST_CASE("registered methods", "[LuaGameState]")
+TEST_CASE("LuaGameState - registered methods", "[LuaGameState]")
 {
     bool hasSetStr = false;
     bool hasGetStr = false;
@@ -57,7 +57,7 @@ TEST_CASE("registered methods", "[LuaGameState]")
     REQUIRE(hasHasInt);
 }
 
-TEST_CASE("get/set string", "[LuaGameState]")
+TEST_CASE("LuaGameState - get/set string", "[LuaGameState]")
 {
     std::string key = "key";
     GameState state;
@@ -69,7 +69,7 @@ TEST_CASE("get/set string", "[LuaGameState]")
     REQUIRE(wrapper.GetStr(key) == "valueB");
 }
 
-TEST_CASE("get/set float", "[LuaGameState]")
+TEST_CASE("LuaGameState - get/set float", "[LuaGameState]")
 {
     std::string key = "key";
     GameState state;
@@ -81,7 +81,7 @@ TEST_CASE("get/set float", "[LuaGameState]")
     REQUIRE(wrapper.GetFloat(key) == 2.f);
 }
 
-TEST_CASE("get/set int", "[LuaGameState]")
+TEST_CASE("LuaGameState - get/set int", "[LuaGameState]")
 {
     std::string key = "key";
     GameState state;
@@ -93,7 +93,7 @@ TEST_CASE("get/set int", "[LuaGameState]")
     REQUIRE(wrapper.GetInt(key) == 2);
 }
 
-TEST_CASE("has string", "[LuaGameState]")
+TEST_CASE("LuaGameState - has string", "[LuaGameState]")
 {
     std::string key = "key";
     GameState state;
@@ -103,7 +103,7 @@ TEST_CASE("has string", "[LuaGameState]")
     REQUIRE(wrapper.HasStr(key));
 }
 
-TEST_CASE("has float", "[LuaGameState]")
+TEST_CASE("LuaGameState - has float", "[LuaGameState]")
 {
     std::string key = "key";
     GameState state;
@@ -113,7 +113,7 @@ TEST_CASE("has float", "[LuaGameState]")
     REQUIRE(wrapper.HasFloat(key));
 }
 
-TEST_CASE("has int", "[LuaGameState]")
+TEST_CASE("LuaGameState - has int", "[LuaGameState]")
 {
     std::string key = "key";
     GameState state;

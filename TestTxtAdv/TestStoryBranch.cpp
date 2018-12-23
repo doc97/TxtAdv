@@ -10,7 +10,7 @@
 namespace txt
 {
 
-TEST_CASE("get head", "[StoryBranch]")
+TEST_CASE("StoryBranch - get head", "[StoryBranch]")
 {
     StoryBranch branch;
 
@@ -35,7 +35,7 @@ TEST_CASE("get head", "[StoryBranch]")
     }
 }
 
-TEST_CASE("set head", "[StoryBranch]")
+TEST_CASE("StoryBranch - set head", "[StoryBranch]")
 {
     StoryBranch branch;
     branch.AddPoint("1", {}, {});
@@ -58,7 +58,7 @@ TEST_CASE("set head", "[StoryBranch]")
     }
 }
 
-TEST_CASE("add points", "[StoryBranch]")
+TEST_CASE("StoryBranch - add points", "[StoryBranch]")
 {
     StoryBranch branch;
     REQUIRE(branch.Length() == 0);
@@ -162,7 +162,7 @@ TEST_CASE("add points", "[StoryBranch]")
     }
 }
 
-TEST_CASE("next point", "[StoryBranch]")
+TEST_CASE("StoryBranch - next point", "[StoryBranch]")
 {
     StoryBranch branch;
     branch.AddPoint("1", {}, {});
@@ -178,7 +178,7 @@ TEST_CASE("next point", "[StoryBranch]")
     REQUIRE(branch.GetHead()->GetText() == "3");
 }
 
-TEST_CASE("previous point", "[StoryBranch]")
+TEST_CASE("StoryBranch - previous point", "[StoryBranch]")
 {
     StoryBranch branch;
     branch.AddPoint("1", {}, {});
@@ -197,7 +197,7 @@ TEST_CASE("previous point", "[StoryBranch]")
 
 }
 
-TEST_CASE("parent branch", "[StoryBranch]")
+TEST_CASE("StoryBranch - parent branch", "[StoryBranch]")
 {
     StoryBranch parent;
     StoryBranch branch;
@@ -208,7 +208,7 @@ TEST_CASE("parent branch", "[StoryBranch]")
     REQUIRE(branch.GetParentBranch() == nullptr);
 }
 
-TEST_CASE("branch name", "[StoryBranch]")
+TEST_CASE("StoryBranch - branch name", "[StoryBranch]")
 {
     SECTION("empty name")
     {

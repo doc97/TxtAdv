@@ -9,12 +9,12 @@
 namespace txt
 {
 
-TEST_CASE("LuaStoryBranch configuration", "[LuaStoryBranch]")
+TEST_CASE("LuaStoryBranch - configuration", "[LuaStoryBranch]")
 {
     REQUIRE(LuaStoryBranch::className == "LuaStoryBranch");
 }
 
-TEST_CASE("LuaStoryBranch registered methods", "[LuaStoryBranch]")
+TEST_CASE("LuaStoryBranch - registered methods", "[LuaStoryBranch]")
 {
     bool hasNext = false;
     bool hasPrev = false;
@@ -29,7 +29,7 @@ TEST_CASE("LuaStoryBranch registered methods", "[LuaStoryBranch]")
     REQUIRE(hasPrev);
 }
 
-TEST_CASE("next/prev", "[LuaStoryBranch]")
+TEST_CASE("LuaStoryBranch - next/prev", "[LuaStoryBranch]")
 {
     StoryBranch branch;
     branch.AddPoint("1", {}, {});

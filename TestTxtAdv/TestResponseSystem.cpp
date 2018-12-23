@@ -9,7 +9,7 @@
 namespace txt
 {
 
-TEST_CASE("LambdaResponseHandlers can be added", "[ResponseSystem]")
+TEST_CASE("ResponseSystem - LambdaResponseHandlers can be added", "[ResponseSystem]")
 {
     std::string key = "a";
     ResponseSystem sys;
@@ -33,7 +33,7 @@ TEST_CASE("LambdaResponseHandlers can be added", "[ResponseSystem]")
     }
 }
 
-TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
+TEST_CASE("ResponseSystem - ResponseHandlers can be removed", "[ResponseSystem]")
 {
     std::string key = "a";
     ResponseSystem sys;
@@ -58,7 +58,7 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
     }
 }
 
-TEST_CASE("Remove all ResponseHandlers")
+TEST_CASE("ResponseSystem - Remove all ResponseHandlers", "[ResponseSystem]")
 {
     ResponseSystem sys;
 

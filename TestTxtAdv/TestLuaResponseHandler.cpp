@@ -29,7 +29,7 @@ static const luaL_Reg testlib[] =
     { "handle", &luaApply }
 };
 
-TEST_CASE("lua matcher function", "[LuaResponseHandler]")
+TEST_CASE("LuaResponseHandler - lua matcher function", "[LuaResponseHandler]")
 {
     LuaManager manager;
     LuaResponseHandler trueHandler(&manager, "LUA/true.lua");
@@ -38,7 +38,7 @@ TEST_CASE("lua matcher function", "[LuaResponseHandler]")
     REQUIRE(!falseHandler.Matches(""));
 }
 
-TEST_CASE("lua action function", "[LuaResponseHandler]")
+TEST_CASE("LuaResponseHandler - lua action function", "[LuaResponseHandler]")
 {
     luaValue = 0;
     std::string key = "key";
@@ -58,7 +58,7 @@ TEST_CASE("lua action function", "[LuaResponseHandler]")
     }
 }
 
-TEST_CASE("lua action lib function", "[LuaResponseHandler]")
+TEST_CASE("LuaResponseHandler - lua action lib function", "[LuaResponseHandler]")
 {
     luaValue = 0;
     std::string key = "key";

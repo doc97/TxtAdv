@@ -37,21 +37,17 @@ public:
     }
 };
 
-TEST_CASE("Prompt")
+TEST_CASE("Prompt", "[Prompt]")
 {
     TestIO io("line");
     Prompt prompt(&io);
 
-    SECTION("test input prompt")
-    {
-        std::string result = prompt.PromptInput();
-        REQUIRE(result == "line");
-    }
     SECTION("test prompt")
     {
         prompt.SetPrompt("$ ");
-        prompt.PromptInput();
+        std::string result = prompt.PromptInput();
         REQUIRE(io.m_output == "$ ");
+        REQUIRE(result == "line");
     }
 }
 

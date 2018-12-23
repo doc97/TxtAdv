@@ -12,7 +12,7 @@ namespace txt
 
 typedef std::function<ResponseMatch(const std::string&)> MatchFunc;
 
-TEST_CASE("matcher function", "[LambdaResponseHandler]")
+TEST_CASE("LambdaResponseHandler - matcher function", "[LambdaResponseHandler]")
 {
     LambdaResponseHandler trueHandler([](const std::string& input) { return ResponseMatch(true); },
         [](const ResponseMatch& match) {});
@@ -22,7 +22,7 @@ TEST_CASE("matcher function", "[LambdaResponseHandler]")
     REQUIRE(!falseHandler.Matches(""));
 }
 
-TEST_CASE("action function", "[LambdaResponseHandler]")
+TEST_CASE("LambdaResponseHandler - action function", "[LambdaResponseHandler]")
 {
     std::string key = "key";
     bool isHandled = false;

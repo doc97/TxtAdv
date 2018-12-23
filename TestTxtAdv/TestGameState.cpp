@@ -9,7 +9,7 @@
 namespace txt
 {
 
-TEST_CASE("has state", "[GameState]")
+TEST_CASE("GameState - has state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -34,7 +34,7 @@ TEST_CASE("has state", "[GameState]")
     }
 }
 
-TEST_CASE("read integer state", "[GameState]")
+TEST_CASE("GameState - read integer state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -54,7 +54,7 @@ TEST_CASE("read integer state", "[GameState]")
     }
 }
 
-TEST_CASE("get integer state", "[GameState]")
+TEST_CASE("GameState - get integer state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -79,7 +79,7 @@ TEST_CASE("get integer state", "[GameState]")
     }
 }
 
-TEST_CASE("get all integer states", "[GameState]")
+TEST_CASE("GameState - get all integer states", "[GameState]")
 {
     size_t count = 10;
     GameState state;
@@ -93,7 +93,7 @@ TEST_CASE("get all integer states", "[GameState]")
         REQUIRE(map[std::to_string(i)] == i);
 }
 
-TEST_CASE("update integer state", "[GameState]")
+TEST_CASE("GameState - update integer state", "[GameState]")
 {
     std::string key = key;
     GameState state;
@@ -124,7 +124,7 @@ TEST_CASE("update integer state", "[GameState]")
     }
 }
 
-TEST_CASE("set integer state", "[GameState]")
+TEST_CASE("GameState - set integer state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -147,7 +147,7 @@ TEST_CASE("set integer state", "[GameState]")
     }
 }
 
-TEST_CASE("read float state", "[GameState]")
+TEST_CASE("GameState - read float state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -167,7 +167,7 @@ TEST_CASE("read float state", "[GameState]")
     }
 }
 
-TEST_CASE("get float state", "[GameState]")
+TEST_CASE("GameState - get float state", "[GameState]")
 {
     std::string key = "a";
     GameState state;
@@ -192,7 +192,7 @@ TEST_CASE("get float state", "[GameState]")
     }
 }
 
-TEST_CASE("get all float states", "[GameState]")
+TEST_CASE("GameState - get all float states", "[GameState]")
 {
     size_t count = 10;
     GameState state;
@@ -206,7 +206,7 @@ TEST_CASE("get all float states", "[GameState]")
         REQUIRE(map[std::to_string(i)] == (float)i);
 }
 
-TEST_CASE("update float state", "[GameState]")
+TEST_CASE("GameState - update float state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -237,7 +237,7 @@ TEST_CASE("update float state", "[GameState]")
     }
 }
 
-TEST_CASE("set float state", "[GameState]")
+TEST_CASE("GameState - set float state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -260,7 +260,7 @@ TEST_CASE("set float state", "[GameState]")
     }
 }
 
-TEST_CASE("read string state", "[GameState]")
+TEST_CASE("GameState - read string state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -280,7 +280,7 @@ TEST_CASE("read string state", "[GameState]")
     }
 }
 
-TEST_CASE("get string state", "[GameState]")
+TEST_CASE("GameState - get string state", "[GameState]")
 {
     std::string key = "a";
     GameState state;
@@ -305,7 +305,7 @@ TEST_CASE("get string state", "[GameState]")
     }
 }
 
-TEST_CASE("get all string states", "[GameState]")
+TEST_CASE("GameState - get all string states", "[GameState]")
 {
     size_t count = 10;
     GameState state;
@@ -319,7 +319,7 @@ TEST_CASE("get all string states", "[GameState]")
         REQUIRE(map[std::to_string(i)] == std::to_string(i));
 }
 
-TEST_CASE("update string state", "[GameState]")
+TEST_CASE("GameState - update string state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -350,7 +350,7 @@ TEST_CASE("update string state", "[GameState]")
     }
 }
 
-TEST_CASE("set string state", "[GameState]")
+TEST_CASE("GameState - set string state", "[GameState]")
 {
     std::string key = "key";
     GameState state;
@@ -367,7 +367,7 @@ TEST_CASE("set string state", "[GameState]")
     }
 }
 
-TEST_CASE("reset state", "[GameState]")
+TEST_CASE("GameState - reset state", "[GameState]")
 {
     std::string iKey = "i_1";
     std::string fKey = "f_1";
