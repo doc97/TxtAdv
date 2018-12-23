@@ -29,10 +29,11 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
         std::vector<std::function<std::string()>> expr;
         expr.emplace_back([]() { return "A"; });
         expr.emplace_back([]() { return "B"; });
+        point.SetMarkup(expr);
 
-        point.SetMarkup("$0", expr);
+        point.SetText("$0");
         REQUIRE(point.GetText() == "A");
-        point.SetMarkup("$1", expr);
+        point.SetText("$1");
         REQUIRE(point.GetText() == "B");
     }
     SECTION("dynamic expression")
@@ -40,8 +41,9 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
         std::string var = "a";
         std::vector<std::function<std::string()>> expr;
         expr.emplace_back([&var]() { return var; });
+        point.SetMarkup(expr);
 
-        point.SetMarkup("$0", expr);
+        point.SetText("$0");
         REQUIRE(point.GetText() == var);
         var = "b";
         REQUIRE(point.GetText() == var);
@@ -50,7 +52,8 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
     {
         std::vector<std::function<std::string()>> expr;
         expr.emplace_back([]() { return "$0"; });
-        point.SetMarkup("$0", expr);
+        point.SetText("$0");
+        point.SetMarkup(expr);
         REQUIRE(point.GetText() == "");
     }
     SECTION("advanced expression")
@@ -58,7 +61,8 @@ TEST_CASE("get/set markup text", "[StoryPoint]")
         std::vector<std::function<std::string()>> expr;
         expr.emplace_back([]() { return "1"; });
         expr.emplace_back([]() { return "A"; });
-        point.SetMarkup("$$0", expr);
+        point.SetText("$$0");
+        point.SetMarkup(expr);
         REQUIRE(point.GetText() == "A");
     }
 }

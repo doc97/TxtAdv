@@ -36,22 +36,22 @@ public:
     void SetText(const std::string& text);
 
     /* Function: SetMarkup
-     * Sets the text with markup in it.
+     * Sets the functions to which parse the markup text.
      *
      * Parameters:
      *
-     *    text - The text with the markup
      *    expr - The functions for parsing the markup
      *
      * Example:
      *
      * --- C++ ---
      * StoryPoint point;
-     * point.SetMarkup("$0 - $1", { []() { return "foo"; }, []() { return "bar"; } });
+     * point.SetText("$0 - $1");
+     * point.SetMarkup({ []() { return "foo"; }, []() { return "bar"; } });
      * point.GetText(); // Returns "foo - bar"
      * -----------
      */
-    void SetMarkup(const std::string& text, const std::vector<std::function<std::string()>>& expr);
+    void SetMarkup(const std::vector<std::function<std::string()>>& expr);
 
     /* Function: SetHandlers
      * Sets a list of handlers associated with this point.

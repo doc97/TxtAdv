@@ -21,9 +21,8 @@ void StoryPoint::SetText(const std::string& text)
     m_text = text;
 }
 
-void StoryPoint::SetMarkup(const std::string& text, const std::vector<std::function<std::string()>>& expr)
+void StoryPoint::SetMarkup(const std::vector<std::function<std::string()>>& expr)
 {
-    m_text = text;
     m_expressions = expr;
 }
 
