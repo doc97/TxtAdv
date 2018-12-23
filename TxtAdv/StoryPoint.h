@@ -62,15 +62,6 @@ public:
      */
     void SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
 
-    /* Function: NotifyHandlers
-     * Forwards the message to the handlers.
-     *
-     * Parameters:
-     *
-     *    message - The message to forward
-     */
-    void NotifyHandlers(const std::string& message);
-
     /* Function: GetText
      *
      * Returns:

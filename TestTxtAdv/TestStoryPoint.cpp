@@ -87,26 +87,4 @@ TEST_CASE("get/set handlers", "[StoryPoint]")
     REQUIRE(!point.GetHandlers()[1]->Matches(""));
 }
 
-TEST_CASE("notify handlers", "[StoryPoint]")
-{
-    unsigned int flag = 0;
-    std::string message = "msg";
-    std::vector<std::shared_ptr<ResponseHandler>> handlers;
-    handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
-        [](const std::string& input) { return true; },
-        [&flag](const ResponseMatch& match) { ++flag; }
-    ));
-    handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
-        [](const std::string& input) { return true; },
-        [&flag](const ResponseMatch& match) { ++flag; }
-    ));
-
-    StoryPoint point;
-    point.NotifyHandlers(message);
-    REQUIRE(flag == 0);
-    point.SetHandlers(handlers);
-    point.NotifyHandlers(message);
-    REQUIRE(flag == 2);
-}
-
 } // namespace txt

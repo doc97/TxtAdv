@@ -31,12 +31,6 @@ void StoryPoint::SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>
     m_handlers = handlers;
 }
 
-void StoryPoint::NotifyHandlers(const std::string& message)
-{
-    for (auto& handler : m_handlers)
-        handler->HandleInput(message);
-}
-
 std::string StoryPoint::ParseText(const std::string& text,
     const std::vector<std::function<std::string()>>& expr) const
 {
