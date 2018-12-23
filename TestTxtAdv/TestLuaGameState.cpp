@@ -12,10 +12,6 @@ namespace txt
 TEST_CASE("LuaGameState configuration", "[LuaGameState]")
 {
     REQUIRE(LuaGameState::className == "LuaGameState");
-    GameState state;
-    LuaGameState wrapper(&state);
-    REQUIRE(!wrapper.isExisting);
-    REQUIRE(!wrapper.isPrecious);
 }
 
 TEST_CASE("registered methods", "[LuaGameState]")

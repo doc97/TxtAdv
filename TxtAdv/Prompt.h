@@ -11,13 +11,44 @@
 namespace txt
 {
 
+/* Class: Prompt
+ * Represents the main user input interface for the game.
+ */
 class Prompt
 {
 public:
+    /* Constructor: Prompt
+     *
+     * Parameters:
+     *
+     *    io - The I/O interface to use
+     */
     Prompt(IO* io);
     ~Prompt();
 
+    /* Function: PromptInput
+     * Asks the I/O interface for input.
+     *
+     * E.g. if the prompt is: "$ "
+     * > $ <input goes here>
+     *
+     * Returns:
+     *
+     *    The input response
+     *
+     * See Also:
+     *
+     *    <SetInput>
+     */
     std::string PromptInput();
+
+    /* Function: SetPrompt
+     * Sets the prompt with which to ask for input.
+     *
+     * Parameters:
+     *
+     *    prompt - The prompt string
+     */
     void SetPrompt(const std::string& prompt);
 private:
     IO* m_io;

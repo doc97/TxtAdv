@@ -9,7 +9,6 @@ namespace txt
 {
 
 LuaManager::LuaManager()
-    : L(nullptr)
 {
     Init();
 }

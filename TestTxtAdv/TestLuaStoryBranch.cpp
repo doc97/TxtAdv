@@ -12,10 +12,6 @@ namespace txt
 TEST_CASE("LuaStoryBranch configuration", "[LuaStoryBranch]")
 {
     REQUIRE(LuaStoryBranch::className == "LuaStoryBranch");
-    StoryBranch branch;
-    LuaStoryBranch wrapper(&branch);
-    REQUIRE(!wrapper.isExisting);
-    REQUIRE(!wrapper.isPrecious);
 }
 
 TEST_CASE("LuaStoryBranch registered methods", "[LuaStoryBranch]")

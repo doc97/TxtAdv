@@ -11,24 +11,76 @@
 namespace txt
 {
 
+/* Class: LuaStoryBranch
+ * Lua wrapper class for <StoryBranch>.
+ *
+ * See Also:
+ *    <StoryBranch>
+ */
 class LuaStoryBranch
 {
 public:
+    /* Constructor: LuaStoryBranch
+     *
+     * Parameters:
+     *
+     *    branch - A pointer to the <StoryBranch> to wrap
+     */
     LuaStoryBranch(StoryBranch* branch);
     ~LuaStoryBranch();
+
+    /* Function: Next
+     * Wrapper for <StoryBranch::Next>
+     */
     void Next();
+
+    /* Function: Prev
+     * Wrapper for <StoryBranch::Prev>
+     */
     void Prev();
 
-    // Lua interface
+    /********** LUA INTERFACE **********/
+
+    /* Constant: className
+     * The name used for this class in Lua.
+     */
     static const char* className;
+
+    /* Constant: methods
+     * An array of methods exposed to Lua.
+     */
     static const Luna<LuaStoryBranch>::FunctionType methods[];
+
+    /* Constant: properties
+     * An array of properties exposed to Lua.
+     */
     static const Luna<LuaStoryBranch>::PropertyType properties[];
 
-    bool isExisting = false;
-    bool isPrecious = false;
-
+    /* Constructor: LuaStoryBranch
+     * Will be called from Lua code.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
     LuaStoryBranch(lua_State* L);
+
+    /* Function: next
+     * Expose <Next> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
     int next(lua_State* L);
+
+    /* Function: prev
+     * Expose <Prev> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
     int prev(lua_State* L);
 private:
     StoryBranch* m_branch = nullptr;

@@ -80,25 +80,25 @@ std::string GameState::GetString(const std::string& key) const
     return m_stringState.at(key);
 }
 
-int GameState::ReadInt(const std::string& key, int defValue) const
+int GameState::ReadInt(const std::string& key, int def) const
 {
     if (HasInt(key))
         return m_intState.at(key);
-    return defValue;
+    return def;
 }
 
-float GameState::ReadFloat(const std::string& key, float defValue) const
+float GameState::ReadFloat(const std::string& key, float def) const
 {
     if (HasFloat(key))
         return m_floatState.at(key);
-    return defValue;
+    return def;
 }
 
-std::string GameState::ReadString(const std::string& key, const std::string& defValue) const
+std::string GameState::ReadString(const std::string& key, const std::string& def) const
 {
     if (HasString(key))
         return m_stringState.at(key);
-    return defValue;
+    return def;
 }
 
 std::unordered_map<std::string, int> GameState::GetAllInts() const

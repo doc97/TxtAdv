@@ -10,13 +10,40 @@
 namespace txt
 {
 
-    class IO
-    {
-    public:
-        virtual ~IO() {}
-        virtual void Write(const std::string& string) = 0;
-        virtual void WriteLine(const std::string& string) = 0;
-        virtual void GetLine(std::string& string) = 0;
-    };
+/* Interface: IO
+ * Used to implement I/O operations.
+ */
+class IO
+{
+public:
+    virtual ~IO() {}
+
+    /* Function: Write
+     * Implement output here.
+     *
+     * Parameters:
+     *
+     *    string - The string to write
+     */
+    virtual void Write(const std::string& string) = 0;
+
+    /* Function: WriteLine
+     * Implement line-ended output here.
+     *
+     * Parameters:
+     *
+     *    string - The string to write
+     */
+    virtual void WriteLine(const std::string& string) = 0;
+
+    /* Function: GetLine
+     * Implement line input here.
+     *
+     * Parameters:
+     *
+     *    string - The result is stored in this variable
+     */
+    virtual void GetLine(std::string& string) = 0;
+};
 
 } // namespace txt
