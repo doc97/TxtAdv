@@ -34,7 +34,7 @@ void ResponseSystem::AddLambdaResponseHandler(const std::function<ResponseMatch(
     m_handlers.push_back(std::make_unique<LambdaResponseHandler>(matcher, func));
 }
 
-void ResponseSystem::RemoveHandler(const std::string& key)
+void ResponseSystem::RemoveHandlers(const std::string& key)
 {
     m_handlers.erase(
         std::remove_if(

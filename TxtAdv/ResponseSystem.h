@@ -48,14 +48,14 @@ public:
     void AddLambdaResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
         const std::function<void(const ResponseMatch&)>& func);
 
-    /* Function: RemoveHandler
+    /* Function: RemoveHandlers
      * Remove all handlers that matches the input.
      *
      * Parameters:
      *
      *    key - The input to match
      */
-    void RemoveHandler(const std::string& key);
+    void RemoveHandlers(const std::string& key);
 
     /* Function: ClearHandlers
      * Remove all handlers.

@@ -40,7 +40,7 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
 
     SECTION("remove from empty ResponseSystem")
     {
-        sys.RemoveHandler(key);
+        sys.RemoveHandlers(key);
         REQUIRE(sys.HandlerCount() == 0);
     }
     SECTION("remove from non-empty ResponseSystem")
@@ -53,7 +53,7 @@ TEST_CASE("ResponseHandlers can be removed", "[ResponseSystem]")
             [&key](const std::string& input) { return input != key; },
             [](const ResponseMatch& match) {}
         );
-        sys.RemoveHandler(key);
+        sys.RemoveHandlers(key);
         REQUIRE(sys.HandlerCount() == 1);
     }
 }
