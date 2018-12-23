@@ -109,7 +109,7 @@ public:
      *
      *    A pointer to the <StoryPoint> at that index, nullpointer if it doesn't exist
      */
-    std::shared_ptr<StoryPoint> GetPointAt(unsigned int index) const;
+    StoryPoint* GetPointAt(unsigned int index) const;
 
     /* Function: GetHead
      * Returns the current <StoryPoint>.
@@ -123,7 +123,7 @@ public:
      *    <Prev>, <Next>
      */
 
-    std::shared_ptr<StoryPoint> GetHead() const;
+    StoryPoint* GetHead() const;
 
     /* Function: GetParentBranch
      *
@@ -131,7 +131,7 @@ public:
      *
      *    A pointer to the parent branch.
      */
-    std::shared_ptr<StoryBranch> GetParentBranch() const;
+    StoryBranch* GetParentBranch() const;
 
     /* Function: Length
      *

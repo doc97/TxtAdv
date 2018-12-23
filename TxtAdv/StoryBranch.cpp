@@ -70,21 +70,21 @@ std::string StoryBranch::GetName() const
     return m_name;
 }
 
-std::shared_ptr<StoryPoint> StoryBranch::GetPointAt(unsigned int index) const
+StoryPoint* StoryBranch::GetPointAt(unsigned int index) const
 {
-    return m_points.at(index);
+    return m_points.at(index).get();
 }
 
-std::shared_ptr<StoryPoint> StoryBranch::GetHead() const
+StoryPoint* StoryBranch::GetHead() const
 {
     if (m_points.empty())
         return nullptr;
-    return m_points.at(m_head);
+    return m_points.at(m_head).get();
 }
 
-std::shared_ptr<StoryBranch> StoryBranch::GetParentBranch() const
+StoryBranch* StoryBranch::GetParentBranch() const
 {
-    return m_parent;
+    return m_parent.get();
 }
 
 size_t StoryBranch::Length() const
