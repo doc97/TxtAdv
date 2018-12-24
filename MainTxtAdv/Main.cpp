@@ -38,7 +38,7 @@ void runExampleLuna()
     manager.PushObject(new txt::LuaStoryBranch(&branch), "branch", true);
 
     std::string err;
-    if (!manager.ExecFile("LUA/luna.lua", err))
+    if (!manager.ExecFile("LUA/luna.lua", err, true))
         std::cout << err << std::endl;
 
     std::cin.get();
