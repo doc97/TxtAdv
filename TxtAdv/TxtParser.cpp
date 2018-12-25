@@ -30,7 +30,8 @@ std::string TxtParser::ParseText(const std::string& text)
 {
     std::string prevResult;
     std::string result = text;
-    while (result != prevResult)
+    size_t depth = 0;
+    while (result != prevResult && depth++ < TxtParser::DEPTH_MAX)
     {
         std::vector<std::string> vars = ParseVariables(result);
         prevResult = result;

@@ -106,7 +106,18 @@ TEST_CASE("TxtParser - recursive variable", "[TxtParser]")
     TxtParser parser(state);
     REQUIRE(parser.Parse("{s_rgx}") == "s_name");
     REQUIRE(parser.Parse("{{s_rgx}}") == "Foo");
-    REQUIRE(parser.Parse("{{s_rgx}}") == "Foo");
+}
+
+TEST_CASE("TxtParser - recursive depth", "[TxtParser]")
+{
+    GameState state;
+    state.SetString("rec1", "{s_rec2}");
+    state.SetString("rec2", "{s_rec1}");
+    TxtParser parser(state);
+
+    // Max recursive depth is 8
+    REQUIRE(parser.Parse("{s_rec1}") == "{s_rec1}");
+    REQUIRE(parser.Parse("{s_rec2}") == "{s_rec2}");
 }
 
 TEST_CASE("TxtParser - dynamic, recursive variable expressions", "[TxtParser]")

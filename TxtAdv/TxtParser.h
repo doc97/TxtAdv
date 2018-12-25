@@ -58,6 +58,7 @@ public:
      */
     void AddExpression(const std::string& name, const std::function<std::string()>& expr);
 private:
+    static const size_t DEPTH_MAX = 8;
     GameState m_state;
     std::unordered_map<std::string, std::function<std::string()>> m_expressions;
 
