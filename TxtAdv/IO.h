@@ -25,7 +25,10 @@ public:
      *
      *    string - The string to write
      */
-    void Write(const std::string& string);
+    inline void Write(const std::string& string)
+    {
+        WriteImpl(string);
+    }
 
     /* Function: WriteLine
      * Implement line-ended output here.
@@ -34,7 +37,10 @@ public:
      *
      *    string - The string to write
      */
-    void WriteLine(const std::string& string);
+    inline void WriteLine(const std::string& string)
+    {
+        WriteLineImpl(string);
+    }
 
     /* Function: GetLine
      * Implement line input here.
@@ -43,7 +49,10 @@ public:
      *
      *    string - The result is stored in this variable
      */
-    void GetLine(std::string& string);
+    inline void GetLine(std::string& string)
+    {
+        GetLineImpl(string);
+    }
 
 private:
     virtual void WriteImpl(const std::string& string) = 0;

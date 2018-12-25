@@ -25,7 +25,10 @@ public:
      *
      *    text - The text to change
      */
-    std::string ParseText(const std::string& text);
+    inline std::string ParseText(const std::string& text)
+    {
+        return ParseTextImpl(text);
+    }
 private:
     virtual std::string ParseTextImpl(const std::string& text) = 0;
 };

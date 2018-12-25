@@ -162,7 +162,6 @@
     <ClCompile Include="ConsoleIO.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="IO.cpp" />
     <ClCompile Include="LuaGameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaResponseHandler.cpp" />
@@ -173,7 +172,6 @@
     <ClCompile Include="ResponseSystem.cpp" />
     <ClCompile Include="StoryBranch.cpp" />
     <ClCompile Include="StoryPoint.cpp" />
-    <ClCompile Include="TextParser.cpp" />
     <ClCompile Include="TxtParser.cpp" />
   </ItemGroup>
   <ItemGroup>
