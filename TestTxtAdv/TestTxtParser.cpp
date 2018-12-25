@@ -52,7 +52,7 @@ TEST_CASE("TxtParser - float variable", "[TxtParser]")
     REQUIRE(parser.Parse("{f_value2}") == "2.26");
 }
 
-TEST_CASE("Txtparser - int variable", "[TxtParser]")
+TEST_CASE("TxtParser - int variable", "[TxtParser]")
 {
     GameState state;
     state.SetInt("value1", -1);
@@ -61,6 +61,18 @@ TEST_CASE("Txtparser - int variable", "[TxtParser]")
     REQUIRE(parser.Parse("{value1}") == "{value1}");
     REQUIRE(parser.Parse("{i_value1}") == "-1");
     REQUIRE(parser.Parse("{i_value2}") == "2");
+}
+
+TEST_CASE("TxtParser - expression variable", "[TxtParser]")
+{
+    GameState state;
+    TxtParser parser(state);
+    parser.AddExpression("expr1", []() { return "foo"; });
+    parser.AddExpression("expr2", []() { return "bar"; });
+    REQUIRE(parser.Parse("{expr1}") == "{expr1}");
+    REQUIRE(parser.Parse("{x_expr1}") == "foo");
+    REQUIRE(parser.Parse("{x_expr2}") == "bar");
+    REQUIRE(parser.Parse("{x_expr1}{x_expr2}") == "foobar");
 }
 
 TEST_CASE("TxtParser - variable type", "[TxtParser]")

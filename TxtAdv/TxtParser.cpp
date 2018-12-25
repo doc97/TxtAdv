@@ -20,6 +20,12 @@ TxtParser::~TxtParser()
 {
 }
 
+
+void TxtParser::AddExpression(const std::string& name, const std::function<std::string()>& expr)
+{
+    m_expressions[name] = expr;
+}
+
 std::string TxtParser::ParseText(const std::string& text)
 {
     std::string prevResult;
@@ -35,7 +41,7 @@ std::string TxtParser::ParseText(const std::string& text)
 
 std::vector<std::string> TxtParser::ParseVariables(const std::string& text) const
 {
-    std::regex rgx("\\{([fis]_\\w+)\\}");
+    std::regex rgx("\\{([fisx]_\\w+)\\}");
     std::sregex_iterator iter(text.begin(), text.end(), rgx);
     std::sregex_iterator end;
     std::vector<std::string> captures;
@@ -73,8 +79,10 @@ std::string TxtParser::GetVariableString(const std::string& type, const std::str
             return FloatToString(m_state.GetFloat(name), 2);
         else if (type == "s_")
             return m_state.GetString(name);
+        else if (type == "x_")
+            return ExprToString(name);
         else
-            throw std::invalid_argument("type must either be i_, f_, or s_");
+            throw std::invalid_argument("type must either be i_, f_, s_ or x_");
     }
     catch (std::invalid_argument)
     {
@@ -90,6 +98,13 @@ std::string TxtParser::FloatToString(float value, size_t precision) const
     std::stringstream ss;
     ss << std::fixed << std::setprecision(precision) << value;
     return ss.str();
+}
+
+std::string TxtParser::ExprToString(const std::string& name) const
+{
+    if (m_expressions.find(name) == m_expressions.end())
+        throw new std::invalid_argument("No expression found with the name: " + name);
+    return m_expressions.at(name)();
 }
 
 } // namespace txt
