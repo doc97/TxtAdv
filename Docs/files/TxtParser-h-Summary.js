@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:TxtParser.h","TxtParser.h");NDSummary.OnSummaryLoaded("File:TxtParser.h",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[167,0,0,"TxtParser","TxtParser"],[168,0,2,"Functions","TxtParser.Functions"],[169,0,1,"TxtParser","TxtParser.TxtParser"],[170,0,1,"AddExpression","TxtParser.AddExpression"]]);

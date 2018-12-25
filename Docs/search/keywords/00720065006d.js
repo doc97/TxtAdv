@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("rem",["Function"],[["RemoveHandler",,[["ResponseSystem",,,,0,"File:ResponseSystem.h:ResponseSystem.RemoveHandler","CClass:ResponseSystem:RemoveHandler"]]]]);
+NDSearch.OnPrefixDataLoaded("rem",["Function"],[["RemoveHandlers",,[["ResponseSystem",,,,0,"File:ResponseSystem.h:ResponseSystem.RemoveHandlers","CClass:ResponseSystem:RemoveHandlers"]]]]);

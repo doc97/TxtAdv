@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:TextParser.h","TextParser.h");NDSummary.OnSummaryLoaded("File:TextParser.h",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[116,0,0,"TextParser","TextParser"],[165,0,2,"Functions","TextParser.Functions"],[166,0,1,"Parse","TextParser.Parse"]]);

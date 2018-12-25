@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("txt",["Class"],[["TxtParser",,[[,,,,0,"File:TxtParser.h:TxtParser","CClass:TxtParser"]]]]);
