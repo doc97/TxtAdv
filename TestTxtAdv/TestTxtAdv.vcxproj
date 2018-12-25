@@ -142,6 +142,7 @@
     <ClCompile Include="TestResponseSystem.cpp" />
     <ClCompile Include="TestStoryBranch.cpp" />
     <ClCompile Include="TestStoryPoint.cpp" />
+    <ClCompile Include="TestTxtParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

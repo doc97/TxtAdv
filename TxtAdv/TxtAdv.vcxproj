@@ -172,6 +172,8 @@
     <ClCompile Include="ResponseSystem.cpp" />
     <ClCompile Include="StoryBranch.cpp" />
     <ClCompile Include="StoryPoint.cpp" />
+    <ClCompile Include="TextParser.cpp" />
+    <ClCompile Include="TxtParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvGame.h" />
@@ -192,6 +194,8 @@
     <ClInclude Include="ResponseSystem.h" />
     <ClInclude Include="StoryBranch.h" />
     <ClInclude Include="StoryPoint.h" />
+    <ClInclude Include="TextParser.h" />
+    <ClInclude Include="TxtParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
