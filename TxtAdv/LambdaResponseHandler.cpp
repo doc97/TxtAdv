@@ -18,14 +18,14 @@ LambdaResponseHandler::~LambdaResponseHandler()
 {
 }
 
-void LambdaResponseHandler::HandleInput(const std::string& input)
+void LambdaResponseHandler::HandleInputImpl(const std::string& input)
 {
     ResponseMatch match = m_matcher(input);
     if (match.IsMatch())
         m_func(match);
 }
 
-bool LambdaResponseHandler::Matches(const std::string& input)
+bool LambdaResponseHandler::MatchesImpl(const std::string& input)
 {
     return m_matcher(input).IsMatch();
 }

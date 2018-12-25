@@ -17,7 +17,7 @@ LuaResponseHandler::~LuaResponseHandler()
 {
 }
 
-void LuaResponseHandler::HandleInput(const std::string& input)
+void LuaResponseHandler::HandleInputImpl(const std::string& input)
 {
     if (Matches(input))
     {
@@ -29,7 +29,7 @@ void LuaResponseHandler::HandleInput(const std::string& input)
     }
 }
 
-bool LuaResponseHandler::Matches(const std::string& input)
+bool LuaResponseHandler::MatchesImpl(const std::string& input)
 {
     std::string err;
     std::vector<LuaParam> params = { { LuaParam::String, input.c_str() } };

@@ -32,26 +32,12 @@ public:
     LuaResponseHandler(LuaManager* manager, const std::string& filename);
     ~LuaResponseHandler();
 
-    /* Function: HandleInput
-     * If <Matches> returns true, calls the _action_ function defined in Lua.
-     *
-     * Parameters:
-     *
-     *    input - The input on which to run the _action_ function
-     */
-    void HandleInput(const std::string& input) override;
-
-    /* Function: Matches
-     * Checks whether the input is acceptable by calling the _matches_ function defined in Lua.
-     *
-     * Parameters:
-     *
-     *    input - The input on which to run the _matches_ function
-     */
-    bool Matches(const std::string& input) override;
 private:
     LuaManager* m_manager;
     std::string m_filename;
+
+    void HandleInputImpl(const std::string& input) override;
+    bool MatchesImpl(const std::string& input) override;
 };
 
 } // namespace txt

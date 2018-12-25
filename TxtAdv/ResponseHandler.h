@@ -25,7 +25,10 @@ public:
      *
      *    input - The input to handle
      */
-    virtual void HandleInput(const std::string& input) = 0;
+    inline void HandleInput(const std::string& input)
+    {
+        HandleInputImpl(input);
+    }
 
     /* Function: Matches
      * Implement matching functionality here.
@@ -34,7 +37,14 @@ public:
      *
      *    input - Input to check for match
      */
-    virtual bool Matches(const std::string& input) = 0;
+    inline bool Matches(const std::string& input)
+    {
+        return MatchesImpl(input);
+    }
+
+private:
+    virtual void HandleInputImpl(const std::string& input) = 0;
+    virtual bool MatchesImpl(const std::string& input) = 0;
 };
 
 } // namespace txt
