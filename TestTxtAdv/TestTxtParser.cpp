@@ -5,6 +5,7 @@
 
 #include "catch.hpp"
 #include "TxtParser.h"
+#include "LambdaExpression.h"
 
 namespace txt
 {
@@ -67,8 +68,8 @@ TEST_CASE("TxtParser - expression variable", "[TxtParser]")
 {
     GameState state;
     TxtParser parser(state);
-    parser.AddExpression("expr1", []() { return "foo"; });
-    parser.AddExpression("expr2", []() { return "bar"; });
+    parser.AddExpression("expr1", std::make_shared<LambdaExpression>([]() { return "foo"; }));
+    parser.AddExpression("expr2", std::make_shared<LambdaExpression>([]() { return "bar"; }));
     REQUIRE(parser.ParseText("{expr1}") == "{expr1}");
     REQUIRE(parser.ParseText("{x_expr1}") == "foo");
     REQUIRE(parser.ParseText("{x_expr2}") == "bar");

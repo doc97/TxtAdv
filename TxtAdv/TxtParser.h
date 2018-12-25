@@ -7,6 +7,7 @@
 
 #include "TextParser.h"
 #include "GameState.h"
+#include "Expression.h"
 #include <functional>
 #include <vector>
 
@@ -56,11 +57,11 @@ public:
      *    name - The name used to refer to the expression
      *    expr - The expression
      */
-    void AddExpression(const std::string& name, const std::function<std::string()>& expr);
+    void AddExpression(const std::string& name, std::shared_ptr<Expression> expr);
 private:
     static const size_t DEPTH_MAX = 8;
     GameState m_state;
-    std::unordered_map<std::string, std::function<std::string()>> m_expressions;
+    std::unordered_map<std::string, std::shared_ptr<Expression>> m_expressions;
 
     std::string ParseTextImpl(const std::string& text) override;
     std::vector<std::string> ParseVariables(const std::string& text) const;

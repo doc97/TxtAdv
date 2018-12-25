@@ -12,6 +12,7 @@
 #include "LuaGameState.h"
 #include "LuaStoryBranch.h"
 #include "TxtParser.h"
+#include "LambdaExpression.h"
 
 namespace txt
 {
@@ -114,7 +115,7 @@ void AdvGame::InitPointTwo()
         }
     ));
     std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(m_state);
-    parser->AddExpression("stats", [this]()
+    parser->AddExpression("stats", std::make_shared<LambdaExpression>([this]()
     {
         std::unordered_map<std::string, int> intMap = this->GetState().GetAllInts();
         std::unordered_map<std::string, float> floatMap = this->GetState().GetAllFloats();
@@ -134,7 +135,7 @@ void AdvGame::InitPointTwo()
         for (; sIt != strMap.end(); ++sIt)
             ss << sIt->first << ": " << sIt->second << std::endl;
         return ss.str();
-    });
+    }));
     m_branch.AddPoint("Current state:\n{x_stats}", parser, handlers);
 }
 
@@ -151,10 +152,10 @@ void AdvGame::InitPointThree()
         "LUA/3.lua"
     ));
     std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(m_state);
-    parser->AddExpression("0", [this]()
+    parser->AddExpression("0", std::make_shared<LambdaExpression>([this]()
     {
         return this->GetState().ReadString("text", "<Default text>");
-    });
+    }));
     m_branch.AddPoint("{x_0}", parser, handlers);
 }
 

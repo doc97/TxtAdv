@@ -21,7 +21,7 @@ TxtParser::~TxtParser()
 }
 
 
-void TxtParser::AddExpression(const std::string& name, const std::function<std::string()>& expr)
+void TxtParser::AddExpression(const std::string& name, std::shared_ptr<Expression> expr)
 {
     m_expressions[name] = expr;
 }
@@ -105,7 +105,7 @@ std::string TxtParser::ExprToString(const std::string& name) const
 {
     if (m_expressions.find(name) == m_expressions.end())
         throw new std::invalid_argument("No expression found with the name: " + name);
-    return m_expressions.at(name)();
+    return m_expressions.at(name)->Exec();
 }
 
 } // namespace txt
