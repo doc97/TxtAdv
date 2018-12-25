@@ -162,6 +162,7 @@
     <ClCompile Include="ConsoleIO.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="LambdaExpression.cpp" />
     <ClCompile Include="LuaGameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaResponseHandler.cpp" />
@@ -177,8 +178,10 @@
   <ItemGroup>
     <ClInclude Include="AdvGame.h" />
     <ClInclude Include="ConsoleIO.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="LambdaExpression.h" />
     <ClInclude Include="ResponseHandler.h" />
     <ClInclude Include="LuaGameState.h" />
     <ClInclude Include="LuaManager.h" />
