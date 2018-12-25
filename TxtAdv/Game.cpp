@@ -9,6 +9,7 @@ namespace txt
 {
 
 Game::Game()
+    : m_isRunning(false)
 {
 }
 
