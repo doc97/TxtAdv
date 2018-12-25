@@ -27,7 +27,7 @@ public:
      */
     void Exit();
 
-protected:
+private:
     /* Function: Init
      * Implement initialization code for your game here.
      *

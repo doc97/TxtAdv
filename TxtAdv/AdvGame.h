@@ -73,16 +73,6 @@ public:
      *    <IO>
      */
     IO* GetIO() const;
-protected:
-    /* Function: Init
-     * Contains game framework initialization code.
-     */
-    void Init() override;
-
-    /* Function: Update
-     * Contains game framework update code.
-     */
-    void Update() override;
 private:
     IO* m_io;
     Prompt m_prompt;
@@ -91,6 +81,8 @@ private:
     GameState m_state;
     LuaManager m_manager;
 
+    void Init() override;
+    void Update() override;
     void InitLua();
     void InitMisc();
     void InitStory();
