@@ -44,15 +44,15 @@ public:
     void AddPoint(const StoryPoint& point);
 
     /* Function: AddPoint
-     * Add a <StoryPoint> by using its parameters
+     * Add a <StoryPoint> by using its parameters.
      *
      * Parameters:
      *
      *    text - See <StoryPoint>
-     *    expr - See <StoryPoint>
+     *    parser - See <StoryPoint>
      *    handlers - See <StoryPoint>
      */
-    void AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
+    void AddPoint(const std::string& text, std::shared_ptr<TextParser> parser,
         const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
 
     /* Function: Next

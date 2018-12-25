@@ -6,6 +6,7 @@
 #include "catch.hpp"
 #include "StoryPoint.h"
 #include "LambdaResponseHandler.h"
+#include "TxtParser.h"
 
 namespace txt
 {
@@ -20,50 +21,34 @@ TEST_CASE("StoryPoint - get/set text", "[StoryPoint]")
     REQUIRE(point.GetText() == "b");
 }
 
-TEST_CASE("StoryPoint - get/set markup text", "[StoryPoint]")
+TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
 {
+    GameState state;
     StoryPoint point;
 
     SECTION("static expressions")
     {
-        std::vector<std::function<std::string()>> expr;
-        expr.emplace_back([]() { return "A"; });
-        expr.emplace_back([]() { return "B"; });
-        point.SetMarkup(expr);
+        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
+        parser->AddExpression("a", []() { return "A"; });
+        parser->AddExpression("b", []() { return "B"; });
+        point.SetParser(parser);
 
-        point.SetText("$0");
+        point.SetText("{x_a}");
         REQUIRE(point.GetText() == "A");
-        point.SetText("$1");
+        point.SetText("{x_b}");
         REQUIRE(point.GetText() == "B");
     }
     SECTION("dynamic expression")
     {
         std::string var = "a";
-        std::vector<std::function<std::string()>> expr;
-        expr.emplace_back([&var]() { return var; });
-        point.SetMarkup(expr);
+        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
+        parser->AddExpression("0", [&var]() { return var; });
+        point.SetParser(parser);
 
-        point.SetText("$0");
+        point.SetText("{x_0}");
         REQUIRE(point.GetText() == var);
         var = "b";
         REQUIRE(point.GetText() == var);
-    }
-    SECTION("invalid expression")
-    {
-        std::vector<std::function<std::string()>> expr;
-        expr.emplace_back([]() { return "$0"; });
-        point.SetText("$0");
-        point.SetMarkup(expr);
-        REQUIRE(point.GetText() == "");
-    }
-    SECTION("advanced expression")
-    {
-        std::vector<std::function<std::string()>> expr;
-        expr.emplace_back([]() { return "1"; });
-        expr.emplace_back([]() { return "A"; });
-        point.SetText("$$0");
-        point.SetMarkup(expr);
-        REQUIRE(point.GetText() == "A");
     }
 }
 

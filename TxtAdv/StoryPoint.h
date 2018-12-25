@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "ResponseHandler.h"
+#include "TextParser.h"
 
 namespace txt
 {
@@ -35,23 +36,14 @@ public:
      */
     void SetText(const std::string& text);
 
-    /* Function: SetMarkup
-     * Sets the functions to which parse the markup text.
+    /* Function: SetParser
+     * Sets the <TextParser> to use to parse the markup text.
      *
      * Parameters:
      *
-     *    expr - The functions for parsing the markup
-     *
-     * Example:
-     *
-     * --- C++ ---
-     * StoryPoint point;
-     * point.SetText("$0 - $1");
-     * point.SetMarkup({ []() { return "foo"; }, []() { return "bar"; } });
-     * point.GetText(); // Returns "foo - bar"
-     * -----------
+     *    parser - The parser
      */
-    void SetMarkup(const std::vector<std::function<std::string()>>& expr);
+    void SetParser(std::shared_ptr<TextParser> parser);
 
     /* Function: SetHandlers
      * Sets a list of handlers associated with this point.
@@ -93,7 +85,7 @@ public:
 private:
     std::string m_text;
     std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
-    std::vector<std::function<std::string()>> m_expressions;
+    std::shared_ptr<TextParser> m_parser = nullptr;
 
     std::string ParseText(const std::string& text, const std::vector<std::function<std::string()>>& expr) const;
     bool IsIllegalText(const std::string& text) const;

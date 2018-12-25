@@ -21,9 +21,9 @@ void StoryPoint::SetText(const std::string& text)
     m_text = text;
 }
 
-void StoryPoint::SetMarkup(const std::vector<std::function<std::string()>>& expr)
+void StoryPoint::SetParser(std::shared_ptr<TextParser> parser)
 {
-    m_expressions = expr;
+    m_parser = parser;
 }
 
 void StoryPoint::SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
@@ -57,7 +57,9 @@ bool StoryPoint::IsIllegalText(const std::string& text) const
 
 std::string StoryPoint::GetText() const
 {
-    return ParseText(m_text, m_expressions);
+    if (!m_parser)
+        return m_text;
+    return m_parser->Parse(m_text);
 }
 
 size_t StoryPoint::GetHandlerCount() const

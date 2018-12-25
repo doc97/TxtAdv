@@ -6,6 +6,7 @@
 #include "catch.hpp"
 #include "StoryBranch.h"
 #include "LambdaResponseHandler.h"
+#include "TxtParser.h"
 
 namespace txt
 {
@@ -100,14 +101,15 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
     }
     SECTION("add point by markup")
     {
-        std::vector<std::function<std::string()>> expr;
-        expr.emplace_back([]() { return "A"; });
-        expr.emplace_back([]() { return "B"; });
+        GameState state;
+        state.SetString("b", "B");
+        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
+        parser->AddExpression("a", []() { return "A"; });
 
-        branch.AddPoint("text $0", expr, {});
+        branch.AddPoint("text {x_a}", parser, {});
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetText() == "text A");
-        branch.AddPoint("text $1", expr, {});
+        branch.AddPoint("text {s_b}", parser, {});
         REQUIRE(branch.Length() == 2);
         REQUIRE(branch.GetPointAt(1)->GetText() == "text B");
     }
@@ -142,20 +144,22 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
     }
     SECTION("add point by markup and handlers")
     {
-        std::vector<std::function<std::string()>> expr;
-        expr.emplace_back([]() { return "A"; });
-        expr.emplace_back([]() { return "B"; });
+        GameState state;
+        state.SetString("b", "B");
+        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
+        parser->AddExpression("a", []() { return "A"; });
+
         std::vector<std::shared_ptr<ResponseHandler>> handlers;
         handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
             [](const std::string& input) { return false; },
             [](const ResponseMatch& match) {}
         ));
 
-        branch.AddPoint("text $0", expr, handlers);
+        branch.AddPoint("text {x_a}", parser, handlers);
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetText() == "text A");
         REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == 1);
-        branch.AddPoint("text $1", expr, handlers);
+        branch.AddPoint("text {s_b}", parser, handlers);
         REQUIRE(branch.Length() == 2);
         REQUIRE(branch.GetPointAt(1)->GetText() == "text B");
         REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == 1);

@@ -27,12 +27,12 @@ void StoryBranch::AddPoint(const StoryPoint& point)
     m_points.push_back(std::make_shared<StoryPoint>(point));
 }
 
-void StoryBranch::AddPoint(const std::string& text, const std::vector<std::function<std::string()>>& expr,
+void StoryBranch::AddPoint(const std::string& text, std::shared_ptr<TextParser> parser,
     const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
     StoryPoint point;
     point.SetText(text);
-    point.SetMarkup(expr);
+    point.SetParser(parser);
     point.SetHandlers(handlers);
     AddPoint(point);
 }
