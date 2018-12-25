@@ -8,9 +8,9 @@
 namespace txt
 {
 
-std::string TextParser::Parse(const std::string& text)
+std::string TextParser::ParseText(const std::string& text)
 {
-    return ParseText(text);
+    return ParseTextImpl(text);
 }
 
 } // namespace txt

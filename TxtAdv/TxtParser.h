@@ -62,7 +62,7 @@ private:
     GameState m_state;
     std::unordered_map<std::string, std::function<std::string()>> m_expressions;
 
-    std::string ParseText(const std::string& text) override;
+    std::string ParseTextImpl(const std::string& text) override;
     std::vector<std::string> ParseVariables(const std::string& text) const;
     std::string ReplaceVariables(const std::string& text, const std::vector<std::string>& vars) const;
     std::string GetVariableString(const std::string& type, const std::string& name, bool throwError = false) const;

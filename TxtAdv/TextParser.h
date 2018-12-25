@@ -18,16 +18,16 @@ class TextParser
 public:
     virtual ~TextParser() {}
 
-    /* Function: Parse
+    /* Function: ParseText
      * Parses a string of text and returns the result.
      *
      * Parameters:
      *
      *    text - The text to change
      */
-    std::string Parse(const std::string& text);
+    std::string ParseText(const std::string& text);
 private:
-    virtual std::string ParseText(const std::string& text) = 0;
+    virtual std::string ParseTextImpl(const std::string& text) = 0;
 };
 
 } // namespace txt

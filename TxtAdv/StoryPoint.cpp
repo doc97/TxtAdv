@@ -31,7 +31,7 @@ void StoryPoint::SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>
     m_handlers = handlers;
 }
 
-std::string StoryPoint::ParseText(const std::string& text,
+std::string StoryPoint::ParseTextImpl(const std::string& text,
     const std::vector<std::function<std::string()>>& expr) const
 {
     std::string parsedText = text;
@@ -59,7 +59,7 @@ std::string StoryPoint::GetText() const
 {
     if (!m_parser)
         return m_text;
-    return m_parser->Parse(m_text);
+    return m_parser->ParseText(m_text);
 }
 
 size_t StoryPoint::GetHandlerCount() const

@@ -26,7 +26,7 @@ void TxtParser::AddExpression(const std::string& name, const std::function<std::
     m_expressions[name] = expr;
 }
 
-std::string TxtParser::ParseText(const std::string& text)
+std::string TxtParser::ParseTextImpl(const std::string& text)
 {
     std::string prevResult;
     std::string result = text;
