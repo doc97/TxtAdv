@@ -23,32 +23,10 @@ public:
     ConsoleIO();
     ~ConsoleIO();
 
-    /* Function: Write
-     * Writes the string to stdout.
-     *
-     * Parameters:
-     *
-     *    string - The string to write
-     */
-    void Write(const std::string& string) override;
-
-    /* Function: WriteLine
-     * Writes the string and a newline to stdout.
-     *
-     * Parameters:
-     *
-     *    string - The string to write
-     */
-    void WriteLine(const std::string& string) override;
-
-    /* Function: GetLine
-     * Reads a line from stdin, will block until a line is given.
-     *
-     * Parameters:
-     *
-     *    string - The result is stored in this variable
-     */
-    void GetLine(std::string& string) override;
+private:
+    void WriteImpl(const std::string& string) override;
+    void WriteLineImpl(const std::string& string) override;
+    void GetLineImpl(std::string& string) override;
 };
 
 } // namespace txt

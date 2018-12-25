@@ -19,19 +19,19 @@ public:
     std::string m_input;
     std::string m_output;
 
-    void Write(const std::string& string)
+    void WriteImpl(const std::string& string) override
     {
         m_output = string;
     }
 
-    void WriteLine(const std::string& string)
+    void WriteLineImpl(const std::string& string) override
     {
         std::ostringstream oss;
         oss << string << std::endl;
         m_output = oss.str();
     }
 
-    void GetLine(std::string& string)
+    void GetLineImpl(std::string& string) override
     {
         string = m_input;
     }

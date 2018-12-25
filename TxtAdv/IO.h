@@ -25,7 +25,7 @@ public:
      *
      *    string - The string to write
      */
-    virtual void Write(const std::string& string) = 0;
+    void Write(const std::string& string);
 
     /* Function: WriteLine
      * Implement line-ended output here.
@@ -34,7 +34,7 @@ public:
      *
      *    string - The string to write
      */
-    virtual void WriteLine(const std::string& string) = 0;
+    void WriteLine(const std::string& string);
 
     /* Function: GetLine
      * Implement line input here.
@@ -43,7 +43,12 @@ public:
      *
      *    string - The result is stored in this variable
      */
-    virtual void GetLine(std::string& string) = 0;
+    void GetLine(std::string& string);
+
+private:
+    virtual void WriteImpl(const std::string& string) = 0;
+    virtual void WriteLineImpl(const std::string& string) = 0;
+    virtual void GetLineImpl(std::string& string) = 0;
 };
 
 } // namespace txt
