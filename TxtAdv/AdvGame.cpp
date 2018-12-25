@@ -86,7 +86,7 @@ void AdvGame::InitPointTwo()
             if (std::regex_match(input, match, rgx))
             {
                 std::vector<std::string> captures;
-                for (size_t i = 1; i <= match.size(); ++i)
+                for (size_t i = 1; i < match.size(); ++i)
                     captures.push_back(match.str(i));
                 return ResponseMatch(true, captures);
             }
