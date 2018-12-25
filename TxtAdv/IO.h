@@ -19,7 +19,6 @@ public:
     virtual ~IO() {}
 
     /* Function: Write
-     * Implement output here.
      *
      * Parameters:
      *
@@ -31,7 +30,6 @@ public:
     }
 
     /* Function: WriteLine
-     * Implement line-ended output here.
      *
      * Parameters:
      *
@@ -43,7 +41,6 @@ public:
     }
 
     /* Function: GetLine
-     * Implement line input here.
      *
      * Parameters:
      *

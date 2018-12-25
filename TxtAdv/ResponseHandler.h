@@ -19,7 +19,6 @@ public:
     virtual ~ResponseHandler() {}
 
     /* Function: HandleInput
-     * Implement input handling code here.
      *
      * Parameters:
      *
@@ -31,7 +30,6 @@ public:
     }
 
     /* Function: Matches
-     * Implement matching functionality here.
      *
      * Parameters:
      *
