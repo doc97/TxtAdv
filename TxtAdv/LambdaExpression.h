@@ -11,9 +11,22 @@
 namespace txt
 {
 
+/* Class: LambdaExpression
+ * Implements expression handling via lambda expressions.
+ *
+ * Extends:
+ *
+ *    <Expression>
+ */
 class LambdaExpression : public Expression
 {
 public:
+    /* Constructor: LambdaExpression
+     *
+     * Parameters:
+     *
+     *    func - The lambda expression used to to implement expression handling functionality
+     */
     LambdaExpression(const std::function<std::string()>& func);
     ~LambdaExpression();
 private:

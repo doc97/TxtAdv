@@ -163,6 +163,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LambdaExpression.cpp" />
+    <ClCompile Include="LuaExpression.cpp" />
     <ClCompile Include="LuaGameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaResponseHandler.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LambdaExpression.h" />
+    <ClInclude Include="LuaExpression.h" />
     <ClInclude Include="ResponseHandler.h" />
     <ClInclude Include="LuaGameState.h" />
     <ClInclude Include="LuaManager.h" />
