@@ -105,7 +105,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
         GameState state;
         state.SetString("b", "B");
         std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("a", std::make_shared<LambdaExpression>([]() { return "A"; }));
+        parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
 
         branch.AddPoint("text {x_a}", parser, {});
         REQUIRE(branch.Length() == 1);
@@ -148,7 +148,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
         GameState state;
         state.SetString("b", "B");
         std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("a", std::make_shared<LambdaExpression>([]() { return "A"; }));
+        parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
 
         std::vector<std::shared_ptr<ResponseHandler>> handlers;
         handlers.emplace_back(std::make_shared<LambdaResponseHandler>(

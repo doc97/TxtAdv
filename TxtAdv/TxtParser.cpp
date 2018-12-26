@@ -21,9 +21,9 @@ TxtParser::~TxtParser()
 }
 
 
-void TxtParser::AddExpression(const std::string& name, std::shared_ptr<Expression> expr)
+void TxtParser::AddExpression(const std::string& name, std::unique_ptr<Expression> expr)
 {
-    m_expressions[name] = expr;
+    m_expressions[name] = std::move(expr);
 }
 
 std::string TxtParser::ParseTextImpl(const std::string& text)

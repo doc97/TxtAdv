@@ -30,8 +30,8 @@ TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
     SECTION("static expressions")
     {
         std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("a", std::make_shared<LambdaExpression>([]() { return "A"; }));
-        parser->AddExpression("b", std::make_shared<LambdaExpression>([]() { return "B"; }));
+        parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
+        parser->AddExpression("b", std::make_unique<LambdaExpression>([]() { return "B"; }));
         point.SetParser(parser);
 
         point.SetText("{x_a}");
@@ -43,7 +43,7 @@ TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
     {
         std::string var = "a";
         std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("0", std::make_shared<LambdaExpression>([&var]() { return var; }));
+        parser->AddExpression("0", std::make_unique<LambdaExpression>([&var]() { return var; }));
         point.SetParser(parser);
 
         point.SetText("{x_0}");
