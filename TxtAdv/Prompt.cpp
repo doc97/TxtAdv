@@ -9,8 +9,7 @@
 namespace txt
 {
 
-Prompt::Prompt(IO* io)
-    : m_io(io)
+Prompt::Prompt()
 {
 }
 
@@ -18,10 +17,10 @@ Prompt::~Prompt()
 {
 }
 
-std::string Prompt::PromptInput()
+std::string Prompt::PromptInput(IO& io)
 {
-    m_io->Write(m_prompt);
-    m_io->GetLine(m_input);
+    io.Write(m_prompt);
+    io.GetLine(m_input);
     return m_input;
 }
 

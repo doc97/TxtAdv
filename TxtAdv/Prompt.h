@@ -17,13 +17,7 @@ namespace txt
 class Prompt
 {
 public:
-    /* Constructor: Prompt
-     *
-     * Parameters:
-     *
-     *    io - The I/O interface to use
-     */
-    Prompt(IO* io);
+    Prompt();
     ~Prompt();
 
     /* Function: PromptInput
@@ -40,7 +34,7 @@ public:
      *
      *    <SetInput>
      */
-    std::string PromptInput();
+    std::string PromptInput(IO& io);
 
     /* Function: SetPrompt
      * Sets the prompt with which to ask for input.
@@ -51,7 +45,6 @@ public:
      */
     void SetPrompt(const std::string& prompt);
 private:
-    IO* m_io;
     std::string m_input;
     std::string m_prompt;
 };

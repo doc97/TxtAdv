@@ -24,8 +24,7 @@ void runExampleLua()
 
 void runExampleGame()
 {
-    txt::ConsoleIO io;
-    txt::AdvGame game(&io);
+    txt::AdvGame game(std::make_unique<txt::ConsoleIO>());
     game.Run();
 }
 

@@ -40,12 +40,12 @@ public:
 TEST_CASE("Prompt", "[Prompt]")
 {
     TestIO io("line");
-    Prompt prompt(&io);
+    Prompt prompt;
 
     SECTION("test prompt")
     {
         prompt.SetPrompt("$ ");
-        std::string result = prompt.PromptInput();
+        std::string result = prompt.PromptInput(io);
         REQUIRE(io.m_output == "$ ");
         REQUIRE(result == "line");
     }

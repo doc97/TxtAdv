@@ -17,8 +17,8 @@
 namespace txt
 {
 
-AdvGame::AdvGame(IO* io)
-    : m_io(io), m_prompt(m_io)
+AdvGame::AdvGame(std::unique_ptr<IO> io)
+    : m_io(std::move(io))
 {
 }
 
@@ -110,7 +110,7 @@ void AdvGame::InitPointTwo()
             }
             catch (std::invalid_argument)
             {
-                this->GetIO()->WriteLine("Invalid type!\n---");
+                this->GetIO().WriteLine("Invalid type!\n---");
             }
         }
     ));
@@ -163,7 +163,7 @@ void AdvGame::Update()
 {
     const StoryPoint* head = m_branch.GetHead();
     m_io->WriteLine(head->GetText());
-    std::string input = m_prompt.PromptInput();
+    std::string input = m_prompt.PromptInput(GetIO());
     m_response.HandleInput(input);
 
     if (head != m_branch.GetHead())
@@ -183,9 +183,9 @@ StoryBranch& AdvGame::GetStory()
     return m_branch;
 }
 
-IO* AdvGame::GetIO() const
+IO& AdvGame::GetIO() const
 {
-    return m_io;
+    return *m_io;
 }
 
 } // namespace txt

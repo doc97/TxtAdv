@@ -30,9 +30,9 @@ public:
      *
      * Parameters:
      *
-     *    io - A pointer to the I/O interface to use
+     *    io - A unique_ptr to the I/O interface to use
      */
-    AdvGame(IO* io);
+    AdvGame(std::unique_ptr<IO> io);
     ~AdvGame();
 
     /* Function: GetState
@@ -72,9 +72,9 @@ public:
      *
      *    <IO>
      */
-    IO* GetIO() const;
+    IO& GetIO() const;
 private:
-    IO* m_io;
+    std::unique_ptr<IO> m_io;
     Prompt m_prompt;
     ResponseSystem m_response;
     StoryBranch m_branch;
