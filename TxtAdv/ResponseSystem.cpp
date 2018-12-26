@@ -19,7 +19,7 @@ ResponseSystem::~ResponseSystem()
 
 void ResponseSystem::AddHandler(std::shared_ptr<ResponseHandler> handler)
 {
-    m_handlers.emplace_back(std::move(handler));
+    m_handlers.push_back(handler);
 }
 
 void ResponseSystem::AddHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
@@ -31,7 +31,7 @@ void ResponseSystem::AddHandlers(const std::vector<std::shared_ptr<ResponseHandl
 void ResponseSystem::AddLambdaResponseHandler(const std::function<ResponseMatch(const std::string&)> matcher,
     const std::function<void(const ResponseMatch& match)>& func)
 {
-    m_handlers.push_back(std::make_unique<LambdaResponseHandler>(matcher, func));
+    m_handlers.push_back(std::make_shared<LambdaResponseHandler>(matcher, func));
 }
 
 void ResponseSystem::RemoveHandlers(const std::string& key)
@@ -51,10 +51,8 @@ void ResponseSystem::ClearHandlers()
 
 void ResponseSystem::HandleInput(const std::string& input)
 {
-    for (auto&& handler : m_handlers)
-    {
+    for (auto& handler : m_handlers)
         handler->HandleInput(input);
-    }
 }
 
 size_t ResponseSystem::HandlerCount() const
