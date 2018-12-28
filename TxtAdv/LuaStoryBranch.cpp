@@ -21,6 +21,7 @@ const Luna<LuaStoryBranch>::PropertyType LuaStoryBranch::properties[] =
 };
 
 LuaStoryBranch::LuaStoryBranch(lua_State* L)
+    : m_branch(nullptr)
 {
 }
 

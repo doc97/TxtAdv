@@ -83,7 +83,7 @@ public:
      */
     int prev(lua_State* L);
 private:
-    StoryBranch* m_branch = nullptr;
+    StoryBranch* m_branch;
 
     static LuaStoryBranch* GetObj(lua_State* L, int index);
 };

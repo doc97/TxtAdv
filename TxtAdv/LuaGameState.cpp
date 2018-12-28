@@ -28,6 +28,7 @@ const Luna<LuaGameState>::PropertyType LuaGameState::properties[] =
 };
 
 LuaGameState::LuaGameState(lua_State* L)
+    : m_state(nullptr)
 {
 }
 
