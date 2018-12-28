@@ -10,6 +10,7 @@
 #include <vector>
 #include "ResponseHandler.h"
 #include "TextParser.h"
+#include "Text.h"
 
 namespace txt
 {
@@ -23,7 +24,7 @@ public:
     StoryPoint();
     ~StoryPoint();
 
-    /* Function: SetText
+    /* Function: SetTextStr
      * Sets the raw text of this story point.
      *
      * Parameters:
@@ -34,7 +35,7 @@ public:
      *
      *    <SetMarkup>
      */
-    void SetText(const std::string& text);
+    void SetTextStr(const std::string& text);
 
     /* Function: SetParser
      * Sets the <TextParser> to use to parse the markup text.
@@ -54,17 +55,17 @@ public:
      */
     void SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
 
-    /* Function: GetText
+    /* Function: GetTextStr
      *
      * Returns:
      *
-     *    Get the parsed text
+     *    Get the parsed text string
      *
      * See Also:
      *
      *    <SetMarkup>
      */
-    std::string GetText() const;
+    std::string GetTextStr() const;
 
     /* Function: GetHandlerCount
      *
@@ -83,7 +84,7 @@ public:
      */
     std::vector<std::shared_ptr<ResponseHandler>> GetHandlers() const;
 private:
-    std::string m_text;
+    Text m_text;
     std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
     std::shared_ptr<TextParser> m_parser = nullptr;
 

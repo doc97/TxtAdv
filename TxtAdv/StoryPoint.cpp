@@ -9,6 +9,7 @@ namespace txt
 {
 
 StoryPoint::StoryPoint()
+    : m_text("")
 {
 }
 
@@ -16,9 +17,9 @@ StoryPoint::~StoryPoint()
 {
 }
 
-void StoryPoint::SetText(const std::string& text)
+void StoryPoint::SetTextStr(const std::string& text)
 {
-    m_text = text;
+    m_text = Text(text);
 }
 
 void StoryPoint::SetParser(std::shared_ptr<TextParser> parser)
@@ -55,11 +56,11 @@ bool StoryPoint::IsIllegalText(const std::string& text) const
     return hasDollar;
 }
 
-std::string StoryPoint::GetText() const
+std::string StoryPoint::GetTextStr() const
 {
     if (!m_parser)
-        return m_text;
-    return m_parser->ParseText(m_text);
+        return m_text.Str();
+    return m_parser->ParseText(m_text.Str());
 }
 
 size_t StoryPoint::GetHandlerCount() const

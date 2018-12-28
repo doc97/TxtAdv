@@ -12,14 +12,14 @@
 namespace txt
 {
 
-TEST_CASE("StoryPoint - get/set text", "[StoryPoint]")
+TEST_CASE("StoryPoint - get/set text string", "[StoryPoint]")
 {
     StoryPoint point;
-    REQUIRE(point.GetText() == "");
-    point.SetText("a");
-    REQUIRE(point.GetText() == "a");
-    point.SetText("b");
-    REQUIRE(point.GetText() == "b");
+    REQUIRE(point.GetTextStr() == "");
+    point.SetTextStr("a");
+    REQUIRE(point.GetTextStr() == "a");
+    point.SetTextStr("b");
+    REQUIRE(point.GetTextStr() == "b");
 }
 
 TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
@@ -34,10 +34,10 @@ TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
         parser->AddExpression("b", std::make_unique<LambdaExpression>([]() { return "B"; }));
         point.SetParser(parser);
 
-        point.SetText("{x_a}");
-        REQUIRE(point.GetText() == "A");
-        point.SetText("{x_b}");
-        REQUIRE(point.GetText() == "B");
+        point.SetTextStr("{x_a}");
+        REQUIRE(point.GetTextStr() == "A");
+        point.SetTextStr("{x_b}");
+        REQUIRE(point.GetTextStr() == "B");
     }
     SECTION("dynamic expression")
     {
@@ -46,10 +46,10 @@ TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
         parser->AddExpression("0", std::make_unique<LambdaExpression>([&var]() { return var; }));
         point.SetParser(parser);
 
-        point.SetText("{x_0}");
-        REQUIRE(point.GetText() == var);
+        point.SetTextStr("{x_0}");
+        REQUIRE(point.GetTextStr() == var);
         var = "b";
-        REQUIRE(point.GetText() == var);
+        REQUIRE(point.GetTextStr() == var);
     }
 }
 

@@ -162,7 +162,7 @@ void AdvGame::InitPointThree()
 void AdvGame::Update()
 {
     const StoryPoint* head = m_branch.GetHead();
-    m_io->WriteLine(head->GetText());
+    m_io->WriteLine(head->GetTextStr());
     std::string input = m_prompt.PromptInput(GetIO());
     m_response.HandleInput(input);
 

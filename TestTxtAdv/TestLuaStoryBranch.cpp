@@ -36,26 +36,26 @@ TEST_CASE("LuaStoryBranch - next/prev", "[LuaStoryBranch]")
     branch.AddPoint("2", {}, {});
     branch.AddPoint("3", {}, {});
     LuaStoryBranch wrapper(&branch);
-    REQUIRE(branch.GetHead()->GetText() == "1");
+    REQUIRE(branch.GetHead()->GetTextStr() == "1");
 
     SECTION("next")
     {
         wrapper.Next();
-        REQUIRE(branch.GetHead()->GetText() == "2");
+        REQUIRE(branch.GetHead()->GetTextStr() == "2");
         wrapper.Next();
-        REQUIRE(branch.GetHead()->GetText() == "3");
+        REQUIRE(branch.GetHead()->GetTextStr() == "3");
         wrapper.Next();
-        REQUIRE(branch.GetHead()->GetText() == "3");
+        REQUIRE(branch.GetHead()->GetTextStr() == "3");
     }
     SECTION("prev")
     {
         wrapper.Prev();
-        REQUIRE(branch.GetHead()->GetText() == "1");
+        REQUIRE(branch.GetHead()->GetTextStr() == "1");
         branch.SetCurrentPoint(2);
         wrapper.Prev();
-        REQUIRE(branch.GetHead()->GetText() == "2");
+        REQUIRE(branch.GetHead()->GetTextStr() == "2");
         wrapper.Prev();
-        REQUIRE(branch.GetHead()->GetText() == "1");
+        REQUIRE(branch.GetHead()->GetTextStr() == "1");
     }
 }
 

@@ -23,16 +23,16 @@ TEST_CASE("StoryBranch - get head", "[StoryBranch]")
     SECTION("one point")
     {
         StoryPoint point;
-        point.SetText("text");
+        point.SetTextStr("text");
         branch.AddPoint(point);
-        REQUIRE(branch.GetHead()->GetText() == point.GetText());
+        REQUIRE(branch.GetHead()->GetTextStr() == point.GetTextStr());
 
         SECTION("another point")
         {
             StoryPoint point2;
-            point2.SetText("text2");
+            point2.SetTextStr("text2");
             branch.AddPoint(point2);
-            REQUIRE(branch.GetHead()->GetText() == point.GetText());
+            REQUIRE(branch.GetHead()->GetTextStr() == point.GetTextStr());
         }
     }
 }
@@ -47,7 +47,7 @@ TEST_CASE("StoryBranch - set head", "[StoryBranch]")
     SECTION("normal")
     {
         branch.SetCurrentPoint(1);
-        REQUIRE(branch.GetHead()->GetText() == "2");
+        REQUIRE(branch.GetHead()->GetTextStr() == "2");
     }
     SECTION("out of range")
     {
@@ -69,19 +69,19 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
     SECTION("add one point")
     {
         StoryPoint point;
-        point.SetText("text");
+        point.SetTextStr("text");
         branch.AddPoint(point);
         REQUIRE(branch.Length() == 1);
-        REQUIRE(branch.GetPointAt(0)->GetText() == point.GetText());
+        REQUIRE(branch.GetPointAt(0)->GetTextStr() == point.GetTextStr());
 
         SECTION("add another point")
         {
             StoryPoint point2;
-            point2.SetText("text2");
+            point2.SetTextStr("text2");
             branch.AddPoint(point2);
             REQUIRE(branch.Length() == 2);
-            REQUIRE(branch.GetPointAt(0)->GetText() == point.GetText());
-            REQUIRE(branch.GetPointAt(1)->GetText() == point2.GetText());
+            REQUIRE(branch.GetPointAt(0)->GetTextStr() == point.GetTextStr());
+            REQUIRE(branch.GetPointAt(1)->GetTextStr() == point2.GetTextStr());
         }
     }
     SECTION("add point by text")
@@ -89,15 +89,15 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
         std::string text1 = "text";
         branch.AddPoint(text1, {}, {});
         REQUIRE(branch.Length() == 1);
-        REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+        REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
 
         SECTION("add another point")
         {
             std::string text2 = "text2";
             branch.AddPoint(text2, {}, {});
             REQUIRE(branch.Length() == 2);
-            REQUIRE(branch.GetPointAt(0)->GetText() == text1);
-            REQUIRE(branch.GetPointAt(1)->GetText() == text2);
+            REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
+            REQUIRE(branch.GetPointAt(1)->GetTextStr() == text2);
         }
     }
     SECTION("add point by markup")
@@ -109,10 +109,10 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
 
         branch.AddPoint("text {x_a}", parser, {});
         REQUIRE(branch.Length() == 1);
-        REQUIRE(branch.GetPointAt(0)->GetText() == "text A");
+        REQUIRE(branch.GetPointAt(0)->GetTextStr() == "text A");
         branch.AddPoint("text {s_b}", parser, {});
         REQUIRE(branch.Length() == 2);
-        REQUIRE(branch.GetPointAt(1)->GetText() == "text B");
+        REQUIRE(branch.GetPointAt(1)->GetTextStr() == "text B");
     }
     SECTION("add point by text and handlers")
     {
@@ -124,7 +124,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
         std::string text1 = "text";
         branch.AddPoint(text1, {}, handlers1);
         REQUIRE(branch.Length() == 1);
-        REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+        REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
         REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == handlers1.size());
 
         SECTION("add another point")
@@ -137,9 +137,9 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
             std::string text2 = "text2";
             branch.AddPoint(text2, {}, handlers2);
             REQUIRE(branch.Length() == 2);
-            REQUIRE(branch.GetPointAt(0)->GetText() == text1);
+            REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
             REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == handlers1.size());
-            REQUIRE(branch.GetPointAt(1)->GetText() == text2);
+            REQUIRE(branch.GetPointAt(1)->GetTextStr() == text2);
             REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == handlers2.size());
         }
     }
@@ -158,11 +158,11 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
 
         branch.AddPoint("text {x_a}", parser, handlers);
         REQUIRE(branch.Length() == 1);
-        REQUIRE(branch.GetPointAt(0)->GetText() == "text A");
+        REQUIRE(branch.GetPointAt(0)->GetTextStr() == "text A");
         REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == 1);
         branch.AddPoint("text {s_b}", parser, handlers);
         REQUIRE(branch.Length() == 2);
-        REQUIRE(branch.GetPointAt(1)->GetText() == "text B");
+        REQUIRE(branch.GetPointAt(1)->GetTextStr() == "text B");
         REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == 1);
     }
 }
@@ -174,13 +174,13 @@ TEST_CASE("StoryBranch - next point", "[StoryBranch]")
     branch.AddPoint("2", {}, {});
     branch.AddPoint("3", {}, {});
 
-    REQUIRE(branch.GetHead()->GetText() == "1");
+    REQUIRE(branch.GetHead()->GetTextStr() == "1");
     branch.Next();
-    REQUIRE(branch.GetHead()->GetText() == "2");
+    REQUIRE(branch.GetHead()->GetTextStr() == "2");
     branch.Next();
-    REQUIRE(branch.GetHead()->GetText() == "3");
+    REQUIRE(branch.GetHead()->GetTextStr() == "3");
     branch.Next();
-    REQUIRE(branch.GetHead()->GetText() == "3");
+    REQUIRE(branch.GetHead()->GetTextStr() == "3");
 }
 
 TEST_CASE("StoryBranch - previous point", "[StoryBranch]")
@@ -192,13 +192,13 @@ TEST_CASE("StoryBranch - previous point", "[StoryBranch]")
     branch.Next();
     branch.Next();
 
-    REQUIRE(branch.GetHead()->GetText() == "3");
+    REQUIRE(branch.GetHead()->GetTextStr() == "3");
     branch.Prev();
-    REQUIRE(branch.GetHead()->GetText() == "2");
+    REQUIRE(branch.GetHead()->GetTextStr() == "2");
     branch.Prev();
-    REQUIRE(branch.GetHead()->GetText() == "1");
+    REQUIRE(branch.GetHead()->GetTextStr() == "1");
     branch.Prev();
-    REQUIRE(branch.GetHead()->GetText() == "1");
+    REQUIRE(branch.GetHead()->GetTextStr() == "1");
 
 }
 

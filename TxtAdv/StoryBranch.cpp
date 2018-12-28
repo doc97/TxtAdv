@@ -31,7 +31,7 @@ void StoryBranch::AddPoint(const std::string& text, std::shared_ptr<TextParser> 
     const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
     StoryPoint point;
-    point.SetText(text);
+    point.SetTextStr(text);
     point.SetParser(parser);
     point.SetHandlers(handlers);
     AddPoint(point);
