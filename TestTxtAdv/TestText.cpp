@@ -277,4 +277,50 @@ TEST_CASE("Text - underline", "[Text]")
     }
 }
 
+TEST_CASE("Text - combination", "[Text]")
+{
+    SECTION("bold + italics")
+    {
+        Text txt("*_hello world_*");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 11);
+        REQUIRE(styles[0].style == (Styles::BOLD | Styles::ITALIC));
+    }
+    SECTION("underline + italics")
+    {
+        Text txt("___hello world___");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 11);
+        REQUIRE(styles[0].style == (Styles::UNDERL | Styles::ITALIC));
+    }
+    SECTION("underline + bold + strike")
+    {
+        Text txt("__*~hello world~*__");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 11);
+        REQUIRE(styles[0].style == (Styles::UNDERL | Styles::BOLD | Styles::STRIKE));
+    }
+    SECTION("mix")
+    {
+        Text txt("__*hello__ ~world~*");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(styles.size() == 3);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 5);
+        REQUIRE(styles[0].style == (Styles::UNDERL | Styles::BOLD));
+        REQUIRE(styles[1].start == 5);
+        REQUIRE(styles[1].len == 1);
+        REQUIRE(styles[1].style == Styles::BOLD);
+        REQUIRE(styles[2].start == 6);
+        REQUIRE(styles[2].len == 5);
+        REQUIRE(styles[2].style == (Styles::BOLD | Styles::STRIKE));
+    }
+}
+
 } // namespace txt
