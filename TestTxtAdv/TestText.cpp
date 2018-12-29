@@ -82,4 +82,118 @@ TEST_CASE("Text - italics", "[Text]")
     }
 }
 
+TEST_CASE("Text - bold", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("*hello world");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "*hello world");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 12);
+        REQUIRE(styles[0].style == Styles::NORMAL);
+    }
+    SECTION("test 2")
+    {
+        Text txt("*hello* *world");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "hello *world");
+        REQUIRE(styles.size() == 2);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 5);
+        REQUIRE(styles[0].style == Styles::BOLD);
+        REQUIRE(styles[1].start == 5);
+        REQUIRE(styles[1].len == 7);
+        REQUIRE(styles[1].style == Styles::NORMAL);
+    }
+    SECTION("test 3")
+    {
+        Text txt("*hello world*");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "hello world");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 11);
+        REQUIRE(styles[0].style == Styles::BOLD);
+    }
+    SECTION("test 4")
+    {
+        Text txt("**normal");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "normal");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 6);
+        REQUIRE(styles[0].style == Styles::NORMAL);
+    }
+    SECTION("test 5")
+    {
+        Text txt("***bold*");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "bold");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 4);
+        REQUIRE(styles[0].style == Styles::BOLD);
+    }
+}
+
+TEST_CASE("Text - strikethrough", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("~hello world");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "~hello world");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 12);
+        REQUIRE(styles[0].style == Styles::NORMAL);
+    }
+    SECTION("test 2")
+    {
+        Text txt("~hello~ ~world");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "hello ~world");
+        REQUIRE(styles.size() == 2);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 5);
+        REQUIRE(styles[0].style == Styles::STRIKE);
+        REQUIRE(styles[1].start == 5);
+        REQUIRE(styles[1].len == 7);
+        REQUIRE(styles[1].style == Styles::NORMAL);
+    }
+    SECTION("test 3")
+    {
+        Text txt("~hello world~");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "hello world");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 11);
+        REQUIRE(styles[0].style == Styles::STRIKE);
+    }
+    SECTION("test 4")
+    {
+        Text txt("~~normal");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "normal");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 6);
+        REQUIRE(styles[0].style == Styles::NORMAL);
+    }
+    SECTION("test 5")
+    {
+        Text txt("~~~strikethrough~");
+        std::vector<TextStyle> styles = txt.GetStyles();
+        REQUIRE(txt.Str() == "strikethrough");
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 13);
+        REQUIRE(styles[0].style == Styles::STRIKE);
+    }
+}
+
 } // namespace txt

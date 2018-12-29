@@ -44,8 +44,12 @@ std::vector<TextStyleChange> Text::ParseStyles(const std::string& str) const
 {
     std::vector<TextStyleChange> changes;
     std::vector<TextStyleChange> italics = ParseStyle(str, '_', Styles::ITALIC);
-    changes.reserve(italics.size());
-    changes.insert(changes.begin(), italics.begin(), italics.end());
+    std::vector<TextStyleChange> bold = ParseStyle(str, '*', Styles::BOLD);
+    std::vector<TextStyleChange> strike = ParseStyle(str, '~', Styles::STRIKE);
+    changes.reserve(italics.size() + bold.size() + strike.size());
+    changes.insert(changes.end(), italics.begin(), italics.end());
+    changes.insert(changes.end(), bold.begin(), bold.end());
+    changes.insert(changes.end(), strike.begin(), strike.end());
     return changes;
 }
 
@@ -53,7 +57,6 @@ std::vector<TextStyleChange> Text::ParseStyle(const std::string& str, const char
 {
     std::vector<TextStyleChange> changes;
 
-    // italic
     size_t offset = 0;
     size_t startIdx = 0;
     while ((startIdx = str.find_first_of(styleChar, offset)) != std::string::npos)
