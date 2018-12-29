@@ -42,9 +42,10 @@ public:
     ~Text();
 
     std::string Str() const;
+    std::string RawStr() const;
     std::vector<TextStyle> GetStyles() const;
 private:
-
+    std::string m_raw;
     std::string m_str;
     std::vector<TextStyle> m_styles;
 

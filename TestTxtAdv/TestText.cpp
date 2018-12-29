@@ -9,6 +9,30 @@
 namespace txt
 {
 
+TEST_CASE("Text - raw", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("_italics_");
+        REQUIRE(txt.RawStr() == "_italics_");
+    }
+    SECTION("test 2")
+    {
+        Text txt("*bold*");
+        REQUIRE(txt.RawStr() == "*bold*");
+    }
+    SECTION("test 3")
+    {
+        Text txt("~strike~");
+        REQUIRE(txt.RawStr() == "~strike~");
+    }
+    SECTION("test 4")
+    {
+        Text txt("__under__");
+        REQUIRE(txt.RawStr() == "__under__");
+    }
+}
+
 TEST_CASE("Text - no markup", "[Text]")
 {
     SECTION("test 1")

@@ -10,10 +10,10 @@ namespace txt
 {
 
 Text::Text(const std::string& text)
+    : m_raw(text)
 {
     m_str = Parse(text);
 }
-
 
 Text::~Text()
 {
@@ -22,6 +22,11 @@ Text::~Text()
 std::string Text::Str() const
 {
     return m_str;
+}
+
+std::string Text::RawStr() const
+{
+    return m_raw;
 }
 
 std::vector<TextStyle> Text::GetStyles() const
