@@ -54,6 +54,8 @@ std::vector<Text::TextStyleChange> Text::ParseStyles(const std::string& str) con
     std::vector<TextStyleChange> bold = ParseStyle(str, "*", Styles::BOLD);
     std::vector<TextStyleChange> strikethrough = ParseStyle(str, "~", Styles::STRIKE);
     changes.reserve(underline.size() + italics.size() + bold.size() + strikethrough.size());
+
+    // Important - Underline before italics
     CombineStyles(changes, underline);
     CombineStyles(changes, italics);
     CombineStyles(changes, bold);
