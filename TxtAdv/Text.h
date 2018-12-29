@@ -18,6 +18,7 @@ enum Styles
     BOLD   = 0x02,
     UNDERL = 0x04,
     STRIKE = 0x08,
+    ALL    = 0xF0
 };
 
 struct TextStyle
@@ -30,6 +31,7 @@ struct TextStyle
 struct TextStyleChange
 {
     size_t idx = 0;
+    size_t style_len = 1;
     unsigned char style_mask = Styles::NORMAL;
 };
 
@@ -50,9 +52,11 @@ private:
     std::vector<TextStyleChange> ParseStyles(const std::string& str) const;
     std::vector<TextStyleChange> ParseStyle(const std::string& str, const std::string& styleId,
         Styles style) const;
+    void CombineStyles(std::vector<TextStyleChange>& orig, const std::vector<TextStyleChange>& append) const;
     void SortChanges(std::vector<TextStyleChange>& changes) const;
     void RemoveMarkupCharacters(std::string& str, std::vector<TextStyleChange>& changes) const;
     std::vector<TextStyle> ExtractStyles(const std::vector<TextStyleChange>& changes, const size_t strLen) const;
+    std::vector<TextStyle> CompressStyles(const std::vector<TextStyle>& styles) const;
 };
 
 } // namespace txt
