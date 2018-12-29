@@ -18,16 +18,16 @@
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="SetText"></a><a name="Topic148"></a><div class="CTopic TFunction LC">
- <div class="CTitle">SetText</div>
- <div id="NDPrototype148" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetText(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">text</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><p>Sets the raw text of this story point.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">text<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The text to set</p></td></tr></table><div class="CHeading">See Also</div><p><a href="../../index.html#CClass:StoryPoint:SetMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,141);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SetMarkup</a></p></div>
+<a name="SetTextStr"></a><a name="Topic194"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">SetTextStr</div>
+ <div id="NDPrototype194" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetTextStr(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">text</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Sets the raw text of this story point.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">text<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The text to set</p></td></tr></table><div class="CHeading">See Also</div><p>&lt;SetMarkup&gt;</p></div>
 </div>
 
-<a name="SetMarkup"></a><a name="Topic141"></a><div class="CTopic TFunction LC">
- <div class="CTitle">SetMarkup</div>
- <div id="NDPrototype141" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetMarkup(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType">vector&lt;std::<span class="SHKeyword">function</span>&lt;std::<span class="SHKeyword">string</span>()&gt;&gt;&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">expr</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><p>Sets the functions to which parse the markup text.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">expr<div class="CDLParameterType"><span class="SHKeyword">const</span> std::vector&lt;std::<span class="SHKeyword">function</span>&lt;std::<span class="SHKeyword">string</span>()&gt;&gt;&amp;</div></td><td class="CDLDefinition"><p>The functions for parsing the markup</p></td></tr></table><div class="CHeading">Example</div><pre>StoryPoint point;<br />point.SetText(<span class="SHString">&quot;$0 - $1&quot;</span>);<br />point.SetMarkup({ []() { <span class="SHKeyword">return</span> <span class="SHString">&quot;foo&quot;</span>; }, []() { <span class="SHKeyword">return</span> <span class="SHString">&quot;bar&quot;</span>; } });<br />point.GetText(); <span class="SHComment">// Returns &quot;foo - bar&quot;</span></pre></div>
+<a name="SetParser"></a><a name="Topic195"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">SetParser</div>
+ <div id="NDPrototype195" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetParser(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType">shared_ptr&lt;<a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a>&gt;&nbsp;</td><td class="PName last">parser</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Sets the <a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a> to use to parse the markup text.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">parser<div class="CDLParameterType">std::shared_ptr&lt;<a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a>&gt;</div></td><td class="CDLDefinition"><p>The parser</p></td></tr></table></div>
 </div>
 
 <a name="SetHandlers"></a><a name="Topic150"></a><div class="CTopic TFunction LC">
@@ -36,10 +36,10 @@
  <div class="CBody"><p>Sets a list of handlers associated with this point.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">handlers<div class="CDLParameterType"><span class="SHKeyword">const</span> std::vector&lt;std::shared_ptr&lt;<a href="../../index.html#CClass:ResponseHandler" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,95);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >ResponseHandler</a>&gt;&gt;&amp;</div></td><td class="CDLDefinition"><p>The list of <a href="../../index.html#CClass:ResponseHandler" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,95);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >ResponseHandler</a>s</p></td></tr></table></div>
 </div>
 
-<a name="GetText"></a><a name="Topic152"></a><div class="CTopic TFunction LC">
- <div class="CTitle">GetText</div>
- <div id="NDPrototype152" class="NDPrototype NoParameterForm">std::<span class="SHKeyword">string</span> GetText() <span class="SHKeyword">const</span></div>
- <div class="CBody"><div class="CHeading">Returns</div><p>Get the parsed text</p><div class="CHeading">See Also</div><p><a href="../../index.html#CClass:StoryPoint:SetMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,141);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SetMarkup</a></p></div>
+<a name="GetTextStr"></a><a name="Topic196"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">GetTextStr</div>
+ <div id="NDPrototype196" class="NDPrototype NoParameterForm">std::<span class="SHKeyword">string</span> GetTextStr() <span class="SHKeyword">const</span></div>
+ <div class="CBody"><div class="CHeading">Returns</div><p>Get the parsed text string</p><div class="CHeading">See Also</div><p>&lt;SetMarkup&gt;</p></div>
 </div>
 
 <a name="GetHandlerCount"></a><a name="Topic153"></a><div class="CTopic TFunction LC">

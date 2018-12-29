@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:TextStyle","TextStyle");NDSummary.OnSummaryLoaded("CClass:TextStyle",[["C/C++","C"]],[["Structs","Struct"]],[[181,0,0,"TextStyle"]]);

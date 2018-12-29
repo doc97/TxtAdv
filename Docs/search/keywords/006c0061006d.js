@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("lam",["Class"],[["LambdaResponseHandler",,[[,,,,0,"File:LambdaResponseHandler.h:LambdaResponseHandler","CClass:LambdaResponseHandler"]]]]);
+NDSearch.OnPrefixDataLoaded("lam",["Class"],[["LambdaExpression",,[[,,,,0,"File:LambdaExpression.h:LambdaExpression","CClass:LambdaExpression"]]],["LambdaResponseHandler",,[[,,,,0,"File:LambdaResponseHandler.h:LambdaResponseHandler","CClass:LambdaResponseHandler"]]]]);

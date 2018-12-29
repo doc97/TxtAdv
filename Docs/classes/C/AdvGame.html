@@ -18,10 +18,10 @@
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="AdvGame"></a><a name="Topic89"></a><div class="CTopic TFunction LC">
+<a name="AdvGame"></a><a name="Topic52"></a><div class="CTopic TFunction LC">
  <div class="CTitle">AdvGame</div>
- <div id="NDPrototype89" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters">AdvGame(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a>&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">io</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">io<div class="CDLParameterType"><a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a>*</div></td><td class="CDLDefinition"><p>A pointer to the I/O interface to use</p></td></tr></table></div>
+ <div id="NDPrototype52" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters">AdvGame(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType">unique_ptr&lt;<a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a>&gt;&nbsp;</td><td class="PName last">io</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">io<div class="CDLParameterType">std::unique_ptr&lt;<a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a>&gt;</div></td><td class="CDLDefinition"><p>A unique_ptr to the I/O interface to use</p></td></tr></table></div>
 </div>
 
 <a name="GetState"></a><a name="Topic90"></a><div class="CTopic TFunction LC">
@@ -36,22 +36,10 @@
  <div class="CBody"><p>Gives access to the story.</p><div class="CHeading">Returns</div><p>A reference to the <a href="../../index.html#CClass:StoryBranch" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,129);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >StoryBranch</a> instance</p><div class="CHeading">See Also</div><p><a href="../../index.html#CClass:StoryBranch" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,129);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >StoryBranch</a></p></div>
 </div>
 
-<a name="GetIO"></a><a name="Topic123"></a><div class="CTopic TFunction LC">
+<a name="GetIO"></a><a name="Topic53"></a><div class="CTopic TFunction LC last">
  <div class="CTitle">GetIO</div>
- <div id="NDPrototype123" class="NDPrototype NoParameterForm"><a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a>* GetIO() <span class="SHKeyword">const</span></div>
+ <div id="NDPrototype53" class="NDPrototype NoParameterForm"><a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a>&amp; GetIO() <span class="SHKeyword">const</span></div>
  <div class="CBody"><p>Gives access to the I/O interface.</p><div class="CHeading">Returns</div><p>A pointer to the <a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a> instance</p><div class="CHeading">See Also</div><p><a href="../../index.html#CClass:IO" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,50);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >IO</a></p></div>
-</div>
-
-<a name="Init"></a><a name="Topic93"></a><div class="CTopic TFunction LC">
- <div class="CTitle">Init</div>
- <div id="NDPrototype93" class="NDPrototype NoParameterForm"><span class="SHKeyword">void</span> Init() <span class="SHKeyword">override</span></div>
- <div class="CBody"><p>Contains game framework initialization code.</p></div>
-</div>
-
-<a name="Update"></a><a name="Topic94"></a><div class="CTopic TFunction LC last">
- <div class="CTitle">Update</div>
- <div id="NDPrototype94" class="NDPrototype NoParameterForm"><span class="SHKeyword">void</span> Update() <span class="SHKeyword">override</span></div>
- <div class="CBody"><p>Contains game framework update code.</p></div>
 </div>
 
 </body></html>

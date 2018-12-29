@@ -1,1 +1,1 @@
-NDFramePage.OnPageTitleLoaded("CClass:ConsoleIO","ConsoleIO");NDSummary.OnSummaryLoaded("CClass:ConsoleIO",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[61,0,0,"ConsoleIO"],[62,0,2,"Functions","Functions"],[63,0,1,"Write","Write"],[64,0,1,"WriteLine","WriteLine"],[65,0,1,"GetLine","GetLine"]]);
+NDFramePage.OnPageTitleLoaded("CClass:ConsoleIO","ConsoleIO");NDSummary.OnSummaryLoaded("CClass:ConsoleIO",[["C/C++","C"]],[["Classes","Class"]],[[61,0,0,"ConsoleIO"]]);

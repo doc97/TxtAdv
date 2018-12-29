@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:LambdaExpression","LambdaExpression");NDSummary.OnSummaryLoaded("CClass:LambdaExpression",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[191,0,0,"LambdaExpression"],[192,0,2,"Functions","Functions"],[193,0,1,"LambdaExpression","LambdaExpression"]]);

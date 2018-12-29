@@ -18,22 +18,10 @@
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="LuaResponseHandler"></a><a name="Topic120"></a><div class="CTopic TFunction LC">
+<a name="LuaResponseHandler"></a><a name="Topic120"></a><div class="CTopic TFunction LC last">
  <div class="CTitle">LuaResponseHandler</div>
  <div id="NDPrototype120" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters">LuaResponseHandler(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="first"></td><td class="PType">LuaManager&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">manager,</td></tr><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">filename</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
  <div class="CBody"><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">manager<div class="CDLParameterType">LuaManager*</div></td><td class="CDLDefinition"><p>A pointer to the &lt;LuaManager&gt; handling the Lua state</p></td></tr><tr><td class="CDLEntry">filename<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The name of the file containing the Lua handler functions</p></td></tr></table></div>
-</div>
-
-<a name="HandleInput"></a><a name="Topic121"></a><div class="CTopic TFunction LC">
- <div class="CTitle">HandleInput</div>
- <div id="NDPrototype121" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> HandleInput(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">input</td></tr></table></td><td class="PAfterParameters">) <span class="SHKeyword">override</span></td></tr></table></div>
- <div class="CBody"><p>If <a href="../../index.html#CClass:LuaResponseHandler:Matches" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,122);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Matches</a> returns true, calls the <u>action</u> function defined in Lua.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">input<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The input on which to run the <u>action</u> function</p></td></tr></table></div>
-</div>
-
-<a name="Matches"></a><a name="Topic122"></a><div class="CTopic TFunction LC last">
- <div class="CTitle">Matches</div>
- <div id="NDPrototype122" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">bool</span> Matches(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">input</td></tr></table></td><td class="PAfterParameters">) <span class="SHKeyword">override</span></td></tr></table></div>
- <div class="CBody"><p>Checks whether the input is acceptable by calling the <u>matches</u> function defined in Lua.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">input<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The input on which to run the <u>matches</u> function</p></td></tr></table></div>
 </div>
 
 </body></html>

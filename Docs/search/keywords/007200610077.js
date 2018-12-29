@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("raw",["Function"],[["RawStr",,[["Text",,,,0,"File:Text.h:Text.RawStr","CClass:Text:RawStr"]]]]);

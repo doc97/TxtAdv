@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:Text","Text");NDSummary.OnSummaryLoaded("CClass:Text",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[182,0,0,"Text"],[183,0,2,"Functions","Functions"],[184,0,1,"Text","Text"],[185,0,1,"Str","Str"],[186,0,1,"RawStr","RawStr"],[187,0,1,"GetStyles","GetStyles"]]);

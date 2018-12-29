@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("par",["Function"],[["Parse",,[["TextParser",,,,0,"File:TextParser.h:TextParser.Parse","CClass:TextParser:Parse"]]]]);
+NDSearch.OnPrefixDataLoaded("par",["Function"],[["ParseText",,[["TextParser",,,,0,"File:TextParser.h:TextParser.ParseText","CClass:TextParser:ParseText"]]]]);

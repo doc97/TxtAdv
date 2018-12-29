@@ -1,0 +1,1 @@
+NDContentPage.OnToolTipsLoaded({5:"<div class=\"NDToolTip TInterface LC\"><div class=\"TTSummary\">Used to implement text parsing expressions.</div></div>"});

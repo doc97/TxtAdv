@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("str",["Constant"],[["String",,[["LuaParam",,,,0,"File:LuaParam.h:LuaParam.String","CClass:LuaParam:String"]]]]);
+NDSearch.OnPrefixDataLoaded("str",["Function","Constant"],[["Str",,[["Text",,,,0,"File:Text.h:Text.Str","CClass:Text:Str"]]],["STRIKE",,[[,,,,1,"File:Text.h:STRIKE"]]],["String",,[["LuaParam",,,,1,"File:LuaParam.h:LuaParam.String","CClass:LuaParam:String"]]]]);

@@ -49,4 +49,4 @@ simple Kanban workflow. The project boards can found
 [here](https://github.com/doc97/TxtAdv/projects).
 
 - [Epics Board](https://github.com/doc97/TxtAdv/projects/2)
-- [Current Sprint Board](https://github.com/doc97/TxtAdv/projects/1)
+- [Current Sprint Board](https://github.com/doc97/TxtAdv/projects/3)

@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:Expression.h","Expression.h");NDSummary.OnSummaryLoaded("File:Expression.h",[["C/C++","C"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[5,0,2,"Expression","Expression"],[6,0,1,"Functions","Expression.Functions"],[151,0,0,"Exec","Expression.Exec"]]);

@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("tex",["Class"],[["TextParser",,[[,,,,0,"File:TextParser.h:TextParser","CClass:TextParser"]]]]);
+NDSearch.OnPrefixDataLoaded("tex",["Class","Struct"],[["Text",,[[,,,,0,"File:Text.h:Text","CClass:Text"]]],["TextParser",,[[,,,,0,"File:TextParser.h:TextParser","CClass:TextParser"]]],["TextStyle",,[[,,,,1,"File:Text.h:TextStyle","CClass:TextStyle"]]]]);

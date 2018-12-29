@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("exe",["Function"],[["ExecFile",,[[,,,,0,"File:LuaManager.h:ExecFile"]]],["ExecFunc",,[[,,,,0,"File:LuaManager.h:ExecFunc"]]]]);
+NDSearch.OnPrefixDataLoaded("exe",["Function"],[["Exec",,[["Expression",,,,0,"File:Expression.h:Expression.Exec","CClass:Expression:Exec"]]],["ExecFile",,[[,,,,0,"File:LuaManager.h:ExecFile"]]],["ExecFunc",,[[,,,,0,"File:LuaManager.h:ExecFunc"]]]]);
