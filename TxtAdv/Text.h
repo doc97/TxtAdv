@@ -48,7 +48,8 @@ private:
 
     std::string Parse(const std::string& raw);
     std::vector<TextStyleChange> ParseStyles(const std::string& str) const;
-    std::vector<TextStyleChange> ParseStyle(const std::string& str, char styleChar, Styles style) const;
+    std::vector<TextStyleChange> ParseStyle(const std::string& str, const std::string& styleId,
+        Styles style) const;
     void SortChanges(std::vector<TextStyleChange>& changes) const;
     void RemoveMarkupCharacters(std::string& str, std::vector<TextStyleChange>& changes) const;
     std::vector<TextStyle> ExtractStyles(const std::vector<TextStyleChange>& changes, const size_t strLen) const;

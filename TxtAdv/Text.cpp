@@ -43,9 +43,9 @@ std::string Text::Parse(const std::string& raw)
 std::vector<TextStyleChange> Text::ParseStyles(const std::string& str) const
 {
     std::vector<TextStyleChange> changes;
-    std::vector<TextStyleChange> italics = ParseStyle(str, '_', Styles::ITALIC);
-    std::vector<TextStyleChange> bold = ParseStyle(str, '*', Styles::BOLD);
-    std::vector<TextStyleChange> strike = ParseStyle(str, '~', Styles::STRIKE);
+    std::vector<TextStyleChange> italics = ParseStyle(str, "_", Styles::ITALIC);
+    std::vector<TextStyleChange> bold = ParseStyle(str, "*", Styles::BOLD);
+    std::vector<TextStyleChange> strike = ParseStyle(str, "~", Styles::STRIKE);
     changes.reserve(italics.size() + bold.size() + strike.size());
     changes.insert(changes.end(), italics.begin(), italics.end());
     changes.insert(changes.end(), bold.begin(), bold.end());
@@ -53,15 +53,15 @@ std::vector<TextStyleChange> Text::ParseStyles(const std::string& str) const
     return changes;
 }
 
-std::vector<TextStyleChange> Text::ParseStyle(const std::string& str, const char styleChar, Styles style) const
+std::vector<TextStyleChange> Text::ParseStyle(const std::string& str, const std::string& styleId, Styles style) const
 {
     std::vector<TextStyleChange> changes;
 
     size_t offset = 0;
     size_t startIdx = 0;
-    while ((startIdx = str.find_first_of(styleChar, offset)) != std::string::npos)
+    while ((startIdx = str.find(styleId, offset)) != std::string::npos)
     {
-        size_t endIdx = str.find_first_of(styleChar, startIdx + 1);
+        size_t endIdx = str.find(styleId, startIdx + 1);
         if (endIdx == std::string::npos)
             break;
 
