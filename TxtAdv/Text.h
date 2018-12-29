@@ -28,12 +28,6 @@ struct TextStyle
     unsigned char style = Styles::NORMAL;
 };
 
-struct TextStyleChange
-{
-    size_t idx = 0;
-    size_t style_len = 1;
-    unsigned char style_mask = Styles::NORMAL;
-};
 
 class Text
 {
@@ -45,6 +39,13 @@ public:
     std::string RawStr() const;
     std::vector<TextStyle> GetStyles() const;
 private:
+    struct TextStyleChange
+    {
+        size_t idx = 0;
+        size_t style_len = 1;
+        unsigned char style_mask = Styles::NORMAL;
+    };
+
     std::string m_raw;
     std::string m_str;
     std::vector<TextStyle> m_styles;

@@ -46,7 +46,7 @@ std::string Text::Parse(const std::string& raw)
     return res;
 }
 
-std::vector<TextStyleChange> Text::ParseStyles(const std::string& str) const
+std::vector<Text::TextStyleChange> Text::ParseStyles(const std::string& str) const
 {
     std::vector<TextStyleChange> changes;
     std::vector<TextStyleChange> underline = ParseStyle(str, "__", Styles::UNDERL);
@@ -61,7 +61,7 @@ std::vector<TextStyleChange> Text::ParseStyles(const std::string& str) const
     return changes;
 }
 
-std::vector<TextStyleChange> Text::ParseStyle(const std::string& str, const std::string& styleId, Styles style) const
+std::vector<Text::TextStyleChange> Text::ParseStyle(const std::string& str, const std::string& styleId, Styles style) const
 {
     std::vector<TextStyleChange> changes;
 
