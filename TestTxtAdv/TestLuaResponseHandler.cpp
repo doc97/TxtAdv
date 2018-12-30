@@ -17,7 +17,7 @@
 namespace txt
 {
 
-int luaValue;
+int luaValue = 0;
 int luaApply(lua_State* L)
 {
     luaValue = 1;
@@ -32,8 +32,8 @@ static const luaL_Reg testlib[] =
 TEST_CASE("LuaResponseHandler - lua matcher function", "[LuaResponseHandler]")
 {
     LuaManager manager;
-    LuaResponseHandler trueHandler(&manager, "LUA/true.lua");
-    LuaResponseHandler falseHandler(&manager, "LUA/false.lua");
+    LuaResponseHandler trueHandler(&manager, "LUA/test.lua", "matches_true");
+    LuaResponseHandler falseHandler(&manager, "LUA/test.lua", "matches_false");
     REQUIRE(trueHandler.Matches(""));
     REQUIRE(!falseHandler.Matches(""));
 }
@@ -43,7 +43,7 @@ TEST_CASE("LuaResponseHandler - lua action function", "[LuaResponseHandler]")
     luaValue = 0;
     std::string key = "key";
     LuaManager manager;
-    LuaResponseHandler handler(&manager, "LUA/action.lua");
+    LuaResponseHandler handler(&manager, "LUA/test.lua", "matches_key", "action_handle");
     manager.RegisterFunc("handle", &luaApply);
 
     SECTION("matching key")
@@ -63,7 +63,7 @@ TEST_CASE("LuaResponseHandler - lua action lib function", "[LuaResponseHandler]"
     luaValue = 0;
     std::string key = "key";
     LuaManager manager;
-    LuaResponseHandler handler(&manager, "LUA/actionlib.lua");
+    LuaResponseHandler handler(&manager, "LUA/test.lua", "matches_key", "action_lib_handle");
     manager.RegisterLib("test", testlib, 1);
 
     SECTION("matching key")

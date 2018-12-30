@@ -8,8 +8,9 @@
 namespace txt
 {
 
-LuaResponseHandler::LuaResponseHandler(LuaManager* manager, const std::string& filename)
-    : m_manager(manager), m_filename(filename)
+LuaResponseHandler::LuaResponseHandler(LuaManager* manager, const std::string& filename,
+    const std::string& matcher, const std::string& action)
+    : m_manager(manager), m_filename(filename), m_func_matcher(matcher), m_func_action(action)
 {
 }
 
@@ -24,7 +25,7 @@ void LuaResponseHandler::HandleInputImpl(const std::string& input)
         std::string err;
         std::vector<LuaParam> params = { { LuaParam::String, input.c_str() } };
         std::vector<LuaParam> retVal = {};
-        if (!m_manager->ExecFunc(m_filename.c_str(), "action", params, retVal, err))
+        if (!m_manager->ExecFunc(m_filename.c_str(), m_func_action.c_str(), params, retVal, err))
             throw std::runtime_error(err);
     }
 }
@@ -34,7 +35,7 @@ bool LuaResponseHandler::MatchesImpl(const std::string& input)
     std::string err;
     std::vector<LuaParam> params = { { LuaParam::String, input.c_str() } };
     std::vector<LuaParam> retVal = { { LuaParam::Bool, false } };
-    if (!m_manager->ExecFunc(m_filename.c_str(), "matches", params, retVal, err))
+    if (!m_manager->ExecFunc(m_filename.c_str(), m_func_matcher.c_str(), params, retVal, err))
         throw std::runtime_error(err);
     return retVal[0].data.b;
 }
