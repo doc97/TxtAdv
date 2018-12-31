@@ -173,6 +173,7 @@
     <ClCompile Include="ResponseMatch.cpp" />
     <ClCompile Include="ResponseSystem.cpp" />
     <ClCompile Include="StoryBranch.cpp" />
+    <ClCompile Include="StoryLoader.cpp" />
     <ClCompile Include="StoryPoint.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TxtParser.cpp" />
@@ -198,7 +199,9 @@
     <ClInclude Include="ResponseMatch.h" />
     <ClInclude Include="ResponseSystem.h" />
     <ClInclude Include="StoryBranch.h" />
+    <ClInclude Include="StoryLoader.h" />
     <ClInclude Include="StoryPoint.h" />
+    <ClInclude Include="StringUtil.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextParser.h" />
     <ClInclude Include="TxtParser.h" />

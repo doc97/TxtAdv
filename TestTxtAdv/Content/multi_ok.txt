@@ -1,0 +1,7 @@
+Meta: multi.meta
+
+Multi 1
+    I am one of the story points.
+
+Multi 2
+    I am the other one.

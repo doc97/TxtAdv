@@ -141,6 +141,7 @@
     <ClCompile Include="TestResponseMatch.cpp" />
     <ClCompile Include="TestResponseSystem.cpp" />
     <ClCompile Include="TestStoryBranch.cpp" />
+    <ClCompile Include="TestStoryLoader.cpp" />
     <ClCompile Include="TestStoryPoint.cpp" />
     <ClCompile Include="TestText.cpp" />
     <ClCompile Include="TestTxtParser.cpp" />

@@ -1,0 +1,4 @@
+Meta: Content/valid.meta
+
+Valid 2
+    I am also a valid txt file
