@@ -42,12 +42,14 @@ TEST_CASE("StoryLoader - load valid txt", "[StoryLoader]")
     {
         std::vector<StoryPoint> points = loader.Load("Content/valid1.txt");
         REQUIRE(points.size() == 1);
+        REQUIRE(points[0].GetName() == "Valid 1");
         REQUIRE(points[0].GetTextStr() == "I am a valid txt file");
     }
     SECTION("file 2")
     {
         std::vector<StoryPoint> points = loader.Load("Content/valid2.txt");
         REQUIRE(points.size() == 1);
+        REQUIRE(points[0].GetName() == "Valid 2");
         REQUIRE(points[0].GetTextStr() == "I am also a valid txt file");
     }
 }
@@ -59,13 +61,16 @@ TEST_CASE("StoryLoader - multiple story points", "[StoryLoader]")
     {
         std::vector<StoryPoint> points = loader.Load("Content/multi_ok.txt");
         REQUIRE(points.size() == 2);
+        REQUIRE(points[0].GetName() == "Multi 1");
         REQUIRE(points[0].GetTextStr() == "I am one of the story points.");
+        REQUIRE(points[1].GetName() == "Multi 2");
         REQUIRE(points[1].GetTextStr() == "I am the other one.");
     }
     SECTION("invalid format")
     {
         std::vector<StoryPoint> points = loader.Load("Content/multi_fail.txt");
         REQUIRE(points.size() == 1);
+        REQUIRE(points[0].GetName() == "Multi 1");
         REQUIRE(points[0].GetTextStr() == "I am one of the story points.");
     }
 }
