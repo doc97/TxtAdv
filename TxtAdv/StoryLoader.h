@@ -6,7 +6,9 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <vector>
+#include "LuaManager.h"
 #include "StoryPoint.h"
 
 namespace txt
@@ -34,9 +36,19 @@ public:
      */
     std::vector<StoryPoint> Load(const std::string& filename) const;
 private:
+    struct Metadata
+    {
+        std::string storypoint;
+        std::string script;
+        std::string matcher_func;
+        std::string action_func;
+    };
+
     std::string GetMetaFile(std::ifstream& file) const;
     std::vector<StoryPoint> GetStoryPoints(std::ifstream& file) const;
     StoryPoint GetStoryPoint(std::ifstream& file, const std::string& lastLine) const;
+    std::unordered_map<std::string, std::vector<Metadata>> GetMetadata(const std::string& filename) const;
+    // TODO: Make metadata change StoryPoints
 };
 
 } // namespace txt

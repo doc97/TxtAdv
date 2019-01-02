@@ -1,0 +1,4 @@
+Meta: Content/multi.meta
+
+MultiHandler
+    I have multiple handlers

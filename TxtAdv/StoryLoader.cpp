@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "LuaResponseHandler.h"
 #include "StringUtil.h"
 
 namespace txt
@@ -22,15 +23,34 @@ StoryLoader::~StoryLoader()
 
 std::vector<StoryPoint> StoryLoader::Load(const std::string& filename) const
 {
-    std::ifstream file(filename.c_str());
+    std::ifstream file(filename);
     if (file.is_open())
     {
         std::string metaFile = GetMetaFile(file);
         std::vector<StoryPoint> ret = GetStoryPoints(file);
+        std::unordered_map<std::string, std::vector<Metadata>> metadata = GetMetadata(metaFile);
+
+        for (StoryPoint& point : ret)
+        {
+            bool hasMetadata = metadata.find(point.GetName()) != metadata.end();
+            if (hasMetadata)
+            {
+                std::vector<Metadata> metas = metadata[point.GetName()];
+                std::vector<std::shared_ptr<ResponseHandler>> handlers;
+                for (Metadata& meta : metas)
+                {
+                    handlers.push_back(std::make_shared<LuaResponseHandler>(
+                        meta.script, meta.matcher_func, meta.action_func
+                    ));
+                }
+                point.SetHandlers(handlers);
+            }
+        }
+
         file.close();
         return ret;
     }
-    throw std::runtime_error("No such file exists!");
+    throw std::runtime_error("Could not open file!");
 }
 
 std::string StoryLoader::GetMetaFile(std::ifstream& file) const
@@ -79,6 +99,34 @@ StoryPoint StoryLoader::GetStoryPoint(std::ifstream& file, const std::string& la
     StoryPoint point(lastLine);
     point.SetTextStr(ss.str());
     return point;
+}
+
+std::unordered_map<std::string, std::vector<StoryLoader::Metadata>> StoryLoader::GetMetadata(const std::string& filename) const
+{
+    std::ifstream file(filename);
+    if (file.is_open())
+    {
+        std::unordered_map<std::string, std::vector<Metadata>> ret;
+        std::string line;
+        while (std::getline(file, line))
+        {
+            std::vector<std::string> data = txt::split(line, ',');
+            if (data.size() != 4)
+                throw std::runtime_error("Invalid data format in .meta file!");
+            for_each(data.begin(), data.end(), txt::trim);
+
+            Metadata metadata;
+            metadata.storypoint = data[0];
+            metadata.script = data[1];
+            metadata.matcher_func = data[2];
+            metadata.action_func = data[3];
+
+            ret[metadata.storypoint].push_back(metadata);
+        }
+        file.close();
+        return ret;
+    }
+    throw std::runtime_error("Could not open file!");
 }
 
 } // namespace txt
