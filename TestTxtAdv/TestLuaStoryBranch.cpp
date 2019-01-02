@@ -32,9 +32,9 @@ TEST_CASE("LuaStoryBranch - registered methods", "[LuaStoryBranch]")
 TEST_CASE("LuaStoryBranch - next/prev", "[LuaStoryBranch]")
 {
     StoryBranch branch;
-    branch.AddPoint("1", {}, {});
-    branch.AddPoint("2", {}, {});
-    branch.AddPoint("3", {}, {});
+    branch.AddPoint("1", "1", {}, {});
+    branch.AddPoint("2", "2", {}, {});
+    branch.AddPoint("3", "3", {}, {});
     LuaStoryBranch wrapper(&branch);
     REQUIRE(branch.GetHead()->GetTextStr() == "1");
 

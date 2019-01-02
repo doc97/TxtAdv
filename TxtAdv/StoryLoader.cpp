@@ -76,7 +76,7 @@ StoryPoint StoryLoader::GetStoryPoint(std::ifstream& file, const std::string& la
         else
             break;
     }
-    StoryPoint point;
+    StoryPoint point("");
     point.SetTextStr(ss.str());
     return point;
 }

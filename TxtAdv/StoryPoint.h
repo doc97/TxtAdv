@@ -16,12 +16,12 @@ namespace txt
 {
 
 /* Class: StoryPoint
- * Represent an atomic point in a storyline
+ * Represent an atomic point in a storyline.
  */
 class StoryPoint
 {
 public:
-    StoryPoint();
+    StoryPoint(const std::string& name);
     ~StoryPoint();
 
     /* Function: SetTextStr
@@ -55,6 +55,14 @@ public:
      */
     void SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
 
+    /* Function: GetName
+     *
+     * Returns:
+     *
+     *    Get the name
+     */
+    std::string GetName() const;
+
     /* Function: GetTextStr
      *
      * Returns:
@@ -84,6 +92,7 @@ public:
      */
     std::vector<std::shared_ptr<ResponseHandler>> GetHandlers() const;
 private:
+    std::string m_name;
     Text m_text;
     std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
     std::shared_ptr<TextParser> m_parser = nullptr;

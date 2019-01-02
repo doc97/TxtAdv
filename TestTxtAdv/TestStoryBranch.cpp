@@ -22,14 +22,14 @@ TEST_CASE("StoryBranch - get head", "[StoryBranch]")
     }
     SECTION("one point")
     {
-        StoryPoint point;
+        StoryPoint point("1");
         point.SetTextStr("text");
         branch.AddPoint(point);
         REQUIRE(branch.GetHead()->GetTextStr() == point.GetTextStr());
 
         SECTION("another point")
         {
-            StoryPoint point2;
+            StoryPoint point2("2");
             point2.SetTextStr("text2");
             branch.AddPoint(point2);
             REQUIRE(branch.GetHead()->GetTextStr() == point.GetTextStr());
@@ -40,9 +40,9 @@ TEST_CASE("StoryBranch - get head", "[StoryBranch]")
 TEST_CASE("StoryBranch - set head", "[StoryBranch]")
 {
     StoryBranch branch;
-    branch.AddPoint("1", {}, {});
-    branch.AddPoint("2", {}, {});
-    branch.AddPoint("3", {}, {});
+    branch.AddPoint("1", "1", {}, {});
+    branch.AddPoint("2", "2", {}, {});
+    branch.AddPoint("3", "3", {}, {});
 
     SECTION("normal")
     {
@@ -68,7 +68,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
 
     SECTION("add one point")
     {
-        StoryPoint point;
+        StoryPoint point("1");
         point.SetTextStr("text");
         branch.AddPoint(point);
         REQUIRE(branch.Length() == 1);
@@ -76,7 +76,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
 
         SECTION("add another point")
         {
-            StoryPoint point2;
+            StoryPoint point2("2");
             point2.SetTextStr("text2");
             branch.AddPoint(point2);
             REQUIRE(branch.Length() == 2);
@@ -87,14 +87,14 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
     SECTION("add point by text")
     {
         std::string text1 = "text";
-        branch.AddPoint(text1, {}, {});
+        branch.AddPoint("1", text1, {}, {});
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
 
         SECTION("add another point")
         {
             std::string text2 = "text2";
-            branch.AddPoint(text2, {}, {});
+            branch.AddPoint("2", text2, {}, {});
             REQUIRE(branch.Length() == 2);
             REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
             REQUIRE(branch.GetPointAt(1)->GetTextStr() == text2);
@@ -107,10 +107,10 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
         std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
         parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
 
-        branch.AddPoint("text {x_a}", parser, {});
+        branch.AddPoint("a", "text {x_a}", parser, {});
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetTextStr() == "text A");
-        branch.AddPoint("text {s_b}", parser, {});
+        branch.AddPoint("b", "text {s_b}", parser, {});
         REQUIRE(branch.Length() == 2);
         REQUIRE(branch.GetPointAt(1)->GetTextStr() == "text B");
     }
@@ -122,7 +122,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
             [](const ResponseMatch& match) {}
         ));
         std::string text1 = "text";
-        branch.AddPoint(text1, {}, handlers1);
+        branch.AddPoint("1", text1, {}, handlers1);
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
         REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == handlers1.size());
@@ -135,7 +135,7 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
                 [](const ResponseMatch& match) {}
             ));
             std::string text2 = "text2";
-            branch.AddPoint(text2, {}, handlers2);
+            branch.AddPoint("2", text2, {}, handlers2);
             REQUIRE(branch.Length() == 2);
             REQUIRE(branch.GetPointAt(0)->GetTextStr() == text1);
             REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == handlers1.size());
@@ -156,11 +156,11 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
             [](const ResponseMatch& match) {}
         ));
 
-        branch.AddPoint("text {x_a}", parser, handlers);
+        branch.AddPoint("a", "text {x_a}", parser, handlers);
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetTextStr() == "text A");
         REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == 1);
-        branch.AddPoint("text {s_b}", parser, handlers);
+        branch.AddPoint("b", "text {s_b}", parser, handlers);
         REQUIRE(branch.Length() == 2);
         REQUIRE(branch.GetPointAt(1)->GetTextStr() == "text B");
         REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == 1);
@@ -170,9 +170,9 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
 TEST_CASE("StoryBranch - next point", "[StoryBranch]")
 {
     StoryBranch branch;
-    branch.AddPoint("1", {}, {});
-    branch.AddPoint("2", {}, {});
-    branch.AddPoint("3", {}, {});
+    branch.AddPoint("1", "1", {}, {});
+    branch.AddPoint("2", "2", {}, {});
+    branch.AddPoint("3", "3", {}, {});
 
     REQUIRE(branch.GetHead()->GetTextStr() == "1");
     branch.Next();
@@ -186,9 +186,9 @@ TEST_CASE("StoryBranch - next point", "[StoryBranch]")
 TEST_CASE("StoryBranch - previous point", "[StoryBranch]")
 {
     StoryBranch branch;
-    branch.AddPoint("1", {}, {});
-    branch.AddPoint("2", {}, {});
-    branch.AddPoint("3", {}, {});
+    branch.AddPoint("1", "1", {}, {});
+    branch.AddPoint("2", "2", {}, {});
+    branch.AddPoint("3", "3", {}, {});
     branch.Next();
     branch.Next();
 

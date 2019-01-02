@@ -12,9 +12,17 @@
 namespace txt
 {
 
+TEST_CASE("StoryPoint - name", "[StoryPoint]")
+{
+    StoryPoint p1("1");
+    REQUIRE(p1.GetName() == "1");
+    StoryPoint p2("2");
+    REQUIRE(p2.GetName() == "2");
+}
+
 TEST_CASE("StoryPoint - get/set text string", "[StoryPoint]")
 {
-    StoryPoint point;
+    StoryPoint point("1");
     REQUIRE(point.GetTextStr() == "");
     point.SetTextStr("a");
     REQUIRE(point.GetTextStr() == "a");
@@ -25,7 +33,7 @@ TEST_CASE("StoryPoint - get/set text string", "[StoryPoint]")
 TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
 {
     GameState state;
-    StoryPoint point;
+    StoryPoint point("1");
 
     SECTION("static expressions")
     {
@@ -65,7 +73,7 @@ TEST_CASE("StoryPoint - get/set handlers", "[StoryPoint]")
         [](const ResponseMatch& match) {}
     ));
 
-    StoryPoint point;
+    StoryPoint point("1");
     REQUIRE(point.GetHandlerCount() == 0);
     point.SetHandlers(handlers);
     REQUIRE(point.GetHandlerCount() == handlers.size());

@@ -48,11 +48,12 @@ public:
      *
      * Parameters:
      *
+     *    name - See <StoryPoint>
      *    text - See <StoryPoint>
      *    parser - See <StoryPoint>
      *    handlers - See <StoryPoint>
      */
-    void AddPoint(const std::string& text, std::shared_ptr<TextParser> parser,
+    void AddPoint(const std::string& name, const std::string& text, std::shared_ptr<TextParser> parser,
         const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
 
     /* Function: Next

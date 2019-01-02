@@ -65,7 +65,7 @@ void AdvGame::InitPointOne()
         [](const std::string& input) { return input == "next"; },
         [this](const ResponseMatch& match) { this->GetStory().Next(); }
     ));
-    m_branch.AddPoint("Welcome to TxtAdv!", {}, handlers);
+    m_branch.AddPoint("1", "Welcome to TxtAdv!", {}, handlers);
 }
 
 void AdvGame::InitPointTwo()
@@ -136,7 +136,7 @@ void AdvGame::InitPointTwo()
             ss << sIt->first << ": " << sIt->second << std::endl;
         return ss.str();
     }));
-    m_branch.AddPoint("Current state:\n{x_stats}", parser, handlers);
+    m_branch.AddPoint("2", "Current state:\n{x_stats}", parser, handlers);
 }
 
 void AdvGame::InitPointThree()
@@ -156,7 +156,7 @@ void AdvGame::InitPointThree()
     {
         return this->GetState().ReadString("text", "<Default text>");
     }));
-    m_branch.AddPoint("{x_0}", parser, handlers);
+    m_branch.AddPoint("3", "{x_0}", parser, handlers);
 }
 
 void AdvGame::Update()

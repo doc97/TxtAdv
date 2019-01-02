@@ -8,8 +8,8 @@
 namespace txt
 {
 
-StoryPoint::StoryPoint()
-    : m_text("")
+StoryPoint::StoryPoint(const std::string& name)
+    : m_name(name), m_text("")
 {
 }
 
@@ -54,6 +54,11 @@ bool StoryPoint::IsIllegalText(const std::string& text) const
 {
     bool hasDollar = text.find("$") != std::string::npos;
     return hasDollar;
+}
+
+std::string StoryPoint::GetName() const
+{
+    return m_name;
 }
 
 std::string StoryPoint::GetTextStr() const
