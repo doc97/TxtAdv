@@ -29,23 +29,7 @@ std::vector<StoryPoint> StoryLoader::Load(const std::string& filename) const
         std::string metaFile = GetMetaFile(file);
         std::vector<StoryPoint> ret = GetStoryPoints(file);
         std::unordered_map<std::string, std::vector<Metadata>> metadata = GetMetadata(metaFile);
-
-        for (StoryPoint& point : ret)
-        {
-            bool hasMetadata = metadata.find(point.GetName()) != metadata.end();
-            if (hasMetadata)
-            {
-                std::vector<Metadata> metas = metadata[point.GetName()];
-                std::vector<std::shared_ptr<ResponseHandler>> handlers;
-                for (Metadata& meta : metas)
-                {
-                    handlers.push_back(std::make_shared<LuaResponseHandler>(
-                        meta.script, meta.matcher_func, meta.action_func
-                    ));
-                }
-                point.SetHandlers(handlers);
-            }
-        }
+        MergeMetadataWithStoryPoints(ret, metadata);
 
         file.close();
         return ret;
@@ -127,6 +111,34 @@ std::unordered_map<std::string, std::vector<StoryLoader::Metadata>> StoryLoader:
         return ret;
     }
     throw std::runtime_error("Could not open file!");
+}
+
+void StoryLoader::MergeMetadataWithStoryPoints(std::vector<StoryPoint>& points,
+    std::unordered_map<std::string, std::vector<Metadata>>& metadata) const
+{
+    for (StoryPoint& point : points)
+    {
+        bool hasMetadata = metadata.find(point.GetName()) != metadata.end();
+        if (hasMetadata)
+        {
+            std::vector<Metadata> data = metadata[point.GetName()];
+            MergeMetadataWithStoryPoint(point, data);
+        }
+    }
+}
+
+void StoryLoader::MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Metadata>& metadata) const
+{
+    std::vector<std::shared_ptr<ResponseHandler>> handlers;
+    for (const Metadata& meta : metadata)
+    {
+        handlers.push_back(std::make_shared<LuaResponseHandler>(
+            meta.script,
+            meta.matcher_func,
+            meta.action_func
+        ));
+    }
+    point.SetHandlers(handlers);
 }
 
 } // namespace txt
