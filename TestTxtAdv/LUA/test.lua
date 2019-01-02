@@ -10,6 +10,9 @@ function matches_key(str)
     return str == "key"
 end
 
+function action_empty(str)
+end
+
 function action_handle(str)
     handle()
 end
