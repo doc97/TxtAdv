@@ -14,8 +14,19 @@ LuaResponseHandler::LuaResponseHandler(LuaManager* manager, const std::string& f
 {
 }
 
+LuaResponseHandler::LuaResponseHandler(const std::string& filename,
+    const std::string& matcher, const std::string& action)
+    : LuaResponseHandler(nullptr, filename, matcher, action)
+{
+}
+
 LuaResponseHandler::~LuaResponseHandler()
 {
+}
+
+void LuaResponseHandler::SetManager(LuaManager* manager)
+{
+    m_manager = manager;
 }
 
 void LuaResponseHandler::HandleInputImpl(const std::string& input)
@@ -32,6 +43,8 @@ void LuaResponseHandler::HandleInputImpl(const std::string& input)
 
 bool LuaResponseHandler::MatchesImpl(const std::string& input)
 {
+    if (!m_manager)
+        throw std::runtime_error("No LuaManager has been specified!");
     std::string err;
     std::vector<LuaParam> params = { { LuaParam::String, input.c_str() } };
     std::vector<LuaParam> retVal = { { LuaParam::Bool, false } };

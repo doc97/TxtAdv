@@ -29,6 +29,22 @@ static const luaL_Reg testlib[] =
     { "handle", &luaApply }
 };
 
+TEST_CASE("LuaResponseHandler - set manager", "[LuaResponseHandler]")
+{
+    LuaManager manager;
+    LuaResponseHandler handler("LUA/test.lua", "matches_true");
+    try
+    {
+        handler.Matches("");
+        FAIL("Without having specified a LuaManager, the LuaResponseHandler should throw a std::runtime_error");
+    }
+    catch (std::runtime_error)
+    {
+    }
+    handler.SetManager(&manager);
+    REQUIRE(handler.Matches(""));
+}
+
 TEST_CASE("LuaResponseHandler - lua matcher function", "[LuaResponseHandler]")
 {
     LuaManager manager;
