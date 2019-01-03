@@ -29,43 +29,44 @@ std::string Text::RawStr() const
     return m_raw;
 }
 
-std::vector<TextStyle> Text::GetStyles() const
+std::vector<TextEmphasis> Text::GetEmphasisStyles() const
 {
-    return m_styles;
+    return m_emphasis;
 }
 
 std::string Text::Parse(const std::string& raw)
 {
     std::string res = raw;
-    std::vector<TextStyleChange> changes = ParseStyles(res);
-    SortChanges(changes);
+
+    std::vector<TextEmphasisChange> changes = ParseEmphasisChanges(res);
+    SortEmphasisChanges(changes);
     RemoveMarkupCharacters(res, changes);
-    m_styles = ExtractStyles(changes, res.length());
-    m_styles = CompressStyles(m_styles);
+    m_emphasis = ExtractEmphasisStyles(changes, res.length());
+    m_emphasis = CompressEmphasisStyles(m_emphasis);
     
     return res;
 }
 
-std::vector<Text::TextStyleChange> Text::ParseStyles(const std::string& str) const
+std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChanges(const std::string& str) const
 {
-    std::vector<TextStyleChange> changes;
-    std::vector<TextStyleChange> underline = ParseStyle(str, "__", Styles::UNDERL);
-    std::vector<TextStyleChange> italics = ParseStyle(str, "_", Styles::ITALIC);
-    std::vector<TextStyleChange> bold = ParseStyle(str, "*", Styles::BOLD);
-    std::vector<TextStyleChange> strikethrough = ParseStyle(str, "~", Styles::STRIKE);
+    std::vector<TextEmphasisChange> changes;
+    std::vector<TextEmphasisChange> underline = ParseEmphasisChange(str, "__", Emphasis::UNDERL);
+    std::vector<TextEmphasisChange> italics = ParseEmphasisChange(str, "_", Emphasis::ITALIC);
+    std::vector<TextEmphasisChange> bold = ParseEmphasisChange(str, "*", Emphasis::BOLD);
+    std::vector<TextEmphasisChange> strikethrough = ParseEmphasisChange(str, "~", Emphasis::STRIKE);
     changes.reserve(underline.size() + italics.size() + bold.size() + strikethrough.size());
 
     // Important - Underline before italics
-    CombineStyles(changes, underline);
-    CombineStyles(changes, italics);
-    CombineStyles(changes, bold);
-    CombineStyles(changes, strikethrough);
+    CombineEmphasisChanges(changes, underline);
+    CombineEmphasisChanges(changes, italics);
+    CombineEmphasisChanges(changes, bold);
+    CombineEmphasisChanges(changes, strikethrough);
     return changes;
 }
 
-std::vector<Text::TextStyleChange> Text::ParseStyle(const std::string& str, const std::string& styleId, Styles style) const
+std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChange(const std::string& str, const std::string& styleId, Emphasis emphasis) const
 {
-    std::vector<TextStyleChange> changes;
+    std::vector<TextEmphasisChange> changes;
 
     size_t offset = 0;
     size_t startIdx = 0;
@@ -75,25 +76,25 @@ std::vector<Text::TextStyleChange> Text::ParseStyle(const std::string& str, cons
         if (endIdx == std::string::npos)
             break;
 
-        changes.push_back({ startIdx, styleId.length(), (unsigned char)style });
-        changes.push_back({ endIdx, styleId.length(), (unsigned char)style });
+        changes.push_back({ startIdx, styleId.length(), (unsigned char)emphasis });
+        changes.push_back({ endIdx, styleId.length(), (unsigned char)emphasis });
         offset = endIdx + 1;
     }
     return changes;
 }
 
-void Text::CombineStyles(std::vector<TextStyleChange>& orig, const std::vector<TextStyleChange>& append) const
+void Text::CombineEmphasisChanges(std::vector<TextEmphasisChange>& orig, const std::vector<TextEmphasisChange>& append) const
 {
-    std::vector<TextStyleChange>::const_iterator it;
+    std::vector<TextEmphasisChange>::const_iterator it;
     for (it = append.begin(); it != append.end(); ++it)
     {
         bool isUnique = true;
-        for (const TextStyleChange& origStyle : orig)
+        for (const TextEmphasisChange& origStyle : orig)
         {
             if (origStyle.idx == it->idx)
             {
                 isUnique = false;
-                if ((it->style_mask & Styles::ITALIC) == Styles::ITALIC)
+                if ((it->mask & Emphasis::ITALIC) == Emphasis::ITALIC)
                     ++it;
                 break;
             }
@@ -107,17 +108,17 @@ void Text::CombineStyles(std::vector<TextStyleChange>& orig, const std::vector<T
     }
 }
 
-void Text::SortChanges(std::vector<TextStyleChange>& changes) const
+void Text::SortEmphasisChanges(std::vector<TextEmphasisChange>& changes) const
 {
-    std::sort(changes.begin(), changes.end(), [](const TextStyleChange& a, const TextStyleChange& b)
+    std::sort(changes.begin(), changes.end(), [](const TextEmphasisChange& a, const TextEmphasisChange& b)
     {
         return a.idx < b.idx;
     });
 }
 
-void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextStyleChange>& changes) const
+void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextEmphasisChange>& changes) const
 {
-    std::vector<TextStyleChange>::iterator it = changes.begin();
+    std::vector<TextEmphasisChange>::iterator it = changes.begin();
     size_t i = 0;
     size_t lastIdx = SIZE_MAX;
     for (size_t i = 0; it != changes.end(); ++it)
@@ -131,17 +132,17 @@ void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextStyleChange>
     }
 }
 
-std::vector<TextStyle> Text::ExtractStyles(const std::vector<TextStyleChange>& changes, const size_t strLen) const
+std::vector<TextEmphasis> Text::ExtractEmphasisStyles(const std::vector<TextEmphasisChange>& changes, const size_t strLen) const
 {
-    std::vector<TextStyle> styles;
+    std::vector<TextEmphasis> styles;
     size_t start = 0;
-    unsigned char styleMask = Styles::NORMAL;
+    unsigned char styleMask = Emphasis::NORMAL;
     for (auto it = changes.begin(); it != changes.end(); ++it)
     {
         size_t len = it->idx - start;
         if (len > 0)
             styles.push_back({ start, len, styleMask });
-        styleMask ^= it->style_mask;
+        styleMask ^= it->mask;
         start = it->idx;
     }
     size_t len = strLen - start;
@@ -150,18 +151,18 @@ std::vector<TextStyle> Text::ExtractStyles(const std::vector<TextStyleChange>& c
     return styles;
 }
 
-std::vector<TextStyle> Text::CompressStyles(const std::vector<TextStyle>& styles) const
+std::vector<TextEmphasis> Text::CompressEmphasisStyles(const std::vector<TextEmphasis>& styles) const
 {
-    std::vector<TextStyle> result;
+    std::vector<TextEmphasis> result;
     if (styles.empty())
         return result;
-    std::vector<TextStyle>::const_iterator last = styles.begin();
-    std::vector<TextStyle>::const_iterator cur = styles.begin() + 1;
-    TextStyle lastStyle = *last;
+    std::vector<TextEmphasis>::const_iterator last = styles.begin();
+    std::vector<TextEmphasis>::const_iterator cur = styles.begin() + 1;
+    TextEmphasis lastStyle = *last;
 
     for (; cur != styles.end(); ++last, ++cur)
     {
-        if (cur->style == lastStyle.style)
+        if (cur->emphasis == lastStyle.emphasis)
         {
             lastStyle.len += cur->len;
         }

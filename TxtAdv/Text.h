@@ -11,45 +11,45 @@
 namespace txt
 {
 
-/* Enum: Styles
- * Bit mask constants used to switch on/off text styles.
+/* Enum: Emphasis
+ * Bit mask constants used to switch on/off text emphasis styles.
  *
- *    NORMAL - No style
- *    ITALIC - Italics style active
- *    BOLD - Bold style active
- *    UNDERL - Underline style active
- *    STRIKE - Strikethrough style active
- *    ALL - All of the styles active
+ *    NORMAL - No emphasis
+ *    ITALIC - Italics emphasis active
+ *    BOLD - Bold emphasis active
+ *    UNDERL - Underline emphasis active
+ *    STRIKE - Strikethrough emphasis active
+ *    ALL - All of the emphasis styles active
  *
  * Examples:
  * === C++ ===
- * unsigned char style = Styles::NORMAL;
- * style ^= Styles::ITALIC; // Toggle italics
- * style ^= Styles::BOLD; // Toggle bold - both italics and bold are active
+ * unsigned char emphasis = Emphasis::NORMAL;
+ * emphasis ^= Emphasis::ITALIC; // Toggle italics
+ * emphasis ^= Emphasis::BOLD; // Toggle bold - both italics and bold are active
  * ===========
  */
-enum Styles
+enum Emphasis
 {
     NORMAL = 0x00,
     ITALIC = 0x01,
     BOLD   = 0x02,
     UNDERL = 0x04,
     STRIKE = 0x08,
-    ALL    = 0xF0
+    ALL    = 0x0F
 };
 
-/* Struct: TextStyle
+/* Struct: TextEmphasis
  * A POD-struct representing a text style.
  *
  * See Also:
  *
- *    <Styles>
+ *    <Emphasis>
  */
-struct TextStyle
+struct TextEmphasis
 {
     size_t start = 0;
     size_t len = 0;
-    unsigned char style = Styles::NORMAL;
+    unsigned char emphasis = Emphasis::NORMAL;
 };
 
 
@@ -92,7 +92,7 @@ public:
     std::string RawStr() const;
 
     /* Function: GetStyles
-     * Get the parsed styles from the markup text given to the constructor.
+     * Get the parsed emphasis styles from the markup text given to the constructor.
      *
      * The vector is ordered and continuous in that sense that each part of
      * the string is mapped to some style. E.g.
@@ -102,34 +102,34 @@ public:
      *
      * Returns:
      *
-     *    The styles generated from the markup text.
+     *    The emphasis styles generated from the markup text
      *
      * See Also:
      *
-     *    <TextStyle>
+     *    <TextEmphasis>
      */
-    std::vector<TextStyle> GetStyles() const;
+    std::vector<TextEmphasis> GetEmphasisStyles() const;
 private:
-    struct TextStyleChange
+    struct TextEmphasisChange
     {
         size_t idx = 0;
         size_t style_len = 1;
-        unsigned char style_mask = Styles::NORMAL;
+        unsigned char mask = Emphasis::NORMAL;
     };
 
     std::string m_raw;
     std::string m_str;
-    std::vector<TextStyle> m_styles;
+    std::vector<TextEmphasis> m_emphasis;
 
     std::string Parse(const std::string& raw);
-    std::vector<TextStyleChange> ParseStyles(const std::string& str) const;
-    std::vector<TextStyleChange> ParseStyle(const std::string& str, const std::string& styleId,
-        Styles style) const;
-    void CombineStyles(std::vector<TextStyleChange>& orig, const std::vector<TextStyleChange>& append) const;
-    void SortChanges(std::vector<TextStyleChange>& changes) const;
-    void RemoveMarkupCharacters(std::string& str, std::vector<TextStyleChange>& changes) const;
-    std::vector<TextStyle> ExtractStyles(const std::vector<TextStyleChange>& changes, const size_t strLen) const;
-    std::vector<TextStyle> CompressStyles(const std::vector<TextStyle>& styles) const;
+    std::vector<TextEmphasisChange> ParseEmphasisChanges(const std::string& str) const;
+    std::vector<TextEmphasisChange> ParseEmphasisChange(const std::string& str, const std::string& styleId,
+        Emphasis emphasis) const;
+    void CombineEmphasisChanges(std::vector<TextEmphasisChange>& orig, const std::vector<TextEmphasisChange>& append) const;
+    void SortEmphasisChanges(std::vector<TextEmphasisChange>& changes) const;
+    void RemoveMarkupCharacters(std::string& str, std::vector<TextEmphasisChange>& changes) const;
+    std::vector<TextEmphasis> ExtractEmphasisStyles(const std::vector<TextEmphasisChange>& changes, const size_t strLen) const;
+    std::vector<TextEmphasis> CompressEmphasisStyles(const std::vector<TextEmphasis>& styles) const;
 };
 
 } // namespace txt

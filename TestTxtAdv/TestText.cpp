@@ -54,55 +54,55 @@ TEST_CASE("Text - italics", "[Text]")
     SECTION("test 1")
     {
         Text txt("_hello world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "_hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 12);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 2")
     {
         Text txt("_hello_ _world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello _world");
         REQUIRE(styles.size() == 2);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 5);
-        REQUIRE(styles[0].style == Styles::ITALIC);
+        REQUIRE(styles[0].emphasis == Emphasis::ITALIC);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 7);
-        REQUIRE(styles[1].style == Styles::NORMAL);
+        REQUIRE(styles[1].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 3")
     {
         Text txt("_hello world_");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == Styles::ITALIC);
+        REQUIRE(styles[0].emphasis == Emphasis::ITALIC);
     }
     SECTION("test 4")
     {
         Text txt("__normal");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 5")
     {
         Text txt("___italic_");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "italic");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].style == Styles::ITALIC);
+        REQUIRE(styles[0].emphasis == Emphasis::ITALIC);
     }
 }
 
@@ -111,55 +111,55 @@ TEST_CASE("Text - bold", "[Text]")
     SECTION("test 1")
     {
         Text txt("*hello world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "*hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 12);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 2")
     {
         Text txt("*hello* *world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello *world");
         REQUIRE(styles.size() == 2);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 5);
-        REQUIRE(styles[0].style == Styles::BOLD);
+        REQUIRE(styles[0].emphasis == Emphasis::BOLD);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 7);
-        REQUIRE(styles[1].style == Styles::NORMAL);
+        REQUIRE(styles[1].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 3")
     {
         Text txt("*hello world*");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == Styles::BOLD);
+        REQUIRE(styles[0].emphasis == Emphasis::BOLD);
     }
     SECTION("test 4")
     {
         Text txt("**normal");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 5")
     {
         Text txt("***bold*");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "bold");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 4);
-        REQUIRE(styles[0].style == Styles::BOLD);
+        REQUIRE(styles[0].emphasis == Emphasis::BOLD);
     }
 }
 
@@ -168,55 +168,55 @@ TEST_CASE("Text - strikethrough", "[Text]")
     SECTION("test 1")
     {
         Text txt("~hello world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "~hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 12);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 2")
     {
         Text txt("~hello~ ~world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello ~world");
         REQUIRE(styles.size() == 2);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 5);
-        REQUIRE(styles[0].style == Styles::STRIKE);
+        REQUIRE(styles[0].emphasis == Emphasis::STRIKE);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 7);
-        REQUIRE(styles[1].style == Styles::NORMAL);
+        REQUIRE(styles[1].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 3")
     {
         Text txt("~hello world~");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == Styles::STRIKE);
+        REQUIRE(styles[0].emphasis == Emphasis::STRIKE);
     }
     SECTION("test 4")
     {
         Text txt("~~normal");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 5")
     {
         Text txt("~~~strikethrough~");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "strikethrough");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 13);
-        REQUIRE(styles[0].style == Styles::STRIKE);
+        REQUIRE(styles[0].emphasis == Emphasis::STRIKE);
     }
 }
 
@@ -225,101 +225,101 @@ TEST_CASE("Text - underline", "[Text]")
     SECTION("test 1")
     {
         Text txt("__hello world__");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == Styles::UNDERL);
+        REQUIRE(styles[0].emphasis == Emphasis::UNDERL);
     }
     SECTION("test 2")
     {
         Text txt("__hello__ __world");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 2);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 5);
-        REQUIRE(styles[0].style == Styles::UNDERL);
+        REQUIRE(styles[0].emphasis == Emphasis::UNDERL);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 6);
-        REQUIRE(styles[1].style == Styles::NORMAL);
+        REQUIRE(styles[1].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 3")
     {
         Text txt("~hello world~");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == Styles::STRIKE);
+        REQUIRE(styles[0].emphasis == Emphasis::STRIKE);
     }
     SECTION("test 4")
     {
         Text txt("~~normal");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].style == Styles::NORMAL);
+        REQUIRE(styles[0].emphasis == Emphasis::NORMAL);
     }
     SECTION("test 5")
     {
         Text txt("~~~strikethrough~");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "strikethrough");
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 13);
-        REQUIRE(styles[0].style == Styles::STRIKE);
+        REQUIRE(styles[0].emphasis == Emphasis::STRIKE);
     }
 }
 
-TEST_CASE("Text - combination", "[Text]")
+TEST_CASE("Text - style combination", "[Text]")
 {
     SECTION("bold + italics")
     {
         Text txt("*_hello world_*");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == (Styles::BOLD | Styles::ITALIC));
+        REQUIRE(styles[0].emphasis == (Emphasis::BOLD | Emphasis::ITALIC));
     }
     SECTION("underline + italics")
     {
         Text txt("___hello world___");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == (Styles::UNDERL | Styles::ITALIC));
+        REQUIRE(styles[0].emphasis == (Emphasis::UNDERL | Emphasis::ITALIC));
     }
     SECTION("underline + bold + strike")
     {
         Text txt("__*~hello world~*__");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 11);
-        REQUIRE(styles[0].style == (Styles::UNDERL | Styles::BOLD | Styles::STRIKE));
+        REQUIRE(styles[0].emphasis == (Emphasis::UNDERL | Emphasis::BOLD | Emphasis::STRIKE));
     }
     SECTION("mix")
     {
         Text txt("__*hello__ ~world~*");
-        std::vector<TextStyle> styles = txt.GetStyles();
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 3);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 5);
-        REQUIRE(styles[0].style == (Styles::UNDERL | Styles::BOLD));
+        REQUIRE(styles[0].emphasis == (Emphasis::UNDERL | Emphasis::BOLD));
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 1);
-        REQUIRE(styles[1].style == Styles::BOLD);
+        REQUIRE(styles[1].emphasis == Emphasis::BOLD);
         REQUIRE(styles[2].start == 6);
         REQUIRE(styles[2].len == 5);
-        REQUIRE(styles[2].style == (Styles::BOLD | Styles::STRIKE));
+        REQUIRE(styles[2].emphasis == (Emphasis::BOLD | Emphasis::STRIKE));
     }
 }
 
