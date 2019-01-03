@@ -59,25 +59,14 @@ TEST_CASE("StoryLoader - load valid txt", "[StoryLoader]")
 TEST_CASE("StoryLoader - multiple story points", "[StoryLoader]")
 {
     StoryLoader loader;
-    SECTION("valid format")
-    {
-        std::vector<StoryPoint> points = loader.Load("Content/multi_ok.txt");
-        REQUIRE(points.size() == 2);
-        REQUIRE(points[0].GetName() == "Multi 1");
-        REQUIRE(points[0].GetTextStr() == "I am one of the story points.");
-        REQUIRE(points[0].GetHandlerCount() == 1);
-        REQUIRE(points[1].GetName() == "Multi 2");
-        REQUIRE(points[1].GetTextStr() == "I am the other one.");
-        REQUIRE(points[1].GetHandlerCount() == 1);
-    }
-    SECTION("invalid format")
-    {
-        std::vector<StoryPoint> points = loader.Load("Content/multi_fail.txt");
-        REQUIRE(points.size() == 1);
-        REQUIRE(points[0].GetName() == "Multi 1");
-        REQUIRE(points[0].GetTextStr() == "I am one of the story points.");
-        REQUIRE(points[0].GetHandlerCount() == 1);
-    }
+    std::vector<StoryPoint> points = loader.Load("Content/multi_story.txt");
+    REQUIRE(points.size() == 2);
+    REQUIRE(points[0].GetName() == "Multi 1");
+    REQUIRE(points[0].GetTextStr() == "I am one of the story points.");
+    REQUIRE(points[0].GetHandlerCount() == 1);
+    REQUIRE(points[1].GetName() == "Multi 2");
+    REQUIRE(points[1].GetTextStr() == "I am the other one.");
+    REQUIRE(points[1].GetHandlerCount() == 1);
 }
 
 TEST_CASE("StoryLoader - multiple handlers", "[StoryLoader]")
@@ -86,6 +75,14 @@ TEST_CASE("StoryLoader - multiple handlers", "[StoryLoader]")
     std::vector<StoryPoint> points = loader.Load("Content/multi_handler.txt");
     REQUIRE(points.size() == 1);
     REQUIRE(points[0].GetHandlerCount() == 2);
+}
+
+TEST_CASE("StoryLoader - newlines", "[StoryLoader]")
+{
+    StoryLoader loader;
+    std::vector<StoryPoint> points = loader.Load("Content/multiline.txt");
+    REQUIRE(points.size() == 1);
+    REQUIRE(points[0].GetTextStr() == "I am a story point with multiple lines.\nIsn't this very cool?");
 }
 
 } // namespace txt

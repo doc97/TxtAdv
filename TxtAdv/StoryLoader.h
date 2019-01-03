@@ -46,7 +46,7 @@ private:
 
     std::string GetMetaFile(std::ifstream& file) const;
     std::vector<StoryPoint> GetStoryPoints(std::ifstream& file) const;
-    StoryPoint GetStoryPoint(std::ifstream& file, const std::string& lastLine) const;
+    StoryPoint CreateStoryPoint(const std::string& name, const std::string& txt) const;
     std::unordered_map<std::string, std::vector<Metadata>> GetMetadata(const std::string& filename) const;
     void MergeMetadataWithStoryPoints(std::vector<StoryPoint>& points,
         std::unordered_map<std::string, std::vector<Metadata>>& metadata) const;

@@ -56,32 +56,48 @@ std::string StoryLoader::GetMetaFile(std::ifstream& file) const
 
 std::vector<StoryPoint> StoryLoader::GetStoryPoints(std::ifstream& file) const
 {
+    bool hasStarted = false;
     std::string line;
     std::vector<StoryPoint> points;
+
+    std::stringstream ss;
+    std::string pointName;
     while (std::getline(file, line))
     {
-        if (!line.empty() && !std::isspace(line.at(0)))
+        if (hasStarted)
         {
-            StoryPoint point = GetStoryPoint(file, line);
-            points.push_back(point);
+            if (line.empty())
+                ss << "\n";
+            else if (line.compare(0, 4, "    ") == 0)
+                ss << line.substr(4) << " ";
+            else if (!std::isspace(line.at(0)))
+            {
+                points.push_back(CreateStoryPoint(pointName, ss.str()));
+
+                pointName = line;
+                ss.str("");
+                ss.clear();
+            }
+        }
+        else if (!line.empty() && !std::isspace(line.at(0)))
+        {
+            pointName = line;
+            hasStarted = true;
         }
     }
+    points.push_back(CreateStoryPoint(pointName, ss.str()));
+
     return points;
 }
 
-StoryPoint StoryLoader::GetStoryPoint(std::ifstream& file, const std::string& lastLine) const
+StoryPoint StoryLoader::CreateStoryPoint(const std::string& name, const std::string& txt) const
 {
-    std::string line;
-    std::stringstream ss;
-    while (std::getline(file, line))
-    {
-        if (line.compare(0, 4, "    ") == 0)
-            ss << line.substr(4);
-        else
-            break;
-    }
-    StoryPoint point(lastLine);
-    point.SetTextStr(ss.str());
+    std::string str = txt;
+    txt::trim(str);
+    txt::repl(str, " \n", "\n");
+
+    StoryPoint point(name);
+    point.SetTextStr(str);
     return point;
 }
 
