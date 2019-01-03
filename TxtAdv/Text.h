@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <bitset>
 #include <string>
 #include <vector>
 
@@ -35,7 +36,30 @@ enum Emphasis
     BOLD   = 0x02,
     UNDERL = 0x04,
     STRIKE = 0x08,
-    ALL    = 0x0F
+    ALL    = 0x0F,
+};
+
+/* Enum: EmphasisBits
+ * Constants referring to the bit indices in the emphasis bit mask.
+ *
+ *    ITALIC_BIT - The first bit
+ *    BOLD_BIT - The second bit
+ *    UNDERL_BIT - The third bit
+ *    STRIKE_BIT - The fourth bit
+ *    BIT_COUNT - The bit count, used as the size of the bit mask
+ *
+ * See Also:
+ *
+ *    <Emphasis>
+ *    <TextEmphasis>
+ */
+enum EmphasisBits
+{
+    ITALIC_BIT = 0,
+    BOLD_BIT   = 1,
+    UNDERL_BIT = 2,
+    STRIKE_BIT = 3,
+    BIT_COUNT  = 4
 };
 
 /* Enum: TextSize
@@ -64,7 +88,7 @@ struct TextEmphasis
 {
     size_t start = 0;
     size_t len = 0;
-    unsigned char emphasis = Emphasis::NORMAL;
+    std::bitset<EmphasisBits::BIT_COUNT> bitmask;
 };
 
 /* Struct: TextMetadata
@@ -151,17 +175,29 @@ public:
      */
     std::vector<TextMetadata> GetMetadata() const;
 private:
+    /* Enum: MetadataChangeBits
+     * Bit mask constants used to mark metadata changes.
+     *
+     *    SIZE_CHANGE - Text size change
+     */
+    enum MetadataChangeBits
+    {
+        SIZE_CHANGE = 0x00,
+        CHANGE_COUNT = 0x01
+    };
+
     struct TextEmphasisChange
     {
         size_t idx = 0;
         size_t style_len = 1;
-        unsigned char mask = Emphasis::NORMAL;
+        std::bitset<EmphasisBits::BIT_COUNT> mask;
     };
     struct TextMetadataChange
     {
         size_t idx = 0;
         size_t len = 2;
         TextMetadata data;
+        std::bitset<MetadataChangeBits::CHANGE_COUNT> changeMask;
     };
 
     std::string m_raw;
@@ -170,8 +206,9 @@ private:
     std::vector<TextMetadata> m_metadata;
 
     std::string Parse(const std::string& raw);
-    std::vector<TextEmphasisChange> ParseEmphasisStyles(std::string& str);
-    std::vector<TextMetadataChange> ParseMetadata(std::string& str);
+    void RemoveMarkupCharacters(std::string& str,
+        std::vector<TextEmphasisChange>& emphasisChanges,
+        std::vector<TextMetadataChange>& metadataChanges) const;
 
     /* Emphasis styles*/
     std::vector<TextEmphasisChange> ParseEmphasisChanges(const std::string& str) const;
@@ -190,6 +227,7 @@ private:
     std::vector<TextMetadataChange> ParseSizeChanges(const std::string& str) const;
     void CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
         const std::vector<TextMetadataChange>& append) const;
+    void SortMetadataChanges(std::vector<TextMetadataChange>& changes) const;
     void RemoveMarkupCharacters(std::string& str, std::vector<TextMetadataChange>& changes) const;
     std::vector<TextMetadata> ExtractMetadata(const std::vector<TextMetadataChange>& changes,
         const size_t strLen) const;

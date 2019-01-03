@@ -43,8 +43,13 @@ std::vector<TextMetadata> Text::GetMetadata() const
 std::string Text::Parse(const std::string& raw)
 {
     std::string res = raw;
-    std::vector<TextEmphasisChange> emphasis = ParseEmphasisStyles(res);
-    std::vector<TextMetadataChange> metadata = ParseMetadata(res);
+    std::vector<TextEmphasisChange> emphasis = ParseEmphasisChanges(res);
+    std::vector<TextMetadataChange> metadata = ParseMetadataChanges(res);
+
+    SortEmphasisChanges(emphasis);
+    SortMetadataChanges(metadata);
+
+    RemoveMarkupCharacters(res, emphasis, metadata);
 
     m_emphasis = ExtractEmphasisStyles(emphasis, res.length());
     m_emphasis = CompressEmphasisStyles(m_emphasis);
@@ -54,19 +59,49 @@ std::string Text::Parse(const std::string& raw)
     return res;
 }
 
-std::vector<Text::TextEmphasisChange> Text::ParseEmphasisStyles(std::string& str)
+void Text::RemoveMarkupCharacters(std::string& str,
+    std::vector<TextEmphasisChange>& emphasisChanges,
+    std::vector<TextMetadataChange>& metadataChanges) const
 {
-    std::vector<TextEmphasisChange> changes = ParseEmphasisChanges(str);
-    SortEmphasisChanges(changes);
-    RemoveMarkupCharacters(str, changes);
-    return changes;
-}
+    std::vector<TextEmphasisChange>::iterator emIt = emphasisChanges.begin();
+    std::vector<TextMetadataChange>::iterator mdIt = metadataChanges.begin();
+    size_t lastEmIdx = SIZE_MAX;
+    size_t lastMdIdx = SIZE_MAX;
+    size_t charsRemoved = 0;
 
-std::vector<Text::TextMetadataChange> Text::ParseMetadata(std::string& str)
-{
-    std::vector<TextMetadataChange> changes = ParseMetadataChanges(str);
-    RemoveMarkupCharacters(str, changes);
-    return changes;
+    do
+    {
+        size_t emIdx = SIZE_MAX;
+        size_t mdIdx = SIZE_MAX;
+        if (emIt != emphasisChanges.end())
+            emIdx = emIt->idx;
+        if (mdIt != metadataChanges.end())
+            mdIdx = mdIt->idx;
+
+        if (emIdx < mdIdx)
+        {
+            if (lastEmIdx == emIdx)
+                continue;
+            lastEmIdx = emIdx;
+            emIt->idx -= charsRemoved;
+            charsRemoved += emIt->style_len;
+            str.erase(emIt->idx, emIt->style_len);
+
+            ++emIt;
+        }
+        else if (mdIdx < emIdx)
+        {
+            if (lastMdIdx == mdIdx)
+                continue;
+            lastMdIdx = mdIdx;
+            mdIt->idx -= charsRemoved;
+            charsRemoved += mdIt->len;
+            str.erase(mdIt->idx, mdIt->len);
+
+            ++mdIt;
+        }
+
+    } while (emIt != emphasisChanges.end() || mdIt != metadataChanges.end());
 }
 
 std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChanges(const std::string& str) const
@@ -86,7 +121,8 @@ std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChanges(const std::stri
     return changes;
 }
 
-std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChange(const std::string& str, const std::string& styleId, Emphasis emphasis) const
+std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChange(const std::string& str, const std::string& styleId,
+    Emphasis emphasis) const
 {
     std::vector<TextEmphasisChange> changes;
 
@@ -98,8 +134,18 @@ std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChange(const std::strin
         if (endIdx == std::string::npos)
             break;
 
-        changes.push_back({ startIdx, styleId.length(), (unsigned char)emphasis });
-        changes.push_back({ endIdx, styleId.length(), (unsigned char)emphasis });
+        TextEmphasisChange startChange;
+        startChange.idx = startIdx;
+        startChange.style_len = styleId.length();
+        startChange.mask = std::bitset<EmphasisBits::BIT_COUNT>((unsigned long)emphasis);
+
+        TextEmphasisChange endChange;
+        endChange.idx = endIdx;
+        endChange.style_len = styleId.length();
+        endChange.mask = std::bitset<EmphasisBits::BIT_COUNT>((unsigned long)emphasis);
+
+        changes.push_back(startChange);
+        changes.push_back(endChange);
         offset = endIdx + 1;
     }
     return changes;
@@ -116,7 +162,7 @@ void Text::CombineEmphasisChanges(std::vector<TextEmphasisChange>& orig, const s
             if (origStyle.idx == it->idx)
             {
                 isUnique = false;
-                if ((it->mask & Emphasis::ITALIC) == Emphasis::ITALIC)
+                if (it->mask[EmphasisBits::ITALIC_BIT])
                     ++it;
                 break;
             }
@@ -158,7 +204,7 @@ std::vector<TextEmphasis> Text::ExtractEmphasisStyles(const std::vector<TextEmph
 {
     std::vector<TextEmphasis> styles;
     size_t start = 0;
-    unsigned char styleMask = Emphasis::NORMAL;
+    std::bitset<EmphasisBits::BIT_COUNT> styleMask;
     for (auto it = changes.begin(); it != changes.end(); ++it)
     {
         size_t len = it->idx - start;
@@ -184,7 +230,7 @@ std::vector<TextEmphasis> Text::CompressEmphasisStyles(const std::vector<TextEmp
 
     for (; cur != styles.end(); ++last, ++cur)
     {
-        if (cur->emphasis == lastStyle.emphasis)
+        if (cur->bitmask == lastStyle.bitmask)
         {
             lastStyle.len += cur->len;
         }
@@ -249,7 +295,12 @@ std::vector<Text::TextMetadataChange> Text::ParseSizeChanges(const std::string& 
             continue;
         }
 
-        changes.push_back({ startIdx, 2, data });
+        TextMetadataChange change;
+        change.idx = startIdx;
+        change.len = 2;
+        change.data = data;
+        change.changeMask.set(MetadataChangeBits::SIZE_CHANGE, true);
+        changes.push_back(change);
     }
     return changes;
 }
@@ -260,6 +311,14 @@ void Text::CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
     std::vector<TextMetadataChange>::const_iterator it;
     for (it = append.begin(); it != append.end(); ++it)
         orig.push_back(*it);
+}
+
+void Text::SortMetadataChanges(std::vector<TextMetadataChange>& changes) const
+{
+    std::sort(changes.begin(), changes.end(), [](const TextMetadataChange& a, const TextMetadataChange& b)
+    {
+        return a.idx < b.idx;
+    });
 }
 
 void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextMetadataChange>& changes) const
@@ -288,13 +347,27 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
     {
         size_t len = it->idx - start;
         if (len > 0)
-            metadata.push_back({ start, len, size });
-        size = it->data.size;
+        {
+            TextMetadata data;
+            data.start = start;
+            data.len = len;
+            data.size = size;
+            metadata.push_back(data);
+        }
+
+        if (it->changeMask[MetadataChangeBits::SIZE_CHANGE])
+            size = it->data.size;
         start = it->idx;
     }
     size_t len = strLen - start;
     if (len > 0)
-        metadata.push_back({ start, len, size });
+    {
+        TextMetadata data;
+        data.start = start;
+        data.len = len;
+        data.size = size;
+        metadata.push_back(data);
+    }
     return metadata;
 }
 
