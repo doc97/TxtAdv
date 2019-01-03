@@ -99,6 +99,18 @@ static inline std::string trim_copy(std::string s)
     return s;
 }
 
+/* Function: split
+ * Splits a string by a delimeter.
+ *
+ * Parameters:
+ *
+ *    s - The string to split
+ *    delim - The character delimeter
+ *
+ * Returns:
+ *
+ *    A vector of the substrings
+ */
 static inline std::vector<std::string> split(const std::string& s, char delim)
 {
     std::vector<std::string> tokens;
@@ -107,6 +119,44 @@ static inline std::vector<std::string> split(const std::string& s, char delim)
     while (std::getline(stream, token, delim))
         tokens.push_back(token);
     return tokens;
+}
+
+/* Function: repl
+ * Replaces inline all occurrences of a substring with another string.
+ *
+ * Parameters:
+ *
+ *    s - The string to operate on
+ *    search - The substring to search for
+ *    replace - The string to replace the search term with
+ */
+static inline void repl(std::string& s, const std::string& search, const std::string& replace)
+{
+    size_t n = 0;
+    while ((n = s.find(search, n)) != std::string::npos)
+    {
+        s.replace(n, search.size(), replace);
+        n += replace.size();
+    }
+}
+
+/* Function: repl_copy
+ * Replaces all occurrences of a substring with another string and returns the result.
+ *
+ * Parameters:
+ *
+ *    s - The string to operate on (pass by value)
+ *    search - The substring to search for
+ *    replace - The string to replace the search term with
+ *
+ * Returns:
+ *
+ *    The modified string
+ */
+static inline std::string repl_copy(std::string s, const std::string& search, const std::string& replace)
+{
+    repl(s, search, replace);
+    return s;
 }
 
 } // namespace txt
