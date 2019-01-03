@@ -96,9 +96,6 @@ private:
     Text m_text;
     std::vector<std::shared_ptr<ResponseHandler>> m_handlers;
     std::shared_ptr<TextParser> m_parser = nullptr;
-
-    std::string ParseTextImpl(const std::string& text, const std::vector<std::function<std::string()>>& expr) const;
-    bool IsIllegalText(const std::string& text) const;
 };
 
 } // namespace txt
