@@ -122,6 +122,7 @@ private:
     std::vector<TextEmphasis> m_emphasis;
 
     std::string Parse(const std::string& raw);
+    void ParseEmphasisStyles(std::string& str);
     std::vector<TextEmphasisChange> ParseEmphasisChanges(const std::string& str) const;
     std::vector<TextEmphasisChange> ParseEmphasisChange(const std::string& str, const std::string& styleId,
         Emphasis emphasis) const;

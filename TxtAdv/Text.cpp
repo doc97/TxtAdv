@@ -37,14 +37,18 @@ std::vector<TextEmphasis> Text::GetEmphasisStyles() const
 std::string Text::Parse(const std::string& raw)
 {
     std::string res = raw;
+    ParseEmphasisStyles(res);
 
-    std::vector<TextEmphasisChange> changes = ParseEmphasisChanges(res);
-    SortEmphasisChanges(changes);
-    RemoveMarkupCharacters(res, changes);
-    m_emphasis = ExtractEmphasisStyles(changes, res.length());
-    m_emphasis = CompressEmphasisStyles(m_emphasis);
-    
     return res;
+}
+
+void Text::ParseEmphasisStyles(std::string& str)
+{
+    std::vector<TextEmphasisChange> changes = ParseEmphasisChanges(str);
+    SortEmphasisChanges(changes);
+    RemoveMarkupCharacters(str, changes);
+    m_emphasis = ExtractEmphasisStyles(changes, str.length());
+    m_emphasis = CompressEmphasisStyles(m_emphasis);
 }
 
 std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChanges(const std::string& str) const
