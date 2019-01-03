@@ -75,6 +75,14 @@ public:
      */
     std::string GetTextStr() const;
 
+    /* Function: GetText
+     *
+     * Returns:
+     *
+     *    The underlying <Text> object
+     */
+    Text GetText() const;
+
     /* Function: GetHandlerCount
      *
      * Returns:

@@ -44,6 +44,11 @@ std::string StoryPoint::GetTextStr() const
     return m_parser->ParseText(m_text.Str());
 }
 
+Text StoryPoint::GetText() const
+{
+    return m_text;
+}
+
 size_t StoryPoint::GetHandlerCount() const
 {
     return m_handlers.size();

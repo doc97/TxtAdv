@@ -30,6 +30,38 @@ TEST_CASE("StoryPoint - get/set text string", "[StoryPoint]")
     REQUIRE(point.GetTextStr() == "b");
 }
 
+TEST_CASE("StoryPoint - get text", "[StoryPoint]")
+{
+    StoryPoint point("1");
+    REQUIRE(point.GetText().Str() == "");
+
+    SECTION("without markup")
+    {
+        point.SetTextStr("a");
+        REQUIRE(point.GetText().Str() == "a");
+        point.SetTextStr("b");
+        REQUIRE(point.GetText().Str() == "b");
+    }
+    SECTION("with markup")
+    {
+        point.SetTextStr("_a_");
+        REQUIRE(point.GetText().Str() == "a");
+        point.SetTextStr("~b~");
+        REQUIRE(point.GetText().Str() == "b");
+    }
+}
+
+TEST_CASE("StoryPoint - get text, ignore parser", "[StoryPoint]")
+{
+    GameState state;
+    std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
+    parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
+    StoryPoint point("1");
+    point.SetParser(parser);
+    point.SetTextStr("{x_a}");
+    REQUIRE(point.GetText().Str() == "{x_a}");
+}
+
 TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
 {
     GameState state;
