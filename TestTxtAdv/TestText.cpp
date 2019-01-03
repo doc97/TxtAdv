@@ -323,4 +323,42 @@ TEST_CASE("Text - style combination", "[Text]")
     }
 }
 
+TEST_CASE("Text - size metadata", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("!2hello");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(metadata.size() == 1);
+        REQUIRE(metadata[0].start == 0);
+        REQUIRE(metadata[0].len == 5);
+        REQUIRE(metadata[0].size == TextSize::S2);
+    }
+    SECTION("test 2")
+    {
+        Text txt("!2hello world");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(metadata.size() == 1);
+        REQUIRE(metadata[0].start == 0);
+        REQUIRE(metadata[0].len == 11);
+        REQUIRE(metadata[0].size == TextSize::S2);
+    }
+    SECTION("test 3")
+    {
+        Text txt("!3hello");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(metadata.size() == 1);
+        REQUIRE(metadata[0].start == 0);
+        REQUIRE(metadata[0].len == 5);
+        REQUIRE(metadata[0].size == TextSize::S3);
+    }
+}
+
+TEST_CASE("Text - metadata compression", "[Text]")
+{
+    Text txt("hel!1lo");
+    std::vector<TextMetadata> metadata = txt.GetMetadata();
+    REQUIRE(metadata.size() == 1);
+}
+
 } // namespace txt

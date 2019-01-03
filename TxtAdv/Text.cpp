@@ -5,6 +5,7 @@
 
 #include "Text.h"
 #include <algorithm>
+#include <cctype>
 
 namespace txt
 {
@@ -34,21 +35,38 @@ std::vector<TextEmphasis> Text::GetEmphasisStyles() const
     return m_emphasis;
 }
 
+std::vector<TextMetadata> Text::GetMetadata() const
+{
+    return m_metadata;
+}
+
 std::string Text::Parse(const std::string& raw)
 {
     std::string res = raw;
-    ParseEmphasisStyles(res);
+    std::vector<TextEmphasisChange> emphasis = ParseEmphasisStyles(res);
+    std::vector<TextMetadataChange> metadata = ParseMetadata(res);
 
+    m_emphasis = ExtractEmphasisStyles(emphasis, res.length());
+    m_emphasis = CompressEmphasisStyles(m_emphasis);
+
+    m_metadata = ExtractMetadata(metadata, res.length());
+    m_metadata = CompressMetadata(m_metadata);
     return res;
 }
 
-void Text::ParseEmphasisStyles(std::string& str)
+std::vector<Text::TextEmphasisChange> Text::ParseEmphasisStyles(std::string& str)
 {
     std::vector<TextEmphasisChange> changes = ParseEmphasisChanges(str);
     SortEmphasisChanges(changes);
     RemoveMarkupCharacters(str, changes);
-    m_emphasis = ExtractEmphasisStyles(changes, str.length());
-    m_emphasis = CompressEmphasisStyles(m_emphasis);
+    return changes;
+}
+
+std::vector<Text::TextMetadataChange> Text::ParseMetadata(std::string& str)
+{
+    std::vector<TextMetadataChange> changes = ParseMetadataChanges(str);
+    RemoveMarkupCharacters(str, changes);
+    return changes;
 }
 
 std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChanges(const std::string& str) const
@@ -177,6 +195,131 @@ std::vector<TextEmphasis> Text::CompressEmphasisStyles(const std::vector<TextEmp
         }
     }
     result.push_back(lastStyle);
+    return result;
+}
+
+std::vector<Text::TextMetadataChange> Text::ParseMetadataChanges(const std::string& str) const
+{
+    std::vector<TextMetadataChange> changes;
+    std::vector<TextMetadataChange> sizeChanges = ParseSizeChanges(str);
+
+    changes.reserve(sizeChanges.size());
+    CombineMetadataChanges(changes, sizeChanges);
+    return changes;
+}
+
+std::vector<Text::TextMetadataChange> Text::ParseSizeChanges(const std::string& str) const
+{
+    std::vector<TextMetadataChange> changes;
+    size_t offset = 0;
+    size_t startIdx = 0;
+
+    while ((startIdx = str.find("!", offset)) != std::string::npos)
+    {
+        // Increment first to avoid incrementing at each flow exit
+        offset = startIdx + 1;
+
+        if (startIdx == str.length() - 1)
+            break;
+
+        char sizeCh = str.at(startIdx + 1);
+        if (!std::isdigit(sizeCh))
+            continue;
+
+        size_t sizeDigit = sizeCh - '0';
+        TextMetadata data;
+        switch (sizeDigit)
+        {
+        case 1:
+            data.size = TextSize::S1;
+            break;
+        case 2:
+            data.size = TextSize::S2;
+            break;
+        case 3:
+            data.size = TextSize::S3;
+            break;
+        case 4:
+            data.size = TextSize::S4;
+            break;
+        case 5:
+            data.size = TextSize::S5;
+            break;
+        default:
+            continue;
+        }
+
+        changes.push_back({ startIdx, 2, data });
+    }
+    return changes;
+}
+
+void Text::CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
+    const std::vector<TextMetadataChange>& append) const
+{
+    std::vector<TextMetadataChange>::const_iterator it;
+    for (it = append.begin(); it != append.end(); ++it)
+        orig.push_back(*it);
+}
+
+void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextMetadataChange>& changes) const
+{
+    std::vector<TextMetadataChange>::iterator it = changes.begin();
+    size_t i = 0;
+    size_t lastIdx = SIZE_MAX;
+    for (size_t i = 0; it != changes.end(); ++it)
+    {
+        if (lastIdx == it->idx)
+            continue;
+        lastIdx = it->idx;
+        it->idx -= i;
+        i += it->len;
+        str.erase(it->idx, it->len);
+    }
+}
+
+std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataChange>& changes,
+    const size_t strLen) const
+{
+    std::vector<TextMetadata> metadata;
+    size_t start = 0;
+    TextSize size = TextSize::S1;
+    for (auto it = changes.begin(); it != changes.end(); ++it)
+    {
+        size_t len = it->idx - start;
+        if (len > 0)
+            metadata.push_back({ start, len, size });
+        size = it->data.size;
+        start = it->idx;
+    }
+    size_t len = strLen - start;
+    if (len > 0)
+        metadata.push_back({ start, len, size });
+    return metadata;
+}
+
+std::vector<TextMetadata> Text::CompressMetadata(const std::vector<TextMetadata>& metadata) const
+{
+    std::vector<TextMetadata> result;
+    if (metadata.empty())
+        return result;
+    std::vector<TextMetadata>::const_iterator last = metadata.begin();
+    std::vector<TextMetadata>::const_iterator cur = metadata.begin() + 1;
+    TextMetadata lastMetadata = *last;
+
+    for (; cur != metadata.end(); ++last, ++cur)
+    {
+        if (cur->size == lastMetadata.size)
+        {
+            lastMetadata.len += cur->len;
+        }
+        else
+        {
+            result.push_back(lastMetadata);
+            lastMetadata = *cur;
+        }
+    }
+    result.push_back(lastMetadata);
     return result;
 }
 
