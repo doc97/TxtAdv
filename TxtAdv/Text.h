@@ -77,6 +77,22 @@ enum TextSize
     S1 = 0, S2, S3, S4, S5, SIZE_COUNT
 };
 
+/* Struct: Color
+ * Represents a 32-bit RGBA color.
+ */
+struct Color
+{
+    unsigned char r = 0;
+    unsigned char g = 0;
+    unsigned char b = 0;
+    unsigned char a = 0;
+};
+
+inline bool operator==(const Color& a, const Color& b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
+
 /* Struct: TextEmphasis
  * A POD-struct representing a text style.
  *
@@ -99,7 +115,13 @@ struct TextMetadata
     size_t start = 0;
     size_t len = 0;
     TextSize size = TextSize::S1;
+    Color color = { 0, 0, 0, 0 };
 };
+
+inline bool operator==(const TextMetadata& a, const TextMetadata& b)
+{
+    return a.size == b.size && a.color == b.color;
+}
 
 
 /* Class: Text
@@ -179,11 +201,13 @@ private:
      * Bit mask constants used to mark metadata changes.
      *
      *    SIZE_CHANGE - Text size change
+     *    COLOR_CHANGE - Text color change
      */
     enum MetadataChangeBits
     {
         SIZE_CHANGE = 0x00,
-        CHANGE_COUNT = 0x01
+        COLOR_CHANGE = 0x01,
+        CHANGE_COUNT = 0x02
     };
 
     struct TextEmphasisChange
@@ -192,6 +216,7 @@ private:
         size_t style_len = 1;
         std::bitset<EmphasisBits::BIT_COUNT> mask;
     };
+
     struct TextMetadataChange
     {
         size_t idx = 0;
@@ -225,6 +250,7 @@ private:
     /* Metadata */
     std::vector<TextMetadataChange> ParseMetadataChanges(const std::string& str) const;
     std::vector<TextMetadataChange> ParseSizeChanges(const std::string& str) const;
+    std::vector<TextMetadataChange> ParseColorChanges(const std::string& str) const;
     void CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
         const std::vector<TextMetadataChange>& append) const;
     void SortMetadataChanges(std::vector<TextMetadataChange>& changes) const;

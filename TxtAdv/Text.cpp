@@ -6,6 +6,7 @@
 #include "Text.h"
 #include <algorithm>
 #include <cctype>
+#include <sstream>
 
 namespace txt
 {
@@ -248,9 +249,11 @@ std::vector<Text::TextMetadataChange> Text::ParseMetadataChanges(const std::stri
 {
     std::vector<TextMetadataChange> changes;
     std::vector<TextMetadataChange> sizeChanges = ParseSizeChanges(str);
+    std::vector<TextMetadataChange> colorChanges = ParseColorChanges(str);
 
-    changes.reserve(sizeChanges.size());
+    changes.reserve(sizeChanges.size() + colorChanges.size());
     CombineMetadataChanges(changes, sizeChanges);
+    CombineMetadataChanges(changes, colorChanges);
     return changes;
 }
 
@@ -305,6 +308,45 @@ std::vector<Text::TextMetadataChange> Text::ParseSizeChanges(const std::string& 
     return changes;
 }
 
+std::vector<Text::TextMetadataChange> Text::ParseColorChanges(const std::string& str) const
+{
+    std::vector<TextMetadataChange> changes;
+    size_t offset = 0;
+    size_t startIdx = 0;
+
+    while ((startIdx = str.find("#", offset)) != std::string::npos)
+    {
+        // Increment first to avoid incrementing at each flow exit
+        offset = startIdx + 1;
+
+        if (startIdx + 8 >= str.length() - 1)
+            break;
+
+        unsigned int hexVal;
+        std::string hexStr = str.substr(startIdx + 1, 8);
+        std::istringstream converter(hexStr);
+        converter >> std::hex >> hexVal;
+        if (converter.fail())
+            continue;
+
+        TextMetadata data;
+        data.color.r = (hexVal & 0xFF000000) >> 24;
+        data.color.g = (hexVal & 0x00FF0000) >> 16;
+        data.color.b = (hexVal & 0x0000FF00) >> 8;
+        data.color.a = (hexVal & 0x000000FF);
+
+        TextMetadataChange change;
+        change.idx = startIdx;
+        change.len = 9;
+        change.data = data;
+        change.changeMask.set(MetadataChangeBits::COLOR_CHANGE, true);
+        changes.push_back(change);
+
+        offset += 8;
+    }
+    return changes;
+}
+
 void Text::CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
     const std::vector<TextMetadataChange>& append) const
 {
@@ -343,6 +385,7 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
     std::vector<TextMetadata> metadata;
     size_t start = 0;
     TextSize size = TextSize::S1;
+    Color color = { 255, 255, 255, 255 };
     for (auto it = changes.begin(); it != changes.end(); ++it)
     {
         size_t len = it->idx - start;
@@ -352,11 +395,14 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
             data.start = start;
             data.len = len;
             data.size = size;
+            data.color = color;
             metadata.push_back(data);
         }
 
         if (it->changeMask[MetadataChangeBits::SIZE_CHANGE])
             size = it->data.size;
+        if (it->changeMask[MetadataChangeBits::COLOR_CHANGE])
+            color = it->data.color;
         start = it->idx;
     }
     size_t len = strLen - start;
@@ -366,6 +412,7 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
         data.start = start;
         data.len = len;
         data.size = size;
+        data.color = color;
         metadata.push_back(data);
     }
     return metadata;
@@ -382,7 +429,7 @@ std::vector<TextMetadata> Text::CompressMetadata(const std::vector<TextMetadata>
 
     for (; cur != metadata.end(); ++last, ++cur)
     {
-        if (cur->size == lastMetadata.size)
+        if (*cur == lastMetadata)
         {
             lastMetadata.len += cur->len;
         }

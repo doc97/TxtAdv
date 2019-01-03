@@ -354,6 +354,40 @@ TEST_CASE("Text - size metadata", "[Text]")
     }
 }
 
+TEST_CASE("Text - color metadata", "[Text]")
+{
+    SECTION("single color")
+    {
+        Color color = { 0x33, 0xFF, 0xEE, 0xFF };
+        Text txt("#33FFEEFFhello");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(txt.Str() == "hello");
+        REQUIRE(metadata.size() == 1);
+        REQUIRE(metadata[0].start == 0);
+        REQUIRE(metadata[0].len == 5);
+        REQUIRE(metadata[0].color == color);
+    }
+    SECTION("multi-color")
+    {
+        Color color0 = { 0xFF, 0xFF, 0xFF, 0xFF };
+        Color color1 = { 0x11, 0x22, 0x33, 0x44 };
+        Color color2 = { 0x55, 0x66, 0x77, 0x88 };
+        Text txt("he#11223344llo#55667788 world");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(txt.Str() == "hello world");
+        REQUIRE(metadata.size() == 3);
+        REQUIRE(metadata[0].start == 0);
+        REQUIRE(metadata[0].len == 2);
+        REQUIRE(metadata[0].color == color0);
+        REQUIRE(metadata[1].start == 2);
+        REQUIRE(metadata[1].len == 3);
+        REQUIRE(metadata[1].color == color1);
+        REQUIRE(metadata[2].start == 5);
+        REQUIRE(metadata[2].len == 6);
+        REQUIRE(metadata[2].color == color2);
+    }
+}
+
 TEST_CASE("Text - metadata compression", "[Text]")
 {
     Text txt("hel!1lo");
