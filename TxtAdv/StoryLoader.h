@@ -34,7 +34,7 @@ public:
      *
      *    A vector of the loaded story points.
      */
-    std::vector<StoryPoint> Load(const std::string& filename) const;
+    std::vector<StoryPoint> Load(const std::string& filename);
 private:
     struct Metadata
     {
@@ -44,10 +44,15 @@ private:
         std::string action_func;
     };
 
-    std::string GetMetaFile(std::ifstream& file) const;
-    std::vector<StoryPoint> GetStoryPoints(std::ifstream& file) const;
+    bool m_isComment = false;
+
+    bool NextLine(std::ifstream& file, std::string& line);
+    bool HandleMultilineComment(std::string& line);
+    bool HandleSinglelineComment(std::string& line);
+    std::string GetMetaFile(std::ifstream& file);
+    std::vector<StoryPoint> GetStoryPoints(std::ifstream& file);
+    std::unordered_map<std::string, std::vector<Metadata>> GetMetadata(const std::string& filename);
     StoryPoint CreateStoryPoint(const std::string& name, const std::string& txt) const;
-    std::unordered_map<std::string, std::vector<Metadata>> GetMetadata(const std::string& filename) const;
     void MergeMetadataWithStoryPoints(std::vector<StoryPoint>& points,
         std::unordered_map<std::string, std::vector<Metadata>>& metadata) const;
     void MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Metadata>& metadata) const;

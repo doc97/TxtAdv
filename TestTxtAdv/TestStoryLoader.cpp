@@ -93,4 +93,15 @@ TEST_CASE("StoryLoader - escape character", "[StoryLoader]")
     REQUIRE(points[0].GetTextStr() == "I am an *escaped string*");
 }
 
+TEST_CASE("StoryLoader - comments", "[StoryLoader]")
+{
+    StoryLoader loader;
+    std::vector<StoryPoint> points = loader.Load("Content/comments.txt");
+    REQUIRE(points.size() == 2);
+    REQUIRE(points[0].GetName() == "Hello world");
+    REQUIRE(points[0].GetTextStr() == "Lorem");
+    REQUIRE(points[1].GetName() == "Hello");
+    REQUIRE(points[1].GetTextStr() == "ipsum");
+}
+
 } // namespace txt

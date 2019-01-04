@@ -1,0 +1,12 @@
+Meta: Content/comments.meta
+
+Hello world
+    Lorem// ipsum
+
+Hello// world
+    /*Lorem */ipsum
+
+/*
+Hello world
+    Lorem ipsum
+*/
