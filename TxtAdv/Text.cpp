@@ -46,11 +46,13 @@ std::string Text::Parse(const std::string& raw)
     std::string res = raw;
     std::vector<TextEmphasisChange> emphasis = ParseEmphasisChanges(res);
     std::vector<TextMetadataChange> metadata = ParseMetadataChanges(res);
+    std::vector<TextRemoveRange> removals = ParseRemoveRanges(res);
 
     SortEmphasisChanges(emphasis);
     SortMetadataChanges(metadata);
+    SortRemoveRanges(removals);
 
-    RemoveMarkupCharacters(res, emphasis, metadata);
+    RemoveMarkupCharacters(res, emphasis, metadata, removals);
 
     m_emphasis = ExtractEmphasisStyles(emphasis, res.length());
     m_emphasis = CompressEmphasisStyles(m_emphasis);
@@ -62,47 +64,57 @@ std::string Text::Parse(const std::string& raw)
 
 void Text::RemoveMarkupCharacters(std::string& str,
     std::vector<TextEmphasisChange>& emphasisChanges,
-    std::vector<TextMetadataChange>& metadataChanges) const
+    std::vector<TextMetadataChange>& metadataChanges,
+    std::vector<TextRemoveRange>& removals) const
 {
     std::vector<TextEmphasisChange>::iterator emIt = emphasisChanges.begin();
     std::vector<TextMetadataChange>::iterator mdIt = metadataChanges.begin();
+    std::vector<TextRemoveRange>::iterator rmIt = removals.begin();
     size_t lastEmIdx = SIZE_MAX;
     size_t lastMdIdx = SIZE_MAX;
+    size_t lastRmIdx = SIZE_MAX;
     size_t charsRemoved = 0;
 
-    do
+    while (emIt != emphasisChanges.end() || mdIt != metadataChanges.end() || rmIt != removals.end())
     {
-        size_t emIdx = SIZE_MAX;
-        size_t mdIdx = SIZE_MAX;
-        if (emIt != emphasisChanges.end())
-            emIdx = emIt->idx;
-        if (mdIt != metadataChanges.end())
-            mdIdx = mdIt->idx;
+        size_t emIdx = (emIt == emphasisChanges.end() ? SIZE_MAX : emIt->idx);
+        size_t mdIdx = (mdIt == metadataChanges.end() ? SIZE_MAX : mdIt->idx);
+        size_t rmIdx = (rmIt == removals.end() ? SIZE_MAX : rmIt->idx);
 
-        if (emIdx < mdIdx)
+        if (emIdx < mdIdx && emIdx < rmIdx)
         {
-            if (lastEmIdx == emIdx)
+            if (lastEmIdx == emIt->idx)
                 continue;
-            lastEmIdx = emIdx;
+            lastEmIdx = emIt->idx;
             emIt->idx -= charsRemoved;
             charsRemoved += emIt->style_len;
             str.erase(emIt->idx, emIt->style_len);
 
             ++emIt;
         }
-        else if (mdIdx < emIdx)
+        else if (mdIdx < emIdx && mdIdx < rmIdx)
         {
-            if (lastMdIdx == mdIdx)
+            if (lastMdIdx == mdIt->idx)
                 continue;
-            lastMdIdx = mdIdx;
+            lastMdIdx = mdIt->idx;
             mdIt->idx -= charsRemoved;
             charsRemoved += mdIt->len;
             str.erase(mdIt->idx, mdIt->len);
 
             ++mdIt;
         }
+        else if (rmIdx < emIdx && rmIdx < mdIdx)
+        {
+            if (lastRmIdx == rmIt->idx)
+                continue;
+            lastRmIdx = rmIt->idx;
+            rmIt->idx -= charsRemoved;
+            charsRemoved += rmIt->len;
+            str.erase(rmIt->idx, rmIt->len);
 
-    } while (emIt != emphasisChanges.end() || mdIt != metadataChanges.end());
+            ++rmIt;
+        }
+    }
 }
 
 std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChanges(const std::string& str) const
@@ -131,6 +143,12 @@ std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChange(const std::strin
     size_t startIdx = 0;
     while ((startIdx = str.find(styleId, offset)) != std::string::npos)
     {
+        if (startIdx > 0 && str.at(startIdx - 1) == '\\')
+        {
+            offset = startIdx + 1;
+            continue;
+        }
+
         size_t endIdx = str.find(styleId, startIdx + styleId.length());
         if (endIdx == std::string::npos)
             break;
@@ -441,6 +459,53 @@ std::vector<TextMetadata> Text::CompressMetadata(const std::vector<TextMetadata>
     }
     result.push_back(lastMetadata);
     return result;
+}
+
+std::vector<Text::TextRemoveRange> Text::ParseRemoveRanges(const std::string& str) const
+{
+    std::vector<TextRemoveRange> removals;
+    std::vector<TextRemoveRange> escapeSequences = ParseEscapeSequences(str);
+
+    removals.reserve(escapeSequences.size());
+    CombineRemoveRanges(removals, escapeSequences);
+    return removals;
+}
+
+std::vector<Text::TextRemoveRange> Text::ParseEscapeSequences(const std::string& str) const
+{
+    std::vector<TextRemoveRange> points;
+    size_t offset = 0;
+    size_t startIdx = 0;
+
+    while ((startIdx = str.find("\\", offset)) != std::string::npos)
+    {
+        offset = startIdx + 1;
+
+        if (startIdx < str.length() && str.at(startIdx + 1) == '\\')
+            ++offset; // Increment to skip over the next backslash
+
+        TextRemoveRange point;
+        point.idx = startIdx;
+        point.len = 1;
+        points.push_back(point);
+    }
+    return points;
+}
+
+void Text::CombineRemoveRanges(std::vector<TextRemoveRange>& orig,
+    const std::vector<TextRemoveRange>& append) const
+{
+    std::vector<TextRemoveRange>::const_iterator it;
+    for (it = append.begin(); it != append.end(); ++it)
+        orig.push_back(*it);
+}
+
+void Text::SortRemoveRanges(std::vector<TextRemoveRange>& points) const
+{
+    std::sort(points.begin(), points.end(), [](const TextRemoveRange& a, const TextRemoveRange& b)
+    {
+        return a.idx < b.idx;
+    });
 }
 
 } // namespace txt

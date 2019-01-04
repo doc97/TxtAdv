@@ -210,6 +210,15 @@ private:
         CHANGE_COUNT = 0x02
     };
 
+    /* Struct: TextRemoveRange
+     * Represents a range in the string to remove.
+     */
+    struct TextRemoveRange
+    {
+        size_t idx = 0;
+        size_t len = 0;
+    };
+
     struct TextEmphasisChange
     {
         size_t idx = 0;
@@ -233,7 +242,8 @@ private:
     std::string Parse(const std::string& raw);
     void RemoveMarkupCharacters(std::string& str,
         std::vector<TextEmphasisChange>& emphasisChanges,
-        std::vector<TextMetadataChange>& metadataChanges) const;
+        std::vector<TextMetadataChange>& metadataChanges,
+        std::vector<TextRemoveRange>& removals) const;
 
     /* Emphasis styles*/
     std::vector<TextEmphasisChange> ParseEmphasisChanges(const std::string& str) const;
@@ -258,6 +268,13 @@ private:
     std::vector<TextMetadata> ExtractMetadata(const std::vector<TextMetadataChange>& changes,
         const size_t strLen) const;
     std::vector<TextMetadata> CompressMetadata(const std::vector<TextMetadata>& metadata) const;
+
+    /* Remove ranges */
+    std::vector<TextRemoveRange> ParseRemoveRanges(const std::string& str) const;
+    std::vector<TextRemoveRange> ParseEscapeSequences(const std::string& str) const;
+    void CombineRemoveRanges(std::vector<TextRemoveRange>& orig,
+        const std::vector<TextRemoveRange>& append) const;
+    void SortRemoveRanges(std::vector<TextRemoveRange>& points) const;
 };
 
 } // namespace txt

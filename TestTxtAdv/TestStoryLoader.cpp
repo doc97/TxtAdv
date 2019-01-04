@@ -85,4 +85,12 @@ TEST_CASE("StoryLoader - newlines", "[StoryLoader]")
     REQUIRE(points[0].GetTextStr() == "I am a story point with multiple lines.\nIsn't this very cool?");
 }
 
+TEST_CASE("StoryLoader - escape character", "[StoryLoader]")
+{
+    StoryLoader loader;
+    std::vector<StoryPoint> points = loader.Load("Content/escape.txt");
+    REQUIRE(points.size() == 1);
+    REQUIRE(points[0].GetTextStr() == "I am an *escaped string*");
+}
+
 } // namespace txt

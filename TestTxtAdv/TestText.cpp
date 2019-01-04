@@ -395,4 +395,35 @@ TEST_CASE("Text - metadata compression", "[Text]")
     REQUIRE(metadata.size() == 1);
 }
 
+TEST_CASE("Text - escape emphasis", "[Text]")
+{
+    Text txt("he\\*llo*");
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 1);
+    REQUIRE(txt.RawStr() == "he\\*llo*");
+    REQUIRE(txt.Str() == "he*llo*");
+}
+
+TEST_CASE("Text - Escape escape", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("\\hello");
+        REQUIRE(txt.RawStr() == "\\hello");
+        REQUIRE(txt.Str() == "hello");
+    }
+    SECTION("test 2")
+    {
+        Text txt("\\\\hello");
+        REQUIRE(txt.RawStr() == "\\\\hello");
+        REQUIRE(txt.Str() == "\\hello");
+    }
+    SECTION("test 3")
+    {
+        Text txt("\\\\\\hello");
+        REQUIRE(txt.RawStr() == "\\\\\\hello");
+        REQUIRE(txt.Str() == "\\hello");
+    }
+}
+
 } // namespace txt
