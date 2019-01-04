@@ -12,7 +12,7 @@ your ideas.
 
 ## Features
 
-- **Lua scripting**: Power your game by writing scripts with the easy to use language Lua
+- **Lua scripting**: Power your game by writing scripts with the easy-to-use language Lua
 - **Text markup**: Write flexible text markup with support for variables
 
 ## Documentation
@@ -41,6 +41,19 @@ to see how the different components work together.
 The framework is tested with [Catch2](https://github.com/catchorg/Catch2) and
 the tests can be found under the TestTxtAdv Visual Studio project.
 
+_(04-Jan-2019)_
+**Commit:** b116921
+**Tests:** 559 assertions in 85 test cases
+**Coverage:** 13 files (7 excluded)
+
+Excluded:
+- `AdvGame.cpp` (experimentation class)
+- `ConsoleIO.cpp` `(stdio implementation class)
+- `Game.cpp` (abstract class)
+- `LambdaExpression.cpp` (simple function wrapper)
+- `LuaGameState.cpp` (Lua wrapper)
+- `LuaManager.cpp` (Lua state will not be tested)
+- `LuaStoryBranch.cpp` (Lua wrapper)
 
 ## Github Projects
 
