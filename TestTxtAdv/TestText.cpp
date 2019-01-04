@@ -404,6 +404,26 @@ TEST_CASE("Text - escape emphasis", "[Text]")
     REQUIRE(txt.Str() == "he*llo*");
 }
 
+TEST_CASE("Text - escape metadata", "[Text]")
+{
+    SECTION("color metadata")
+    {
+        Text txt("he\\#11223344llo");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(metadata.size() == 1);
+        REQUIRE(txt.RawStr() == "he\\#11223344llo");
+        REQUIRE(txt.Str() == "he#11223344llo");
+    }
+    SECTION("size metadata")
+    {
+        Text txt("he\\!2llo");
+        std::vector<TextMetadata> metadata = txt.GetMetadata();
+        REQUIRE(metadata.size() == 1);
+        REQUIRE(txt.RawStr() == "he\\!2llo");
+        REQUIRE(txt.Str() == "he!2llo");
+    }
+}
+
 TEST_CASE("Text - Escape escape", "[Text]")
 {
     SECTION("test 1")

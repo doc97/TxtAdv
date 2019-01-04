@@ -286,6 +286,9 @@ std::vector<Text::TextMetadataChange> Text::ParseSizeChanges(const std::string& 
         // Increment first to avoid incrementing at each flow exit
         offset = startIdx + 1;
 
+        if (startIdx > 0 && str.at(startIdx - 1) == '\\')
+            continue;
+
         if (startIdx == str.length() - 1)
             break;
 
@@ -336,6 +339,9 @@ std::vector<Text::TextMetadataChange> Text::ParseColorChanges(const std::string&
     {
         // Increment first to avoid incrementing at each flow exit
         offset = startIdx + 1;
+
+        if (startIdx > 0 && str.at(startIdx - 1) == '\\')
+            continue;
 
         if (startIdx + 8 >= str.length() - 1)
             break;
