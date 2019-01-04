@@ -41,12 +41,9 @@ to see how the different components work together.
 The framework is tested with [Catch2](https://github.com/catchorg/Catch2) and
 the tests can be found under the TestTxtAdv Visual Studio project.
 
-_(04-Jan-2019)_
-
-**Commit:** b116921
-
-**Tests:** 559 assertions in 85 test cases
-
+_(04-Jan-2019)_  
+**Commit:** [b116921](https://github.com/doc97/TxtAdv/commit/b116921d35739cc83a429c94c0d3c6db2d2737ba)  
+**Tests:** 559 assertions in 85 test cases  
 **Coverage:** 13 files (7 excluded)
 
 Excluded:
