@@ -42,13 +42,16 @@ The framework is tested with [Catch2](https://github.com/catchorg/Catch2) and
 the tests can be found under the TestTxtAdv Visual Studio project.
 
 _(04-Jan-2019)_
+
 **Commit:** b116921
+
 **Tests:** 559 assertions in 85 test cases
+
 **Coverage:** 13 files (7 excluded)
 
 Excluded:
 - `AdvGame.cpp` (experimentation class)
-- `ConsoleIO.cpp` `(stdio implementation class)
+- `ConsoleIO.cpp` (stdio implementation class)
 - `Game.cpp` (abstract class)
 - `LambdaExpression.cpp` (simple function wrapper)
 - `LuaGameState.cpp` (Lua wrapper)
