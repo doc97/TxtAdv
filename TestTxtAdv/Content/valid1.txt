@@ -1,4 +1,4 @@
 Meta: Content/valid.meta
 
-Valid 1
+Story: Valid 1
     I am a valid txt file

@@ -1,7 +1,7 @@
 Meta: Content/multi.meta
 
-Multi 1
+Story: Multi 1
     I am one of the story points.
 
-Multi 2
+Story: Multi 2
     I am the other one.

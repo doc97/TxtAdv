@@ -1,4 +1,4 @@
 Meta: Content/escape.meta
 
-Escape
+Story: Escape
     I am an \*escaped string\*

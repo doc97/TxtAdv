@@ -1,4 +1,4 @@
 Meta: Content/multi.meta
 
-MultiHandler
+Story: MultiHandler
     I have multiple handlers

@@ -126,18 +126,18 @@ std::vector<StoryPoint> StoryLoader::GetStoryPoints(std::ifstream& file)
                 ss << "\n";
             else if (line.compare(0, 4, "    ") == 0)
                 ss << line.substr(4) << " ";
-            else if (!std::isspace(line.at(0)))
+            else if (line.find("Story:") != std::string::npos)
             {
                 points.push_back(CreateStoryPoint(pointName, ss.str()));
 
-                pointName = line;
+                pointName = txt::trim_copy(line.substr(6));
                 ss.str("");
                 ss.clear();
             }
         }
-        else if (!line.empty() && !std::isspace(line.at(0)))
+        else if (line.find("Story:") != std::string::npos)
         {
-            pointName = line;
+            pointName = txt::trim_copy(line.substr(6));
             hasStarted = true;
         }
     }
