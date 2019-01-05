@@ -120,6 +120,8 @@ void Text::SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::
     std::vector<TextEmphasis>::iterator remover = lower + ++offset;
     for (size_t i = 0; i < toRemove && remover != m_emphasis.end(); ++i)
         remover = m_emphasis.erase(remover);
+
+    m_emphasis = CompressEmphasisStyles(m_emphasis);
 }
 
 std::string Text::Str() const

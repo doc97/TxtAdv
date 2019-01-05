@@ -851,4 +851,16 @@ TEST_CASE("Text - set emphasis style, invalid length", "[Text]")
     }
 }
 
+TEST_CASE("Text - set emphasis style, compression", "[Text]")
+{
+    Text txt("hello *world*");
+    txt.SetEmphasisStyle(6, 5, Emphasis::NONE);
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 1);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 11);
+    REQUIRE(styles[0].bitmask == Emphasis::NONE);
+
+}
+
 } // namespace txt
