@@ -81,9 +81,6 @@ void Text::RemoveMarkupCharacters(std::string& str,
     std::vector<TextMetadataChange>::iterator mdIt = metadataChanges.begin();
     std::vector<TextRemoveRange>::iterator rmIt = removals.begin();
     std::vector<TextTagChange>::iterator tgIt = tagChanges.begin();
-    size_t lastEmIdx = SIZE_MAX;
-    size_t lastMdIdx = SIZE_MAX;
-    size_t lastRmIdx = SIZE_MAX;
     size_t charsRemoved = 0;
 
     while (emIt != emphasisChanges.end() || mdIt != metadataChanges.end() ||
@@ -96,9 +93,6 @@ void Text::RemoveMarkupCharacters(std::string& str,
 
         if (emIdx < mdIdx && emIdx < rmIdx && emIdx < tgIdx)
         {
-            if (lastEmIdx == emIt->idx)
-                continue;
-            lastEmIdx = emIt->idx;
             emIt->idx -= charsRemoved;
             charsRemoved += emIt->style_len;
             str.erase(emIt->idx, emIt->style_len);
@@ -107,9 +101,6 @@ void Text::RemoveMarkupCharacters(std::string& str,
         }
         else if (mdIdx < emIdx && mdIdx < rmIdx && mdIdx < tgIdx)
         {
-            if (lastMdIdx == mdIt->idx)
-                continue;
-            lastMdIdx = mdIt->idx;
             mdIt->idx -= charsRemoved;
             charsRemoved += mdIt->len;
             str.erase(mdIt->idx, mdIt->len);
@@ -118,9 +109,6 @@ void Text::RemoveMarkupCharacters(std::string& str,
         }
         else if (rmIdx < emIdx && rmIdx < mdIdx && rmIdx < tgIdx)
         {
-            if (lastRmIdx == rmIt->idx)
-                continue;
-            lastRmIdx = rmIt->idx;
             rmIt->idx -= charsRemoved;
             charsRemoved += rmIt->len;
             str.erase(rmIt->idx, rmIt->len);
