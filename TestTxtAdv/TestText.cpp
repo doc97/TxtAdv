@@ -395,6 +395,132 @@ TEST_CASE("Text - metadata compression", "[Text]")
     REQUIRE(metadata.size() == 1);
 }
 
+TEST_CASE("Text - no tags", "[Text]")
+{
+    Text txt("hello");
+    std::vector<TextTag> tags = txt.GetTags();
+    REQUIRE(tags.size() == 0);
+    REQUIRE(txt.Str() == "hello");
+    REQUIRE(txt.RawStr() == "hello");
+}
+
+TEST_CASE("Text - one invalid tag", "[Text]")
+{
+    SECTION("unclosed tag")
+    {
+        Text txt("<open>hello");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<open>hello");
+        REQUIRE(txt.RawStr() == "<open>hello");
+    }
+    SECTION("non-matching tag 1")
+    {
+        Text txt("<open>hello</opened>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<open>hello</opened>");
+        REQUIRE(txt.RawStr() == "<open>hello</opened>");
+    }
+}
+
+TEST_CASE("Text - one valid tag", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("<test>hello</test>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 5);
+        REQUIRE(tags[0].name == "test");
+        REQUIRE(txt.Str() == "hello");
+        REQUIRE(txt.RawStr() == "<test>hello</test>");
+    }
+    SECTION("test 2")
+    {
+        Text txt("hello <best>world!</best>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 6);
+        REQUIRE(tags[0].len == 6);
+        REQUIRE(tags[0].name == "best");
+        REQUIRE(txt.Str() == "hello world!");
+        REQUIRE(txt.RawStr() == "hello <best>world!</best>");
+    }
+    SECTION("test 3")
+    {
+        Text txt("hello <testing>world!</testing>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 6);
+        REQUIRE(tags[0].len == 6);
+        REQUIRE(tags[0].name == "testing");
+        REQUIRE(txt.Str() == "hello world!");
+        REQUIRE(txt.RawStr() == "hello <testing>world!</testing>");
+    }
+}
+
+TEST_CASE("Text - nested tags not allowed", "[Text]")
+{
+    Text txt("<a>hello <b>world</b></a>");
+    std::vector<TextTag> tags = txt.GetTags();
+    REQUIRE(tags.size() == 1);
+    REQUIRE(tags[0].start == 0);
+    REQUIRE(tags[0].len == 18);
+    REQUIRE(tags[0].name == "a");
+    REQUIRE(txt.Str() == "hello <b>world</b>");
+}
+
+TEST_CASE("Text - multiple same tags", "[Text]")
+{
+    Text txt("<a>hello</a> <a>world</a>");
+    std::vector<TextTag> tags = txt.GetTags();
+    REQUIRE(tags.size() == 2);
+    REQUIRE(tags[0].start == 0);
+    REQUIRE(tags[0].len == 5);
+    REQUIRE(tags[0].name == "a");
+    REQUIRE(tags[1].start == 6);
+    REQUIRE(tags[1].len == 5);
+    REQUIRE(tags[1].name == "a");
+    REQUIRE(txt.Str() == "hello world");
+}
+
+TEST_CASE("Text - multiple different tags", "[Text]")
+{
+    Text txt("<a>hello</a> <b>world</b> <c>to you</c>!");
+    std::vector<TextTag> tags = txt.GetTags();
+    REQUIRE(tags.size() == 3);
+    REQUIRE(tags[0].start == 0);
+    REQUIRE(tags[0].len == 5);
+    REQUIRE(tags[0].name == "a");
+    REQUIRE(tags[1].start == 6);
+    REQUIRE(tags[1].len == 5);
+    REQUIRE(tags[1].name == "b");
+    REQUIRE(tags[2].start == 12);
+    REQUIRE(tags[2].len == 6);
+    REQUIRE(tags[2].name == "c");
+    REQUIRE(txt.Str() == "hello world to you!");
+}
+
+TEST_CASE("Text - tag + emphasis markup", "[Text")
+{
+    Text txt("<a>*hello*</a>");
+    std::vector<TextTag> tags = txt.GetTags();
+    REQUIRE(tags.size() == 1);
+    REQUIRE(tags[0].start == 0);
+    REQUIRE(tags[0].len == 5);
+    REQUIRE(tags[0].name == "a");
+    REQUIRE(txt.Str() == "hello");
+    REQUIRE(txt.RawStr() == "<a>*hello*</a>");
+
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 1);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 5);
+    REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+}
+
 TEST_CASE("Text - escape emphasis", "[Text]")
 {
     Text txt("he\\*llo*");

@@ -123,6 +123,16 @@ inline bool operator==(const TextMetadata& a, const TextMetadata& b)
     return a.size == b.size && a.color == b.color;
 }
 
+/* Struct: TextTag
+ * A struct for representing a text tag.
+ */
+struct TextTag
+{
+    size_t start = 0;
+    size_t len = 0;
+    std::string name;
+};
+
 /* Class: Text
  * Represents stylized text.
  */
@@ -195,6 +205,19 @@ public:
      *    <TextMetadata>
      */
     std::vector<TextMetadata> GetMetadata() const;
+
+    /* Function: GetTags
+     * Get the parsed text tags from the markup text given to the constructor.
+     *
+     * Returns:
+     *
+     *    The text tags generated from the markup text
+     *
+     * See Also:
+     *
+     *    <TextTag>
+     */
+    std::vector<TextTag> GetTags() const;
 private:
     /* Enum: MetadataChangeBits
      * Bit mask constants used to mark metadata changes.
@@ -233,16 +256,25 @@ private:
         std::bitset<MetadataChangeBits::CHANGE_COUNT> changeMask;
     };
 
+    struct TextTagChange
+    {
+        size_t idx = 0;
+        size_t len = 0;
+        std::string name;
+    };
+
     std::string m_raw;
     std::string m_str;
     std::vector<TextEmphasis> m_emphasis;
     std::vector<TextMetadata> m_metadata;
+    std::vector<TextTag> m_tags;
 
     std::string Parse(const std::string& raw);
     void RemoveMarkupCharacters(std::string& str,
         std::vector<TextEmphasisChange>& emphasisChanges,
         std::vector<TextMetadataChange>& metadataChanges,
-        std::vector<TextRemoveRange>& removals) const;
+        std::vector<TextRemoveRange>& removals,
+        std::vector<TextTagChange>& tagChanges) const;
 
     /* Emphasis styles*/
     std::vector<TextEmphasisChange> ParseEmphasisChanges(const std::string& str) const;
@@ -274,6 +306,10 @@ private:
     void CombineRemoveRanges(std::vector<TextRemoveRange>& orig,
         const std::vector<TextRemoveRange>& append) const;
     void SortRemoveRanges(std::vector<TextRemoveRange>& points) const;
+
+    /* Tags */
+    std::vector<TextTagChange> ParseTagChanges(const std::string& str) const;
+    std::vector<TextTag> ExtractTags(const std::vector<TextTagChange>& changes);
 };
 
 } // namespace txt

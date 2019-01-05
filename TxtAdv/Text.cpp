@@ -41,47 +41,60 @@ std::vector<TextMetadata> Text::GetMetadata() const
     return m_metadata;
 }
 
+std::vector<TextTag> Text::GetTags() const
+{
+    return m_tags;
+}
+
 std::string Text::Parse(const std::string& raw)
 {
     std::string res = raw;
     std::vector<TextEmphasisChange> emphasis = ParseEmphasisChanges(res);
     std::vector<TextMetadataChange> metadata = ParseMetadataChanges(res);
     std::vector<TextRemoveRange> removals = ParseRemoveRanges(res);
+    std::vector<TextTagChange> tags = ParseTagChanges(res);
 
     SortEmphasisChanges(emphasis);
     SortMetadataChanges(metadata);
     SortRemoveRanges(removals);
 
-    RemoveMarkupCharacters(res, emphasis, metadata, removals);
+    RemoveMarkupCharacters(res, emphasis, metadata, removals, tags);
 
     m_emphasis = ExtractEmphasisStyles(emphasis, res.length());
     m_emphasis = CompressEmphasisStyles(m_emphasis);
 
     m_metadata = ExtractMetadata(metadata, res.length());
     m_metadata = CompressMetadata(m_metadata);
+
+    m_tags = ExtractTags(tags);
+
     return res;
 }
 
 void Text::RemoveMarkupCharacters(std::string& str,
     std::vector<TextEmphasisChange>& emphasisChanges,
     std::vector<TextMetadataChange>& metadataChanges,
-    std::vector<TextRemoveRange>& removals) const
+    std::vector<TextRemoveRange>& removals,
+    std::vector<TextTagChange>& tagChanges) const
 {
     std::vector<TextEmphasisChange>::iterator emIt = emphasisChanges.begin();
     std::vector<TextMetadataChange>::iterator mdIt = metadataChanges.begin();
     std::vector<TextRemoveRange>::iterator rmIt = removals.begin();
+    std::vector<TextTagChange>::iterator tgIt = tagChanges.begin();
     size_t lastEmIdx = SIZE_MAX;
     size_t lastMdIdx = SIZE_MAX;
     size_t lastRmIdx = SIZE_MAX;
     size_t charsRemoved = 0;
 
-    while (emIt != emphasisChanges.end() || mdIt != metadataChanges.end() || rmIt != removals.end())
+    while (emIt != emphasisChanges.end() || mdIt != metadataChanges.end() ||
+        rmIt != removals.end() || tgIt != tagChanges.end())
     {
         size_t emIdx = (emIt == emphasisChanges.end() ? SIZE_MAX : emIt->idx);
         size_t mdIdx = (mdIt == metadataChanges.end() ? SIZE_MAX : mdIt->idx);
         size_t rmIdx = (rmIt == removals.end() ? SIZE_MAX : rmIt->idx);
+        size_t tgIdx = (tgIt == tagChanges.end() ? SIZE_MAX : tgIt->idx);
 
-        if (emIdx < mdIdx && emIdx < rmIdx)
+        if (emIdx < mdIdx && emIdx < rmIdx && emIdx < tgIdx)
         {
             if (lastEmIdx == emIt->idx)
                 continue;
@@ -92,7 +105,7 @@ void Text::RemoveMarkupCharacters(std::string& str,
 
             ++emIt;
         }
-        else if (mdIdx < emIdx && mdIdx < rmIdx)
+        else if (mdIdx < emIdx && mdIdx < rmIdx && mdIdx < tgIdx)
         {
             if (lastMdIdx == mdIt->idx)
                 continue;
@@ -103,7 +116,7 @@ void Text::RemoveMarkupCharacters(std::string& str,
 
             ++mdIt;
         }
-        else if (rmIdx < emIdx && rmIdx < mdIdx)
+        else if (rmIdx < emIdx && rmIdx < mdIdx && rmIdx < tgIdx)
         {
             if (lastRmIdx == rmIt->idx)
                 continue;
@@ -113,6 +126,14 @@ void Text::RemoveMarkupCharacters(std::string& str,
             str.erase(rmIt->idx, rmIt->len);
 
             ++rmIt;
+        }
+        else if (tgIdx < emIdx && tgIdx < mdIdx && tgIdx < rmIdx)
+        {
+            tgIt->idx -= charsRemoved;
+            charsRemoved += tgIt->len;
+            str.erase(tgIt->idx, tgIt->len);
+
+            ++tgIt;
         }
     }
 }
@@ -512,6 +533,70 @@ void Text::SortRemoveRanges(std::vector<TextRemoveRange>& points) const
     {
         return a.idx < b.idx;
     });
+}
+
+std::vector<Text::TextTagChange> Text::ParseTagChanges(const std::string& str) const
+{
+    std::vector<TextTagChange> changes;
+    size_t offset = 0;
+    while (offset < str.length())
+    {
+        size_t start;
+        if ((start = str.find("<", offset)) == std::string::npos)
+            break;
+
+        offset = start + 1;
+        size_t startEnd;
+        if ((startEnd = str.find(">", offset)) == std::string::npos)
+            break;
+
+        std::string name = str.substr(start + 1, startEnd - start - 1);
+
+        offset = startEnd + 1;
+        size_t end;
+        if ((end = str.find("</" + name + ">", offset)) == std::string::npos)
+            break;
+
+        size_t endEnd = end + name.length() + 2;
+        offset = endEnd + 1;
+
+        TextTagChange startChange;
+        startChange.idx = start;
+        startChange.len = startEnd - start + 1;
+        startChange.name = name;
+
+        changes.push_back(startChange);
+
+        TextTagChange endChange;
+        endChange.idx = end;
+        endChange.len = endEnd - end + 1;
+        endChange.name = name;
+
+        changes.push_back(endChange);
+    }
+
+    return changes;
+}
+
+std::vector<TextTag> Text::ExtractTags(const std::vector<TextTagChange>& changes)
+{
+    std::vector<TextTag> tags;
+    for (auto it = changes.begin(); it != changes.end() && (it + 1) != changes.end(); it += 2)
+    {
+        size_t start = it->idx;
+        size_t end = (it + 1)->idx;
+        size_t len = end - start;
+
+        if (len > 0)
+        {
+            TextTag tag;
+            tag.start = start;
+            tag.len = len;
+            tag.name = it->name;
+            tags.push_back(tag);
+        }
+    }
+    return tags;
 }
 
 } // namespace txt
