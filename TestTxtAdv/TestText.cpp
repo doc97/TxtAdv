@@ -59,7 +59,7 @@ TEST_CASE("Text - italics", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 12);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 2")
     {
@@ -72,7 +72,7 @@ TEST_CASE("Text - italics", "[Text]")
         REQUIRE(styles[0].bitmask == Emphasis::ITALIC);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 7);
-        REQUIRE(styles[1].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[1].bitmask == Emphasis::NONE);
     }
     SECTION("test 3")
     {
@@ -92,7 +92,7 @@ TEST_CASE("Text - italics", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 5")
     {
@@ -116,7 +116,7 @@ TEST_CASE("Text - bold", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 12);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 2")
     {
@@ -129,7 +129,7 @@ TEST_CASE("Text - bold", "[Text]")
         REQUIRE(styles[0].bitmask == Emphasis::BOLD);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 7);
-        REQUIRE(styles[1].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[1].bitmask == Emphasis::NONE);
     }
     SECTION("test 3")
     {
@@ -149,7 +149,7 @@ TEST_CASE("Text - bold", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 5")
     {
@@ -173,7 +173,7 @@ TEST_CASE("Text - strikethrough", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 12);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 2")
     {
@@ -186,7 +186,7 @@ TEST_CASE("Text - strikethrough", "[Text]")
         REQUIRE(styles[0].bitmask == Emphasis::STRIKE);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 7);
-        REQUIRE(styles[1].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[1].bitmask == Emphasis::NONE);
     }
     SECTION("test 3")
     {
@@ -206,7 +206,7 @@ TEST_CASE("Text - strikethrough", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 5")
     {
@@ -243,7 +243,7 @@ TEST_CASE("Text - underline", "[Text]")
         REQUIRE(styles[0].bitmask == Emphasis::UNDERL);
         REQUIRE(styles[1].start == 5);
         REQUIRE(styles[1].len == 6);
-        REQUIRE(styles[1].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[1].bitmask == Emphasis::NONE);
     }
     SECTION("test 3")
     {
@@ -263,7 +263,7 @@ TEST_CASE("Text - underline", "[Text]")
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
         REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
     SECTION("test 5")
     {
@@ -583,7 +583,7 @@ TEST_CASE("Text - tag + bold markup", "[Text")
         REQUIRE(styles[0].bitmask == Emphasis::BOLD);
         REQUIRE(styles[1].start == 1);
         REQUIRE(styles[1].len == 1);
-        REQUIRE(styles[1].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[1].bitmask == Emphasis::NONE);
         REQUIRE(styles[2].start == 2);
         REQUIRE(styles[2].len == 3);
         REQUIRE(styles[2].bitmask == Emphasis::BOLD);

@@ -15,7 +15,7 @@ namespace txt
 /* Enum: Emphasis
  * Bit mask constants used to switch on/off text emphasis styles.
  *
- *    NORMAL - No emphasis
+ *    NONE - No emphasis
  *    ITALIC - Italics emphasis active
  *    BOLD - Bold emphasis active
  *    UNDERL - Underline emphasis active
@@ -24,14 +24,14 @@ namespace txt
  *
  * Examples:
  * === C++ ===
- * unsigned char emphasis = Emphasis::NORMAL;
+ * unsigned char emphasis = Emphasis::NONE;
  * emphasis ^= Emphasis::ITALIC; // Toggle italics
  * emphasis ^= Emphasis::BOLD; // Toggle bold - both italics and bold are active
  * ===========
  */
 enum Emphasis
 {
-    NORMAL = 0x00,
+    NONE   = 0x00,
     ITALIC = 0x01,
     BOLD   = 0x02,
     UNDERL = 0x04,
