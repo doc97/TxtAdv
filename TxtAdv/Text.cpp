@@ -503,6 +503,9 @@ std::vector<Text::TextTagChange> Text::ParseTagChanges(const std::string& str) c
             break;
 
         offset = start + 1;
+        if (start > 0 && str.at(start - 1) == '\\')
+            continue;
+
         size_t startEnd;
         if ((startEnd = str.find(">", offset)) == std::string::npos)
             break;
@@ -510,12 +513,24 @@ std::vector<Text::TextTagChange> Text::ParseTagChanges(const std::string& str) c
         std::string name = str.substr(start + 1, startEnd - start - 1);
 
         offset = startEnd + 1;
+        if (str.at(startEnd - 1) == '\\')
+            continue;
+
         size_t end;
-        if ((end = str.find("</" + name + ">", offset)) == std::string::npos)
+        while ((end = str.find("</" + name + ">", offset)) != std::string::npos)
+        {
+            offset = end + 1;
+            if (str.at(end - 1) == '\\')
+                continue;
+            break;
+        }
+        if (end == std::string::npos)
             break;
 
         size_t endEnd = end + name.length() + 2;
         offset = endEnd + 1;
+        if (str.at(end - 1) == '\\')
+            continue;
 
         TextTagChange startChange;
         startChange.idx = start;

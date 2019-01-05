@@ -665,6 +665,57 @@ TEST_CASE("Text - escape metadata", "[Text]")
     }
 }
 
+TEST_CASE("Text - escape start tag", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("\\<a>hello</a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<a>hello</a>");
+    }
+    SECTION("test 2")
+    {
+        Text txt("<a\\>hello</a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<a>hello</a>");
+    }
+}
+
+TEST_CASE("Text - escape end tag", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("<a>hello\\</a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<a>hello</a>");
+    }
+    SECTION("test 2")
+    {
+        Text txt("<a>hello<\\/a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<a>hello</a>");
+    }
+    SECTION("test 3")
+    {
+        Text txt("<a>hello</a\\>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 0);
+        REQUIRE(txt.Str() == "<a>hello</a>");
+    }
+}
+
+TEST_CASE("Text - escape and saved tag", "[Text]")
+{
+    Text txt("<a>hello\\</a></a>");
+    std::vector<TextTag> tags = txt.GetTags();
+    REQUIRE(tags.size() == 1);
+    REQUIRE(txt.Str() == "hello</a>");
+}
+
 TEST_CASE("Text - Escape escape", "[Text]")
 {
     SECTION("test 1")
