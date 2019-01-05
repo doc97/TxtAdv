@@ -244,7 +244,7 @@ private:
     struct TextEmphasisChange
     {
         size_t idx = 0;
-        size_t style_len = 1;
+        size_t len = 1;
         std::bitset<EmphasisBits::BIT_COUNT> mask;
     };
 

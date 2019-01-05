@@ -95,8 +95,8 @@ void Text::RemoveMarkupCharacters(std::string& str,
         if (emIdx < mdIdx && emIdx < rmIdx && emIdx < tgIdx)
         {
             emIt->idx -= charsRemoved;
-            charsRemoved += emIt->style_len;
-            str.erase(emIt->idx, emIt->style_len);
+            charsRemoved += emIt->len;
+            str.erase(emIt->idx, emIt->len);
 
             ++emIt;
         }
@@ -165,12 +165,12 @@ std::vector<Text::TextEmphasisChange> Text::ParseEmphasisChange(const std::strin
 
         TextEmphasisChange startChange;
         startChange.idx = startIdx;
-        startChange.style_len = styleId.length();
+        startChange.len = styleId.length();
         startChange.mask = std::bitset<EmphasisBits::BIT_COUNT>((unsigned long)emphasis);
 
         TextEmphasisChange endChange;
         endChange.idx = endIdx;
-        endChange.style_len = styleId.length();
+        endChange.len = styleId.length();
         endChange.mask = std::bitset<EmphasisBits::BIT_COUNT>((unsigned long)emphasis);
 
         changes.push_back(startChange);
