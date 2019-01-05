@@ -297,6 +297,15 @@ TEST_CASE("Text - style combination", "[Text]")
         REQUIRE(styles[0].len == 11);
         REQUIRE(styles[0].bitmask == (Emphasis::UNDERL | Emphasis::ITALIC));
     }
+    SECTION("underline + bold + italics")
+    {
+        Text txt("__*_hello world_*__");
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 11);
+        REQUIRE(styles[0].bitmask == (Emphasis::UNDERL | Emphasis::BOLD | Emphasis::ITALIC));
+    }
     SECTION("underline + bold + strike")
     {
         Text txt("__*~hello world~*__");
@@ -503,22 +512,82 @@ TEST_CASE("Text - multiple different tags", "[Text]")
     REQUIRE(txt.Str() == "hello world to you!");
 }
 
-TEST_CASE("Text - tag + emphasis markup", "[Text")
+TEST_CASE("Text - tag + bold markup", "[Text")
 {
-    Text txt("<a>*hello*</a>");
-    std::vector<TextTag> tags = txt.GetTags();
-    REQUIRE(tags.size() == 1);
-    REQUIRE(tags[0].start == 0);
-    REQUIRE(tags[0].len == 5);
-    REQUIRE(tags[0].name == "a");
-    REQUIRE(txt.Str() == "hello");
-    REQUIRE(txt.RawStr() == "<a>*hello*</a>");
+    SECTION("tag out, bold in")
+    {
+        Text txt("<a>*hello*</a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 5);
+        REQUIRE(tags[0].name == "a");
+        REQUIRE(txt.Str() == "hello");
+        REQUIRE(txt.RawStr() == "<a>*hello*</a>");
 
-    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
-    REQUIRE(styles.size() == 1);
-    REQUIRE(styles[0].start == 0);
-    REQUIRE(styles[0].len == 5);
-    REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 5);
+        REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+    }
+    SECTION("tag in, bold out")
+    {
+        Text txt("*<a>hello</a>*");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 5);
+        REQUIRE(tags[0].name == "a");
+        REQUIRE(txt.Str() == "hello");
+        REQUIRE(txt.RawStr() == "*<a>hello</a>*");
+
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 5);
+        REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+    }
+    SECTION("tag and bold mix 1")
+    {
+        Text txt("*<a>hello*</a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 5);
+        REQUIRE(tags[0].name == "a");
+        REQUIRE(txt.Str() == "hello");
+        REQUIRE(txt.RawStr() == "*<a>hello*</a>");
+
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 1);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 5);
+        REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+    }
+    SECTION("tag and bold mix 2")
+    {
+        Text txt("*<a>h*e*llo</a>*");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 5);
+        REQUIRE(tags[0].name == "a");
+        REQUIRE(txt.Str() == "hello");
+        REQUIRE(txt.RawStr() == "*<a>h*e*llo</a>*");
+
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 3);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 1);
+        REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+        REQUIRE(styles[1].start == 1);
+        REQUIRE(styles[1].len == 1);
+        REQUIRE(styles[1].bitmask == Emphasis::NORMAL);
+        REQUIRE(styles[2].start == 2);
+        REQUIRE(styles[2].len == 3);
+        REQUIRE(styles[2].bitmask == Emphasis::BOLD);
+    }
 }
 
 TEST_CASE("Text - escape emphasis", "[Text]")
