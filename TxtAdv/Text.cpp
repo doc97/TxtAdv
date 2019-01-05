@@ -71,7 +71,7 @@ void Text::SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::
 
     std::vector<TextEmphasis>::iterator lower, upper;
     lower = std::lower_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
-        [](const TextEmphasis& a, const TextEmphasis& emphasis) { return a.start < emphasis.start; });
+        [](const TextEmphasis& a, const TextEmphasis& emphasis) { return a.start <= emphasis.start; });
     upper = std::upper_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
         [](const TextEmphasis& emphasis, const TextEmphasis& b) { return emphasis.start + emphasis.len < b.start; });
 
@@ -111,8 +111,15 @@ void Text::SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::
 
     // Replace the leftmost style and insert the modified after it (see removal below)
     size_t offset = 0;
-    *lower = left;
-    m_emphasis.insert(lower + ++offset, emphasis);
+    if (left.len > 0)
+    {
+        *lower = left;
+        m_emphasis.insert(lower + ++offset, emphasis);
+    }
+    else
+    {
+        *lower = emphasis;
+    }
     if (right.len > 0)
         m_emphasis.insert(lower + ++offset, right);
 
@@ -136,7 +143,7 @@ void Text::ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBit
 
     std::vector<TextEmphasis>::iterator lower, upper;
     lower = std::lower_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
-        [](const TextEmphasis& a, const TextEmphasis& emphasis) { return a.start < emphasis.start; });
+        [](const TextEmphasis& a, const TextEmphasis& emphasis) { return a.start <= emphasis.start; });
     upper = std::upper_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
         [](const TextEmphasis& emphasis, const TextEmphasis& b) { return emphasis.start + emphasis.len < b.start; });
 

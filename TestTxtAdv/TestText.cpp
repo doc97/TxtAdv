@@ -741,18 +741,12 @@ TEST_CASE("Text - Escape escape", "[Text]")
 TEST_CASE("Text - set new emphasis style", "[Text]")
 {
     Text txt("hello world");
-    txt.SetEmphasisStyle(2, 3, Emphasis::BOLD);
+    txt.SetEmphasisStyle(0, 11, Emphasis::BOLD);
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
-    REQUIRE(styles.size() == 3);
+    REQUIRE(styles.size() == 1);
     REQUIRE(styles[0].start == 0);
-    REQUIRE(styles[0].len == 2);
-    REQUIRE(styles[0].bitmask == Emphasis::NONE);
-    REQUIRE(styles[1].start == 2);
-    REQUIRE(styles[1].len == 3);
-    REQUIRE(styles[1].bitmask == Emphasis::BOLD);
-    REQUIRE(styles[2].start == 5);
-    REQUIRE(styles[2].len == 6);
-    REQUIRE(styles[2].bitmask == Emphasis::NONE);
+    REQUIRE(styles[0].len == 11);
+    REQUIRE(styles[0].bitmask == Emphasis::BOLD);
 }
 
 TEST_CASE("Text - change emphasis style", "[Text]")
