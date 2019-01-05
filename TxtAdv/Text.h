@@ -283,7 +283,6 @@ private:
     void CombineEmphasisChanges(std::vector<TextEmphasisChange>& orig,
         const std::vector<TextEmphasisChange>& append) const;
     void SortEmphasisChanges(std::vector<TextEmphasisChange>& changes) const;
-    void RemoveMarkupCharacters(std::string& str, std::vector<TextEmphasisChange>& changes) const;
     std::vector<TextEmphasis> ExtractEmphasisStyles(const std::vector<TextEmphasisChange>& changes,
         const size_t strLen) const;
     std::vector<TextEmphasis> CompressEmphasisStyles(const std::vector<TextEmphasis>& styles) const;
@@ -295,7 +294,6 @@ private:
     void CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
         const std::vector<TextMetadataChange>& append) const;
     void SortMetadataChanges(std::vector<TextMetadataChange>& changes) const;
-    void RemoveMarkupCharacters(std::string& str, std::vector<TextMetadataChange>& changes) const;
     std::vector<TextMetadata> ExtractMetadata(const std::vector<TextMetadataChange>& changes,
         const size_t strLen) const;
     std::vector<TextMetadata> CompressMetadata(const std::vector<TextMetadata>& metadata) const;

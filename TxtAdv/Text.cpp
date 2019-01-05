@@ -224,22 +224,6 @@ void Text::SortEmphasisChanges(std::vector<TextEmphasisChange>& changes) const
     });
 }
 
-void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextEmphasisChange>& changes) const
-{
-    std::vector<TextEmphasisChange>::iterator it = changes.begin();
-    size_t i = 0;
-    size_t lastIdx = SIZE_MAX;
-    for (size_t i = 0; it != changes.end(); ++it)
-    {
-        if (lastIdx == it->idx)
-            continue;
-        lastIdx = it->idx;
-        it->idx -= i;
-        i += it->style_len;
-        str.erase(it->idx, it->style_len);
-    }
-}
-
 std::vector<TextEmphasis> Text::ExtractEmphasisStyles(const std::vector<TextEmphasisChange>& changes, const size_t strLen) const
 {
     std::vector<TextEmphasis> styles;
@@ -406,22 +390,6 @@ void Text::SortMetadataChanges(std::vector<TextMetadataChange>& changes) const
     {
         return a.idx < b.idx;
     });
-}
-
-void Text::RemoveMarkupCharacters(std::string& str, std::vector<TextMetadataChange>& changes) const
-{
-    std::vector<TextMetadataChange>::iterator it = changes.begin();
-    size_t i = 0;
-    size_t lastIdx = SIZE_MAX;
-    for (size_t i = 0; it != changes.end(); ++it)
-    {
-        if (lastIdx == it->idx)
-            continue;
-        lastIdx = it->idx;
-        it->idx -= i;
-        i += it->len;
-        str.erase(it->idx, it->len);
-    }
 }
 
 std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataChange>& changes,
