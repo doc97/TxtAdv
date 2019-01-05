@@ -332,6 +332,27 @@ TEST_CASE("Text - style combination", "[Text]")
     }
 }
 
+TEST_CASE("Text - emphasis all", "[Text]")
+{
+    Text txt("_*__~hello~__*_");
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 1);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 5);
+    REQUIRE(styles[0].bitmask == (Emphasis::ITALIC | Emphasis::BOLD | Emphasis::UNDERL | Emphasis::STRIKE));
+    REQUIRE(styles[0].bitmask == Emphasis::ALL);
+}
+
+TEST_CASE("Text - emphasis mixed", "[Text]")
+{
+    Text txt("_*__~hello___*~");
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 1);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 5);
+    REQUIRE(styles[0].bitmask == (Emphasis::ITALIC | Emphasis::BOLD | Emphasis::UNDERL | Emphasis::STRIKE));
+}
+
 TEST_CASE("Text - size metadata", "[Text]")
 {
     SECTION("test 1")
