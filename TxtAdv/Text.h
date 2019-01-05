@@ -108,7 +108,7 @@ struct TextEmphasis
 };
 
 /* Struct: TextMetadata
- * A POD-struct representing text metadata.
+ * A POD-struct representing text metadata such as text size and color.
  */
 struct TextMetadata
 {
@@ -122,7 +122,6 @@ inline bool operator==(const TextMetadata& a, const TextMetadata& b)
 {
     return a.size == b.size && a.color == b.color;
 }
-
 
 /* Class: Text
  * Represents stylized text.
@@ -181,7 +180,7 @@ public:
      */
     std::vector<TextEmphasis> GetEmphasisStyles() const;
 
-    /* Function: GetTextData
+    /* Function: GetMetadata
      * Get the parsed text metadata from the markup text given to the constructor.
      *
      * The vector is ordered and continuous in that sense that each part of
@@ -189,11 +188,11 @@ public:
      *
      * Returns:
      *
-     *    The text data generated from the markup text
+     *    The text metadata generated from the markup text
      *
      * See Also:
      *
-     *    <TextData>
+     *    <TextMetadata>
      */
     std::vector<TextMetadata> GetMetadata() const;
 private:
