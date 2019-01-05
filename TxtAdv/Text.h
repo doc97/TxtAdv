@@ -162,6 +162,21 @@ public:
      */
     void SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask);
 
+    /* Function: ToggleEmphasisStyle
+     * Toggles an emphasis style at a position of the string.
+     *
+     * Parameters:
+     *
+     *    start - The starting index, if < string length it throws std::out_of_range
+     *    len - The number of characters that the style spans, it is clamped to span to the end of the string
+     *    mask - The style to toggle
+     *
+     * See Also:
+     *
+     *    <SetEmphasisStyle>
+     */
+    void ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask);
+
     /* Function: Str
      * Returns the cleaned text.
      *

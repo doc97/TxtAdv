@@ -863,4 +863,41 @@ TEST_CASE("Text - set emphasis style, compression", "[Text]")
 
 }
 
+TEST_CASE("Text - toggle emphasis style, no existing style", "[Text]")
+{
+    Text txt("hello world");
+    txt.ToggleEmphasisStyle(3, 3, (Emphasis::BOLD | Emphasis::ITALIC));
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 3);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 3);
+    REQUIRE(styles[0].bitmask == Emphasis::NONE);
+    REQUIRE(styles[1].start == 3);
+    REQUIRE(styles[1].len == 3);
+    REQUIRE(styles[1].bitmask == (Emphasis::BOLD | Emphasis::ITALIC));
+    REQUIRE(styles[2].start == 6);
+    REQUIRE(styles[2].len == 5);
+    REQUIRE(styles[2].bitmask == Emphasis::NONE);
+}
+
+TEST_CASE("Text - toggle emphasis style, existing style", "[Text]")
+{
+    Text txt("*hello* world");
+    txt.ToggleEmphasisStyle(3, 5, Emphasis::ITALIC);
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 4);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 3);
+    REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+    REQUIRE(styles[1].start == 3);
+    REQUIRE(styles[1].len == 2);
+    REQUIRE(styles[1].bitmask == (Emphasis::BOLD | Emphasis::ITALIC));
+    REQUIRE(styles[2].start == 5);
+    REQUIRE(styles[2].len == 3);
+    REQUIRE(styles[2].bitmask == Emphasis::ITALIC);
+    REQUIRE(styles[3].start == 8);
+    REQUIRE(styles[3].len == 3);
+    REQUIRE(styles[3].bitmask == Emphasis::NONE);
+}
+
 } // namespace txt

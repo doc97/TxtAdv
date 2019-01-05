@@ -124,6 +124,50 @@ void Text::SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::
     m_emphasis = CompressEmphasisStyles(m_emphasis);
 }
 
+void Text::ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask)
+{
+    TextEmphasis emphasis;
+    emphasis.start = start;
+    emphasis.len = len;
+    emphasis.bitmask = mask;
+
+    // Reserve to avoid reallocation which destroys iterators
+    m_emphasis.reserve(m_emphasis.size() + 1);
+
+    std::vector<TextEmphasis>::iterator lower, upper;
+    lower = std::lower_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
+        [](const TextEmphasis& a, const TextEmphasis& emphasis) { return a.start < emphasis.start; });
+    upper = std::upper_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
+        [](const TextEmphasis& emphasis, const TextEmphasis& b) { return emphasis.start + emphasis.len < b.start; });
+
+    /* std::lower_bound gives the element NOT "less" than the element to compare to,
+     * decrement to get previous. If there is no such element, std::lower_bound
+     * returns the m_emphasis.end().
+     *
+     * m_emphasis is guaranteed to have at least one element so decrementing m_emphasis.end()
+     * is safe.
+     */
+    --lower;
+
+    std::vector<TextEmphasis>::iterator cur = lower;
+    std::vector<TextEmphasis>::iterator next = cur + 1;
+    bool lowerIsLast = next == m_emphasis.end();
+    size_t lowerLen = (lowerIsLast ? len : next->start - start);
+    std::bitset<EmphasisBits::BIT_COUNT> lowerMask = lower->bitmask ^ mask;
+
+    if (!lowerIsLast)
+    {
+        size_t end = start + len;
+        ++cur;
+        while (++next != m_emphasis.end() && next->start < end)
+            (cur++)->bitmask ^= mask;
+
+        SetEmphasisStyle(cur->start, end - cur->start, cur->bitmask ^ mask);
+    }
+
+    SetEmphasisStyle(start, lowerLen, lowerMask);
+}
+
 std::string Text::Str() const
 {
     return m_str;
