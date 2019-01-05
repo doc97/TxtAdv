@@ -67,6 +67,7 @@ std::string Text::Parse(const std::string& raw)
     m_metadata = CompressMetadata(m_metadata);
 
     m_tags = ExtractTags(tags);
+    m_tags = CompressTags(m_tags);
 
     return res;
 }
@@ -553,6 +554,32 @@ std::vector<TextTag> Text::ExtractTags(const std::vector<TextTagChange>& changes
         }
     }
     return tags;
+}
+
+std::vector<TextTag> Text::CompressTags(const std::vector<TextTag>& tags) const
+{
+    std::vector<TextTag> result;
+    if (tags.empty())
+        return result;
+    std::vector<TextTag>::const_iterator last = tags.begin();
+    std::vector<TextTag>::const_iterator cur = tags.begin() + 1;
+    TextTag lastTag = *last;
+
+    for (; cur != tags.end(); ++last, ++cur)
+    {
+        if (lastTag.start + lastTag.len == cur->start && cur->name == lastTag.name)
+        {
+            lastTag.len += cur->len;
+        }
+        else
+        {
+            result.push_back(lastTag);
+            lastTag = *cur;
+        }
+    }
+    result.push_back(lastTag);
+    return result;
+
 }
 
 } // namespace txt

@@ -308,6 +308,7 @@ private:
     /* Tags */
     std::vector<TextTagChange> ParseTagChanges(const std::string& str) const;
     std::vector<TextTag> ExtractTags(const std::vector<TextTagChange>& changes);
+    std::vector<TextTag> CompressTags(const std::vector<TextTag>& tags) const;
 };
 
 } // namespace txt

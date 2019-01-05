@@ -533,6 +533,31 @@ TEST_CASE("Text - multiple different tags", "[Text]")
     REQUIRE(txt.Str() == "hello world to you!");
 }
 
+TEST_CASE("Text - tag compression", "[Text]")
+{
+    SECTION("compressed")
+    {
+        Text txt("<a>foo</a><a>bar</a>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 6);
+        REQUIRE(tags[0].name == "a");
+    }
+    SECTION("not compressed")
+    {
+        Text txt("<a>foo</a><b>bar</b>");
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 2);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 3);
+        REQUIRE(tags[0].name == "a");
+        REQUIRE(tags[1].start == 3);
+        REQUIRE(tags[1].len == 3);
+        REQUIRE(tags[1].name == "b");
+    }
+}
+
 TEST_CASE("Text - tag + bold markup", "[Text")
 {
     SECTION("tag out, bold in")
