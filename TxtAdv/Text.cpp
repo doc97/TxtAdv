@@ -21,6 +21,107 @@ Text::~Text()
 {
 }
 
+void Text::SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask)
+{
+    /* Description:
+    * 
+    * Replace 'middle' with 'mask'. Might shrink the size of 'L' and 'R'
+    * if 'mask' is bigger than 'middle'.
+    *
+    * Invariants:
+    *    - start <= x0
+    *    - len >= x1 - x0
+    *    - L is guaranteed to exist
+    *
+    * Start:
+    *
+    *             x0              x1
+    *       +-----+---------------+-----+
+    *       |  L  |    middle     |  R  |
+    *   - - o - - o - - - o - - - o - - o - -
+    *       ^                           ^
+    *       |                           |
+    *
+    *  lower bound                 upper bound
+    *
+    * Result:
+    *
+    *          left       mask     right
+    *   - - o - - - - o - - - - o - - - - o - -
+    *       ^         ^         ^         ^
+    *       |         |         |         |
+    *
+    *  lower bound  start  start+len  upper bound
+    */
+
+    if (start >= m_str.length())
+        throw std::out_of_range("start is out of range");
+    if (len == 0)
+        return;
+
+    len = std::min(m_str.length() - start, len);
+
+    // Reserve to avoid reallocation which destroys iterators
+    m_emphasis.reserve(m_emphasis.size() + 2);
+
+    TextEmphasis emphasis;
+    emphasis.start = start;
+    emphasis.len = len;
+    emphasis.bitmask = mask;
+
+    std::vector<TextEmphasis>::iterator lower, upper;
+    lower = std::lower_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
+        [](const TextEmphasis& a, const TextEmphasis& emphasis) { return a.start < emphasis.start; });
+    upper = std::upper_bound(m_emphasis.begin(), m_emphasis.end(), emphasis,
+        [](const TextEmphasis& emphasis, const TextEmphasis& b) { return emphasis.start + emphasis.len < b.start; });
+
+    /* std::lower_bound gives the element NOT "less" than the element to compare to,
+     * decrement to get previous. If there is no such element, std::lower_bound
+     * returns the m_emphasis.end().
+     *
+     * m_emphasis is guaranteed to have at least one element so decrementing m_emphasis.end()
+     * is safe.
+     */
+    --lower;
+
+    size_t toRemove = 0;
+    std::bitset<EmphasisBits::BIT_COUNT> rightMask = lower->bitmask;
+    std::vector<TextEmphasis>::iterator middle = lower + 1;
+
+    // Traverse forward until reaching the last element BEFORE 'upper'
+    while (middle != upper)
+    {
+        rightMask = middle->bitmask;
+        ++middle;
+        ++toRemove;
+    }
+
+    // The index of the upper style, or the end of the string if there is no upper style.
+    size_t upperBound = (upper == m_emphasis.end() ? m_str.length() : upper->start);
+
+    TextEmphasis left, right;
+
+    left.start = lower->start;
+    left.len = emphasis.start - left.start;
+    left.bitmask = lower->bitmask;
+
+    right.start = emphasis.start + emphasis.len;
+    right.len = upperBound - right.start;
+    right.bitmask = rightMask;
+
+    // Replace the leftmost style and insert the modified after it (see removal below)
+    size_t offset = 0;
+    *lower = left;
+    m_emphasis.insert(lower + ++offset, emphasis);
+    if (right.len > 0)
+        m_emphasis.insert(lower + ++offset, right);
+
+    // Remove the middle styles that was just overwritten by 'emphasis' and 'right'
+    std::vector<TextEmphasis>::iterator remover = lower + ++offset;
+    for (size_t i = 0; i < toRemove && remover != m_emphasis.end(); ++i)
+        remover = m_emphasis.erase(remover);
+}
+
 std::string Text::Str() const
 {
     return m_str;

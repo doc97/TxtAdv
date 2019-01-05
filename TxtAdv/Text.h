@@ -151,6 +151,17 @@ public:
     Text(const std::string& text);
     ~Text();
 
+    /* Function: SetEmphasisStyle
+     * Sets an emphasis style at position.
+     *
+     * Parameters:
+     *
+     *    start - The starting index
+     *    len - The number of characters that the style spans
+     *    mask - The style to set
+     */
+    void SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask);
+
     /* Function: Str
      * Returns the cleaned text.
      *

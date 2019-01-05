@@ -738,4 +738,117 @@ TEST_CASE("Text - Escape escape", "[Text]")
     }
 }
 
+TEST_CASE("Text - set new emphasis style", "[Text]")
+{
+    Text txt("hello world");
+    txt.SetEmphasisStyle(2, 3, Emphasis::BOLD);
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 3);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 2);
+    REQUIRE(styles[0].bitmask == Emphasis::NONE);
+    REQUIRE(styles[1].start == 2);
+    REQUIRE(styles[1].len == 3);
+    REQUIRE(styles[1].bitmask == Emphasis::BOLD);
+    REQUIRE(styles[2].start == 5);
+    REQUIRE(styles[2].len == 6);
+    REQUIRE(styles[2].bitmask == Emphasis::NONE);
+}
+
+TEST_CASE("Text - change emphasis style", "[Text]")
+{
+    SECTION("test 1")
+    {
+        Text txt("*hello* _world_");
+        txt.SetEmphasisStyle(3, 6, Emphasis::UNDERL);
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 3);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 3);
+        REQUIRE(styles[0].bitmask == Emphasis::BOLD);
+        REQUIRE(styles[1].start == 3);
+        REQUIRE(styles[1].len == 6);
+        REQUIRE(styles[1].bitmask == Emphasis::UNDERL);
+        REQUIRE(styles[2].start == 9);
+        REQUIRE(styles[2].len == 2);
+        REQUIRE(styles[2].bitmask == Emphasis::ITALIC);
+    }
+    SECTION("test 2")
+    {
+        Text txt("hello _world_");
+        txt.SetEmphasisStyle(3, 6, Emphasis::UNDERL);
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 3);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 3);
+        REQUIRE(styles[0].bitmask == Emphasis::NONE);
+        REQUIRE(styles[1].start == 3);
+        REQUIRE(styles[1].len == 6);
+        REQUIRE(styles[1].bitmask == Emphasis::UNDERL);
+        REQUIRE(styles[2].start == 9);
+        REQUIRE(styles[2].len == 2);
+        REQUIRE(styles[2].bitmask == Emphasis::ITALIC);
+    }
+}
+
+TEST_CASE("Text - replace emphasis style", "[Text]")
+{
+    Text txt("hel*lo wo*rld");
+    txt.SetEmphasisStyle(3, 5, Emphasis::ITALIC);
+    std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+    REQUIRE(styles.size() == 3);
+    REQUIRE(styles[0].start == 0);
+    REQUIRE(styles[0].len == 3);
+    REQUIRE(styles[0].bitmask == Emphasis::NONE);
+    REQUIRE(styles[1].start == 3);
+    REQUIRE(styles[1].len == 5);
+    REQUIRE(styles[1].bitmask == Emphasis::ITALIC);
+    REQUIRE(styles[2].start == 8);
+    REQUIRE(styles[2].len == 3);
+    REQUIRE(styles[2].bitmask == Emphasis::NONE);
+}
+
+TEST_CASE("Text - set emphasis style, invalid start", "[Text]")
+{
+    Text txt("hello world");
+    try
+    {
+        txt.SetEmphasisStyle(12, 1, Emphasis::BOLD);
+        FAIL("Trying to set emphasis style with out of range start should throw std::out_of_range");
+    }
+    catch (std::out_of_range)
+    {
+    }
+}
+
+TEST_CASE("Text - set emphasis style, invalid length", "[Text]")
+{
+    Text txt("~hello *world*~");
+
+    SECTION("len == 0")
+    {
+        txt.SetEmphasisStyle(0, 0, Emphasis::ITALIC);
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 2);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 6);
+        REQUIRE(styles[0].bitmask == Emphasis::STRIKE);
+        REQUIRE(styles[1].start == 6);
+        REQUIRE(styles[1].len == 5);
+        REQUIRE(styles[1].bitmask == (Emphasis::STRIKE | Emphasis::BOLD));
+    }
+    SECTION("len too long")
+    {
+        txt.SetEmphasisStyle(3, 9, Emphasis::ITALIC);
+        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
+        REQUIRE(styles.size() == 2);
+        REQUIRE(styles[0].start == 0);
+        REQUIRE(styles[0].len == 3);
+        REQUIRE(styles[0].bitmask == Emphasis::STRIKE);
+        REQUIRE(styles[1].start == 3);
+        REQUIRE(styles[1].len == 8);
+        REQUIRE(styles[1].bitmask == Emphasis::ITALIC);
+    }
+}
+
 } // namespace txt
