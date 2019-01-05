@@ -222,13 +222,25 @@ std::vector<TextEmphasis> Text::ExtractEmphasisStyles(const std::vector<TextEmph
     {
         size_t len = it->idx - start;
         if (len > 0)
-            styles.push_back({ start, len, styleMask });
+        {
+            TextEmphasis style;
+            style.start = start;
+            style.len = len;
+            style.bitmask = styleMask;
+            styles.push_back(style);
+        }
         styleMask ^= it->mask;
         start = it->idx;
     }
     size_t len = strLen - start;
     if (len > 0)
-        styles.push_back({ start, len, styleMask });
+    {
+        TextEmphasis style;
+        style.start = start;
+        style.len = len;
+        style.bitmask = styleMask;
+        styles.push_back(style);
+    }
     return styles;
 }
 
@@ -348,16 +360,16 @@ std::vector<Text::TextMetadataChange> Text::ParseColorChanges(const std::string&
             continue;
 
         TextMetadata data;
-        data.color.r = (hexVal & 0xFF000000) >> 24;
-        data.color.g = (hexVal & 0x00FF0000) >> 16;
-        data.color.b = (hexVal & 0x0000FF00) >> 8;
-        data.color.a = (hexVal & 0x000000FF);
+        data.fill_color.r = (hexVal & 0xFF000000) >> 24;
+        data.fill_color.g = (hexVal & 0x00FF0000) >> 16;
+        data.fill_color.b = (hexVal & 0x0000FF00) >> 8;
+        data.fill_color.a = (hexVal & 0x000000FF);
 
         TextMetadataChange change;
         change.idx = startIdx;
         change.len = 9;
         change.data = data;
-        change.changeMask.set(MetadataChangeBits::COLOR_CHANGE, true);
+        change.changeMask.set(MetadataChangeBits::FILL_COLOR_CHANGE, true);
         changes.push_back(change);
 
         offset += 8;
@@ -387,7 +399,9 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
     std::vector<TextMetadata> metadata;
     size_t start = 0;
     TextSize size = TextSize::S1;
-    Color color = { 255, 255, 255, 255 };
+    Color fill_color = { 255, 255, 255, 255 };
+    Color out_color = { 255, 255, 255, 255 };
+    Color bg_color = { 0, 0, 0, 0 };
     for (auto it = changes.begin(); it != changes.end(); ++it)
     {
         size_t len = it->idx - start;
@@ -397,14 +411,21 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
             data.start = start;
             data.len = len;
             data.size = size;
-            data.color = color;
+            data.fill_color = fill_color;
+            data.outline_color = out_color;
+            data.bg_color = bg_color;
             metadata.push_back(data);
         }
 
         if (it->changeMask[MetadataChangeBits::SIZE_CHANGE])
             size = it->data.size;
-        if (it->changeMask[MetadataChangeBits::COLOR_CHANGE])
-            color = it->data.color;
+        if (it->changeMask[MetadataChangeBits::FILL_COLOR_CHANGE])
+            fill_color = it->data.fill_color;
+        if (it->changeMask[MetadataChangeBits::OUT_COLOR_CHANGE])
+            out_color = it->data.outline_color;
+        if (it->changeMask[MetadataChangeBits::BG_COLOR_CHANGE])
+            bg_color = it->data.bg_color;
+
         start = it->idx;
     }
     size_t len = strLen - start;
@@ -414,7 +435,7 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
         data.start = start;
         data.len = len;
         data.size = size;
-        data.color = color;
+        data.fill_color = fill_color;
         metadata.push_back(data);
     }
     return metadata;

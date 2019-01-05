@@ -115,12 +115,14 @@ struct TextMetadata
     size_t start = 0;
     size_t len = 0;
     TextSize size = TextSize::S1;
-    Color color = { 0, 0, 0, 0 };
+    Color outline_color = { 255, 255, 255, 255 };
+    Color fill_color = { 255, 255, 255, 255 };
+    Color bg_color = { 0, 0, 0, 0 };
 };
 
 inline bool operator==(const TextMetadata& a, const TextMetadata& b)
 {
-    return a.size == b.size && a.color == b.color;
+    return a.size == b.size && a.outline_color == b.outline_color && a.fill_color == b.fill_color && a.bg_color == b.bg_color;
 }
 
 /* Struct: TextTag
@@ -228,8 +230,10 @@ private:
     enum MetadataChangeBits
     {
         SIZE_CHANGE = 0x00,
-        COLOR_CHANGE = 0x01,
-        CHANGE_COUNT = 0x02
+        FILL_COLOR_CHANGE = 0x01,
+        OUT_COLOR_CHANGE = 0x02,
+        BG_COLOR_CHANGE = 0x03,
+        CHANGE_COUNT = 0x04
     };
 
     /* Struct: TextRemoveRange
