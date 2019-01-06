@@ -125,6 +125,25 @@ inline bool operator==(const TextMetadata& a, const TextMetadata& b)
     return a.size == b.size && a.outline_color == b.outline_color && a.fill_color == b.fill_color && a.bg_color == b.bg_color;
 }
 
+/* Enum: MetadataChangeBits
+ * Bit mask constants used to mark metadata changes.
+ *
+ *    SIZE_CHANGE_BIT - Text size change bit
+ *    FILL_COLOR_CHANGE_BIT - Text fill color change bit
+ *    OUT_COLOR_CHANGE_BIT - Text outline color change bit
+ *    BG_COLOR_CHANGE_BIT - Text background color change bit
+ *    ALL_CHANGED - Value used to set all bits to true
+ */
+enum MetadataChangeBits
+{
+    SIZE_CHANGE_BIT = 0,
+    FILL_COLOR_CHANGE_BIT = 1,
+    OUT_COLOR_CHANGE_BIT = 2,
+    BG_COLOR_CHANGE_BIT = 3,
+    CHANGE_BIT_COUNT = 4,
+    ALL_CHANGED = 15,
+};
+
 /* Struct: TextTag
  * A struct for representing a text tag.
  */
@@ -176,6 +195,14 @@ public:
      *    <SetEmphasisStyle>
      */
     void ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask);
+
+    void SetMetadata(size_t start, size_t len, const TextSize& size,
+        const Color& outline, const Color& fill, const Color& background,
+        const std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT>& changeMask);
+    void SetMetadataSize(size_t start, size_t len, const TextSize& size);
+    void SetMetadataOutlineColor(size_t start, size_t len, const Color& outline);
+    void SetMetadataFillColor(size_t start, size_t len, const Color& fill);
+    void SetMetadataBgColor(size_t start, size_t len, const Color& bg);
 
     /* Function: Str
      * Returns the cleaned text.
@@ -247,21 +274,6 @@ public:
      */
     std::vector<TextTag> GetTags() const;
 private:
-    /* Enum: MetadataChangeBits
-     * Bit mask constants used to mark metadata changes.
-     *
-     *    SIZE_CHANGE - Text size change
-     *    COLOR_CHANGE - Text color change
-     */
-    enum MetadataChangeBits
-    {
-        SIZE_CHANGE = 0x00,
-        FILL_COLOR_CHANGE = 0x01,
-        OUT_COLOR_CHANGE = 0x02,
-        BG_COLOR_CHANGE = 0x03,
-        CHANGE_COUNT = 0x04
-    };
-
     /* Struct: TextRemoveRange
      * Represents a range in the string to remove.
      */
@@ -283,7 +295,7 @@ private:
         size_t idx = 0;
         size_t len = 2;
         TextMetadata data;
-        std::bitset<MetadataChangeBits::CHANGE_COUNT> changeMask;
+        std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT> changeMask;
     };
 
     struct TextTagChange

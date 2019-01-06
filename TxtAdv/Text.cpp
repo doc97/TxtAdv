@@ -175,6 +175,135 @@ void Text::ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBit
     SetEmphasisStyle(start, lowerLen, lowerMask);
 }
 
+void Text::SetMetadata(size_t start, size_t len, const TextSize& size,
+    const Color& outline, const Color& fill, const Color& background,
+    const std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT>& changeMask)
+{
+    if (start >= m_str.length())
+        throw std::out_of_range("start is out of range");
+    if (len == 0)
+        return;
+
+    len = std::min(m_str.length() - start, len);
+
+    // Reserve to avoid reallocation which destroys iterators
+    m_metadata.reserve(m_metadata.size() + 2);
+
+    TextMetadata metadata;
+    metadata.start = start;
+    metadata.len = len;
+
+    std::vector<TextMetadata>::iterator lower, upper;
+    lower = std::lower_bound(m_metadata.begin(), m_metadata.end(), metadata,
+        [](const TextMetadata& a, const TextMetadata& metadata) { return a.start <= metadata.start; });
+    upper = std::upper_bound(m_metadata.begin(), m_metadata.end(), metadata,
+        [](const TextMetadata& metadata, const TextMetadata& b) { return metadata.start + metadata.len < b.start; });
+
+    /* std::lower_bound gives the element NOT "less" than the element to compare to,
+     * decrement to get previous. If there is no such element, std::lower_bound
+     * returns the m_emphasis.end().
+     *
+     * m_emphasis is guaranteed to have at least one element so decrementing m_emphasis.end()
+     * is safe.
+     */
+    --lower;
+
+    metadata.size = changeMask[MetadataChangeBits::SIZE_CHANGE_BIT] ? size : lower->size;
+    metadata.outline_color = changeMask[MetadataChangeBits::OUT_COLOR_CHANGE_BIT] ? outline : lower->outline_color;
+    metadata.fill_color = changeMask[MetadataChangeBits::FILL_COLOR_CHANGE_BIT] ? fill : lower->fill_color;
+    metadata.bg_color = changeMask[MetadataChangeBits::BG_COLOR_CHANGE_BIT] ? background : lower->bg_color;
+
+    size_t toRemove = 0;
+    TextSize rightSize = lower->size;
+    Color rightOutColor = lower->outline_color;
+    Color rightFillColor = lower->fill_color;
+    Color rightBgColor = lower->bg_color;
+    std::vector<TextMetadata>::iterator middle = lower + 1;
+
+    // Traverse forward until reaching the last element BEFORE 'upper'
+    while (middle != upper)
+    {
+        rightSize = middle->size;
+        rightOutColor = middle->outline_color;
+        rightFillColor = middle->fill_color;
+        rightBgColor = middle->bg_color;
+        ++middle;
+        ++toRemove;
+    }
+
+    // The index of the upper style, or the end of the string if there is no upper style.
+    size_t upperBound = (upper == m_metadata.end() ? m_str.length() : upper->start);
+
+    TextMetadata left, right;
+
+    left.start = lower->start;
+    left.len = metadata.start - left.start;
+    left.size = lower->size;
+    left.outline_color = lower->outline_color;
+    left.fill_color = lower->fill_color;
+    left.bg_color = lower->bg_color;
+
+    right.start = metadata.start + metadata.len;
+    right.len = upperBound - right.start;
+    right.size = rightSize;
+    right.outline_color = rightOutColor;
+    right.fill_color = rightFillColor;
+    right.bg_color = rightBgColor;
+
+    // Replace the leftmost metadata and insert the modified after it (see removal below)
+    size_t offset = 0;
+    if (left.len > 0)
+    {
+        *lower = left;
+        m_metadata.insert(lower + ++offset, metadata);
+    }
+    else
+    {
+        *lower = metadata;
+    }
+    if (right.len > 0)
+        m_metadata.insert(lower + ++offset, right);
+
+    // Remove the middle metadata that was just overwritten by 'metadata' and 'right'
+    std::vector<TextMetadata>::iterator remover = lower + ++offset;
+    for (size_t i = 0; i < toRemove && remover != m_metadata.end(); ++i)
+        remover = m_metadata.erase(remover);
+
+    m_metadata = CompressMetadata(m_metadata);
+}
+
+void Text::SetMetadataSize(size_t start, size_t len, const TextSize& size)
+{
+    std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT> mask;
+    mask.set(MetadataChangeBits::SIZE_CHANGE_BIT, true);
+    Color notused = { 0, 0, 0, 0 };
+    SetMetadata(start, len, size, notused, notused, notused, mask);
+}
+
+void Text::SetMetadataOutlineColor(size_t start, size_t len, const Color& outline)
+{
+    std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT> mask;
+    mask.set(MetadataChangeBits::OUT_COLOR_CHANGE_BIT, true);
+    Color notused = { 0, 0, 0, 0 };
+    SetMetadata(start, len, TextSize::S1, outline, notused, notused, mask);
+}
+
+void Text::SetMetadataFillColor(size_t start, size_t len, const Color& fill)
+{
+    std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT> mask;
+    mask.set(MetadataChangeBits::FILL_COLOR_CHANGE_BIT, true);
+    Color notused = { 0, 0, 0, 0 };
+    SetMetadata(start, len, TextSize::S1, notused, fill, notused, mask);
+}
+
+void Text::SetMetadataBgColor(size_t start, size_t len, const Color& bg)
+{
+    std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT> mask;
+    mask.set(MetadataChangeBits::BG_COLOR_CHANGE_BIT, true);
+    Color notused = { 0, 0, 0, 0 };
+    SetMetadata(start, len, TextSize::S1, notused, notused, bg, mask);
+}
+
 std::string Text::Str() const
 {
     return m_str;
@@ -483,7 +612,7 @@ std::vector<Text::TextMetadataChange> Text::ParseSizeChanges(const std::string& 
         change.idx = startIdx;
         change.len = 2;
         change.data = data;
-        change.changeMask.set(MetadataChangeBits::SIZE_CHANGE, true);
+        change.changeMask.set(MetadataChangeBits::SIZE_CHANGE_BIT, true);
         changes.push_back(change);
     }
     return changes;
@@ -523,7 +652,7 @@ std::vector<Text::TextMetadataChange> Text::ParseColorChanges(const std::string&
         change.idx = startIdx;
         change.len = 9;
         change.data = data;
-        change.changeMask.set(MetadataChangeBits::FILL_COLOR_CHANGE, true);
+        change.changeMask.set(MetadataChangeBits::FILL_COLOR_CHANGE_BIT, true);
         changes.push_back(change);
 
         offset += 8;
@@ -571,13 +700,13 @@ std::vector<TextMetadata> Text::ExtractMetadata(const std::vector<TextMetadataCh
             metadata.push_back(data);
         }
 
-        if (it->changeMask[MetadataChangeBits::SIZE_CHANGE])
+        if (it->changeMask[MetadataChangeBits::SIZE_CHANGE_BIT])
             size = it->data.size;
-        if (it->changeMask[MetadataChangeBits::FILL_COLOR_CHANGE])
+        if (it->changeMask[MetadataChangeBits::FILL_COLOR_CHANGE_BIT])
             fill_color = it->data.fill_color;
-        if (it->changeMask[MetadataChangeBits::OUT_COLOR_CHANGE])
+        if (it->changeMask[MetadataChangeBits::OUT_COLOR_CHANGE_BIT])
             out_color = it->data.outline_color;
-        if (it->changeMask[MetadataChangeBits::BG_COLOR_CHANGE])
+        if (it->changeMask[MetadataChangeBits::BG_COLOR_CHANGE_BIT])
             bg_color = it->data.bg_color;
 
         start = it->idx;
