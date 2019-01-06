@@ -177,6 +177,7 @@
     <ClCompile Include="StoryBranch.cpp" />
     <ClCompile Include="StoryLoader.cpp" />
     <ClCompile Include="StoryPoint.cpp" />
+    <ClCompile Include="StyleFileReader.cpp" />
     <ClCompile Include="TextStyleSheet.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextMarkup.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="StoryLoader.h" />
     <ClInclude Include="StoryPoint.h" />
     <ClInclude Include="StringUtil.h" />
+    <ClInclude Include="StyleFileReader.h" />
     <ClInclude Include="TextStyleSheet.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextMarkup.h" />
