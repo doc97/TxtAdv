@@ -24,7 +24,8 @@ TxtInfo TxtFileReader::Read(const std::string& filename)
     if (file.is_open())
     {
         TxtInfo info;
-        info.meta_filename = GetMetaFile(file);
+        if (!GetKeyValue(file, "Meta", info.meta_filename, false))
+            throw std::runtime_error("FileFormatError: No Meta-field found!");
         info.story_points = GetStoryPoints(file);
 
         file.close();
@@ -33,20 +34,22 @@ TxtInfo TxtFileReader::Read(const std::string& filename)
     throw std::runtime_error("Could not open file!");
 }
 
-std::string TxtFileReader::GetMetaFile(std::ifstream& file)
+bool TxtFileReader::GetKeyValue(std::ifstream& file, const std::string& key, std::string& value, bool oneline)
 {
     std::string line;
-    std::string prefix = "Meta:";
+    std::string prefix = key + ":";
     while (m_reader.NextLine(file, line))
     {
         if (line.compare(0, prefix.size(), prefix) == 0)
         {
-            std::string metaFile = line.substr(prefix.size());
-            txt::trim(metaFile);
-            return metaFile;
+            value = line.substr(prefix.size());
+            txt::trim(value);
+            return true;
         }
+        if (oneline)
+            break;
     }
-    throw std::runtime_error("No Meta-field found!");
+    return false;
 }
 
 std::vector<StoryPoint> TxtFileReader::GetStoryPoints(std::ifstream& file)

@@ -48,7 +48,7 @@ public:
 private:
     FileLineReader m_reader;
 
-    std::string GetMetaFile(std::ifstream& file);
+    bool GetKeyValue(std::ifstream& file, const std::string& key, std::string& value, bool oneline);
     std::vector<StoryPoint> GetStoryPoints(std::ifstream& file);
     StoryPoint CreateStoryPoint(const std::string& name, const std::string& txt) const;
 };
