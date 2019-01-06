@@ -12,8 +12,7 @@ namespace txt
 
 TEST_CASE("Text - set new emphasis style", "[Text]")
 {
-    TextMarkup markup("hello world");
-    Text txt = markup.GetText();
+    Text txt("hello world");
     txt.SetEmphasisStyle(0, 11, Emphasis::BOLD);
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 1);
@@ -80,8 +79,7 @@ TEST_CASE("Text - replace emphasis style", "[Text]")
 
 TEST_CASE("Text - set emphasis style, invalid start", "[Text]")
 {
-    TextMarkup markup("hello world");
-    Text txt = markup.GetText();
+    Text txt("hello world");
     try
     {
         txt.SetEmphasisStyle(12, 1, Emphasis::BOLD);
@@ -137,8 +135,7 @@ TEST_CASE("Text - set emphasis style, compression", "[Text]")
 
 TEST_CASE("Text - toggle emphasis style, no existing style", "[Text]")
 {
-    TextMarkup markup("hello world");
-    Text txt = markup.GetText();
+    Text txt("hello world");
     txt.ToggleEmphasisStyle(3, 3, (Emphasis::BOLD | Emphasis::ITALIC));
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 3);
@@ -181,8 +178,7 @@ TEST_CASE("Text - set new metadata", "[Text]")
     expected.outline_color = { 10, 10, 10, 10 };
     expected.fill_color = { 100, 100, 100, 100 };
     expected.bg_color = { 200, 200, 200, 200 };
-    TextMarkup markup("hello world");
-    Text txt = markup.GetText();
+    Text txt("hello world");
     txt.SetMetadata(0, 11, expected.size, expected.outline_color, expected.fill_color, expected.bg_color,
         MetadataChangeBits::ALL_CHANGED);
     std::vector<TextMetadata> metadata = txt.GetMetadata();
@@ -213,8 +209,7 @@ TEST_CASE("Text - change metadata", "[Text]")
 
 TEST_CASE("Text - set metadata, invalid start", "[Text]")
 {
-    TextMarkup markup("hello world");
-    Text txt = markup.GetText();
+    Text txt("hello world");
     try
     {
         txt.SetMetadata(12, 1, TextSize::S2, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0 },
@@ -273,8 +268,7 @@ TEST_CASE("Text - set metadata, overloaded functions", "[Text]")
 {
     TextMetadata expected;
     std::vector<TextMetadata> metadata;
-    TextMarkup markup("hello world");
-    Text txt = markup.GetText();
+    Text txt("hello world");
 
     expected.size = TextSize::S2;
     txt.SetMetadataSize(0, 11, expected.size);
@@ -410,4 +404,5 @@ TEST_CASE("Text - tag compression", "[Text]")
         REQUIRE(tags[1].name == "b");
     }
 }
+
 } // namespace txt

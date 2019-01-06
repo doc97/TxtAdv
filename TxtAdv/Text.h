@@ -166,6 +166,15 @@ public:
     Text();
 
     /* Constructor: Text
+     * Creates a styleless text.
+     *
+     * Parameters:
+     *
+     *    text - The text, without markup
+     */
+    Text(const std::string& text);
+
+    /* Constructor: Text
      * Create text from the parameters.
      *
      * Parameters:

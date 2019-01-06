@@ -11,8 +11,20 @@ namespace txt
 {
 
 Text::Text()
-    : Text("", "", { TextEmphasis{} }, { TextMetadata{} }, {})
+    : Text("")
 {
+}
+
+Text::Text(const std::string& text)
+    : m_raw(text), m_str(text)
+{
+    TextEmphasis emphasis;
+    emphasis.len = text.length();
+    m_emphasis.push_back(emphasis);
+
+    TextMetadata metadata;
+    metadata.len = text.length();
+    m_metadata.push_back(metadata);
 }
 
 Text::Text(const std::string& raw, const std::string& text,
