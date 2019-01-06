@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AdvGame.cpp" />
     <ClCompile Include="ConsoleIO.cpp" />
+    <ClCompile Include="FileLineReader.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LambdaExpression.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="LuaResponseHandler.cpp" />
     <ClCompile Include="LuaStoryBranch.cpp" />
     <ClCompile Include="LambdaResponseHandler.cpp" />
+    <ClCompile Include="MetaFileReader.cpp" />
     <ClCompile Include="Prompt.cpp" />
     <ClCompile Include="ResponseMatch.cpp" />
     <ClCompile Include="ResponseSystem.cpp" />
@@ -178,16 +180,19 @@
     <ClCompile Include="TextStyleSheet.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextMarkup.cpp" />
+    <ClCompile Include="TxtFileReader.cpp" />
     <ClCompile Include="TxtParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvGame.h" />
     <ClInclude Include="ConsoleIO.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="FileLineReader.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LambdaExpression.h" />
     <ClInclude Include="LuaExpression.h" />
+    <ClInclude Include="MetaFileReader.h" />
     <ClInclude Include="ResponseHandler.h" />
     <ClInclude Include="LuaGameState.h" />
     <ClInclude Include="LuaManager.h" />
@@ -208,6 +213,7 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextMarkup.h" />
     <ClInclude Include="TextParser.h" />
+    <ClInclude Include="TxtFileReader.h" />
     <ClInclude Include="TxtParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

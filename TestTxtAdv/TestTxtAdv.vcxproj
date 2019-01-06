@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TestFileLineReader.cpp" />
     <ClCompile Include="TestGameState.cpp" />
     <ClCompile Include="TestLuaGameState.cpp" />
     <ClCompile Include="TestLuaResponseHandler.cpp" />

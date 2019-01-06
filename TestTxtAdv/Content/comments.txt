@@ -6,6 +6,8 @@ Story: Hello world
 Story: Hello// world
     /*Lorem */ipsum
 
+//Story: hello world
+//    lorem ipsum
 /*
 Story: Hello world
     Lorem ipsum

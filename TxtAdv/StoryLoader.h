@@ -6,10 +6,9 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
-#include <vector>
-#include "LuaManager.h"
 #include "StoryPoint.h"
+#include "TxtFileReader.h"
+#include "MetaFileReader.h"
 
 namespace txt
 {
@@ -24,11 +23,11 @@ public:
     ~StoryLoader();
 
     /* Function: Load
-     * Loads a set of <StoryPoint>s from a file.
+     * Loads a set of <StoryPoint>s from a .txt file.
      *
      * Parameters:
      *
-     *    filename - The path to the file
+     *    filename - The path to the .txt file
      *
      * Returns:
      *
@@ -36,25 +35,10 @@ public:
      */
     std::vector<StoryPoint> Load(const std::string& filename);
 private:
-    struct Metadata
-    {
-        std::string storypoint;
-        std::string script;
-        std::string matcher_func;
-        std::string action_func;
-    };
+    TxtFileReader m_txtReader;
+    MetaFileReader m_metaReader;
 
-    bool m_isComment = false;
-
-    bool NextLine(std::ifstream& file, std::string& line);
-    bool HandleMultilineComment(std::string& line);
-    bool HandleSinglelineComment(std::string& line);
-    std::string GetMetaFile(std::ifstream& file);
-    std::vector<StoryPoint> GetStoryPoints(std::ifstream& file);
-    std::unordered_map<std::string, std::vector<Metadata>> GetMetadata(const std::string& filename);
-    StoryPoint CreateStoryPoint(const std::string& name, const std::string& txt) const;
-    void MergeMetadataWithStoryPoints(std::vector<StoryPoint>& points,
-        std::unordered_map<std::string, std::vector<Metadata>>& metadata) const;
+    void MergeMetadataWithStoryPoints(TxtInfo& txtInfo, MetaInfo& metaInfo) const;
     void MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Metadata>& metadata) const;
 };
 

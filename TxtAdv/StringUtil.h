@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cctype>
 #include <locale>
+#include <sstream>
 
 namespace txt
 {
