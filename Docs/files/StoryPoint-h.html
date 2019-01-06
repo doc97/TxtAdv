@@ -8,10 +8,10 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="StoryPoint"></a><a name="Topic146"></a><div class="CTopic TClass LC first">
+<a name="StoryPoint"></a><a name="Topic219"></a><div class="CTopic TClass LC first">
  <div class="CTitle">StoryPoint</div>
- <div class="NDClassPrototype" id="NDClassPrototype146"><div class="CPEntry TClass Current"><div class="CPName">StoryPoint</div></div></div>
- <div class="CBody"><p>Represent an atomic point in a storyline</p></div>
+ <div class="NDClassPrototype" id="NDClassPrototype219"><div class="CPEntry TClass Current"><div class="CPName">StoryPoint</div></div></div>
+ <div class="CBody"><p>Represent an atomic point in a storyline.</p></div>
 </div>
 
 <a name="StoryPoint.Functions"></a><a name="Topic147"></a><div class="CTopic TGroup LC">
@@ -36,10 +36,22 @@
  <div class="CBody"><p>Sets a list of handlers associated with this point.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">handlers<div class="CDLParameterType"><span class="SHKeyword">const</span> std::vector&lt;std::shared_ptr&lt;<a href="../index.html#File:ResponseHandler.h:ResponseHandler" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,95);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >ResponseHandler</a>&gt;&gt;&amp;</div></td><td class="CDLDefinition"><p>The list of <a href="../index.html#File:ResponseHandler.h:ResponseHandler" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,95);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >ResponseHandler</a>s</p></td></tr></table></div>
 </div>
 
+<a name="StoryPoint.GetName"></a><a name="Topic220"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">GetName</div>
+ <div id="NDPrototype220" class="NDPrototype NoParameterForm">std::<span class="SHKeyword">string</span> GetName() <span class="SHKeyword">const</span></div>
+ <div class="CBody"><div class="CHeading">Returns</div><p>Get the name</p></div>
+</div>
+
 <a name="StoryPoint.GetTextStr"></a><a name="Topic196"></a><div class="CTopic TFunction LC">
  <div class="CTitle">GetTextStr</div>
  <div id="NDPrototype196" class="NDPrototype NoParameterForm">std::<span class="SHKeyword">string</span> GetTextStr() <span class="SHKeyword">const</span></div>
  <div class="CBody"><div class="CHeading">Returns</div><p>Get the parsed text string</p><div class="CHeading">See Also</div><p>&lt;SetMarkup&gt;</p></div>
+</div>
+
+<a name="StoryPoint.GetText"></a><a name="Topic221"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">GetText</div>
+ <div id="NDPrototype221" class="NDPrototype NoParameterForm"><a href="../index.html#File:Text.h:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a> GetText() <span class="SHKeyword">const</span></div>
+ <div class="CBody"><div class="CHeading">Returns</div><p>The underlying <a href="../index.html#File:Text.h:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a> object</p></div>
 </div>
 
 <a name="StoryPoint.GetHandlerCount"></a><a name="Topic153"></a><div class="CTopic TFunction LC">

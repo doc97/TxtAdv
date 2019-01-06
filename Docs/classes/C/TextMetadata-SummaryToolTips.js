@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:TextMetadata",{243:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">A POD-struct representing text metadata such as text size and color.</div></div>",245:"<div class=\"NDToolTip TEnumeration LC\"><div class=\"TTSummary\">Bit mask constants used to mark metadata changes.</div></div>"});

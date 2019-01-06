@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("uns",["Function"],[["UnsetParentBranch",,[["StoryBranch",,,,0,"File:StoryBranch.h:StoryBranch.UnsetParentBranch","CClass:StoryBranch:UnsetParentBranch"]]]]);
+NDSearch.OnPrefixDataLoaded("uns",["Function"],[["UnsetParentBranch",,[["StoryBranch",,,,0,"File:StoryBranch.h:StoryBranch.UnsetParentBranch","CClass:StoryBranch:UnsetParentBranch"]]],["UnsetStyle",,[[,,,,0,"File:TextStyleSheet.h:UnsetStyle"]]]]);

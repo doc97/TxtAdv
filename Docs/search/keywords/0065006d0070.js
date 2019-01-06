@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("emp",["Function"],[["Empty",,[["StoryBranch",,,,0,"File:StoryBranch.h:StoryBranch.Empty","CClass:StoryBranch:Empty"]]]]);
+NDSearch.OnPrefixDataLoaded("emp",["Enumeration","Function"],[["Emphasis",,[[,,,,0,"File:Text.h:Emphasis"]]],["EmphasisBits",,[[,,,,0,"File:Text.h:EmphasisBits"]]],["Empty",,[["StoryBranch",,,,1,"File:StoryBranch.h:StoryBranch.Empty","CClass:StoryBranch:Empty"]]]]);

@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:TextRemoveRange",{201:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">Represents a range in the string to remove.</div></div>"});

@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("sto",["Class"],[["StoryBranch",,[[,,,,0,"File:StoryBranch.h:StoryBranch","CClass:StoryBranch"]]],["StoryPoint",,[[,,,,0,"File:StoryPoint.h:StoryPoint","CClass:StoryPoint"]]]]);
+NDSearch.OnPrefixDataLoaded("sto",["Class"],[["StoryBranch",,[[,,,,0,"File:StoryBranch.h:StoryBranch","CClass:StoryBranch"]]],["StoryLoader",,[[,,,,0,"File:StoryLoader.h:StoryLoader","CClass:StoryLoader"]]],["StoryPoint",,[[,,,,0,"File:StoryPoint.h:StoryPoint","CClass:StoryPoint"]]]]);

@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("out",["Constant"],[["OUT_COLOR_CHANGE_BIT",,[["TextMetadata",,,,0,"File:Text.h:TextMetadata.OUT_COLOR_CHANGE_BIT","CClass:TextMetadata:OUT_COLOR_CHANGE_BIT"]]]]);

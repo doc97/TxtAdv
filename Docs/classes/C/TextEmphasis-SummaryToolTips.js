@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:TextEmphasis",{242:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">A POD-struct representing a text style.</div></div>"});

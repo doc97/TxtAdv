@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:Metadata","Metadata");NDSummary.OnSummaryLoaded("CClass:Metadata",[["C/C++","C"]],[["Structs","Struct"]],[[211,0,0,"Metadata"]]);

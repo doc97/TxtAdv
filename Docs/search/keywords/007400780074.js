@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("txt",["Class"],[["TxtParser",,[[,,,,0,"File:TxtParser.h:TxtParser","CClass:TxtParser"]]]]);
+NDSearch.OnPrefixDataLoaded("txt",["Class","Struct"],[["TxtFileReader",,[[,,,,0,"File:TxtFileReader.h:TxtFileReader","CClass:TxtFileReader"]]],["TxtInfo",,[[,,,,1,"File:TxtFileReader.h:TxtInfo","CClass:TxtInfo"]]],["TxtParser",,[[,,,,0,"File:TxtParser.h:TxtParser","CClass:TxtParser"]]]]);

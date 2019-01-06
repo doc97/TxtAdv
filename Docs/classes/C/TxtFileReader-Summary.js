@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:TxtFileReader","TxtFileReader");NDSummary.OnSummaryLoaded("CClass:TxtFileReader",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[164,0,0,"TxtFileReader"],[166,0,2,"Functions","Functions"],[182,0,1,"Read","Read"]]);

@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("und",["Constant"],[["UNDERL",,[[,,,,0,"File:Text.h:UNDERL"]]]]);
+NDSearch.OnPrefixDataLoaded("und",["Constant"],[["UNDERL",,[[,,,,0,"File:Text.h:UNDERL"]]],["UNDERL_BIT",,[[,,,,0,"File:Text.h:UNDERL_BIT"]]]]);

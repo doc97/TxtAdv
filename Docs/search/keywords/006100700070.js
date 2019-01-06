@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("app",["Function"],[["Apply",,[[,,,,0,"File:TextStyleSheet.h:Apply"]]]]);

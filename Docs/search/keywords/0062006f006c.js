@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("bol",["Constant"],[["BOLD",,[[,,,,0,"File:Text.h:BOLD"]]]]);
+NDSearch.OnPrefixDataLoaded("bol",["Constant"],[["BOLD",,[[,,,,0,"File:Text.h:BOLD"]]],["BOLD_BIT",,[[,,,,0,"File:Text.h:BOLD_BIT"]]]]);

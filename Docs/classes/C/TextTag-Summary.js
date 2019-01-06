@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:TextTag","TextTag");NDSummary.OnSummaryLoaded("CClass:TextTag",[["C/C++","C"]],[["Structs","Struct"]],[[251,0,0,"TextTag"]]);

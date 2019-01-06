@@ -1,0 +1,1 @@
+NDContentPage.OnToolTipsLoaded({213:"<div class=\"NDToolTip TClass LC\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype213\"><div class=\"CPEntry TClass Current\"><div class=\"CPName\">MetaFileReader</div></div></div><div class=\"TTSummary\">Takes care of reading and parsing a .meta file.</div></div>"});

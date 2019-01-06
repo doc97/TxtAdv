@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:TxtInfo",{123:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">The result of the TxtFileReader.</div></div>"});

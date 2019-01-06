@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:Color",{241:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">Represents a 32-bit RGBA color.</div></div>"});

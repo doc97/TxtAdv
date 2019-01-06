@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("col",["Struct"],[["Color",,[[,,,,0,"File:Text.h:Color","CClass:Color"]]]]);

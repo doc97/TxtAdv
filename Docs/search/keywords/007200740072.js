@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("rtr",["Function"],[["rtrim",,[[,,,,0,"File:StringUtil.h:rtrim"]]],["rtrim_copy",,[[,,,,0,"File:StringUtil.h:rtrim_copy"]]]]);

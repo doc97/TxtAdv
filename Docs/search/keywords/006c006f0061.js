@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("loa",["Function"],[["Load",,[["StoryLoader",,,,0,"File:StoryLoader.h:StoryLoader.Load","CClass:StoryLoader:Load"]]]]);

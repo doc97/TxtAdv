@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("ita",["Constant"],[["ITALIC",,[[,,,,0,"File:Text.h:ITALIC"]]]]);
+NDSearch.OnPrefixDataLoaded("ita",["Constant"],[["ITALIC",,[[,,,,0,"File:Text.h:ITALIC"]]],["ITALIC_BIT",,[[,,,,0,"File:Text.h:ITALIC_BIT"]]]]);

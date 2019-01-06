@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("tog",["Function"],[["ToggleEmphasisStyle",,[["Text",,,,0,"File:Text.h:Text.ToggleEmphasisStyle","CClass:Text:ToggleEmphasisStyle"]]]]);

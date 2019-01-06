@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:Color","Color");NDSummary.OnSummaryLoaded("CClass:Color",[["C/C++","C"]],[["Structs","Struct"]],[[241,0,0,"Color"]]);

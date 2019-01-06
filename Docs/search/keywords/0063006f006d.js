@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("com",["Function"],[["CompressEmphasisStyles",,[["Text",,,,0,"File:Text.h:Text.CompressEmphasisStyles","CClass:Text:CompressEmphasisStyles"]]]]);

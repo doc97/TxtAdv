@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:TextTag",{251:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">A struct for representing a text tag.</div></div>"});

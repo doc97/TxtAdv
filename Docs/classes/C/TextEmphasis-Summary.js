@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:TextEmphasis","TextEmphasis");NDSummary.OnSummaryLoaded("CClass:TextEmphasis",[["C/C++","C"]],[["Structs","Struct"]],[[242,0,0,"TextEmphasis"]]);
