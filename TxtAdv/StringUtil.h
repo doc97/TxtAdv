@@ -160,4 +160,25 @@ static inline std::string repl_copy(std::string s, const std::string& search, co
     return s;
 }
 
+/* Function: hex2int
+ * Converts a hex string to an unsigned int.
+ *
+ * Parameters:
+ *
+ *    s - The string to convert
+ *
+ * Throws:
+ *
+ *    std::invalid_argument if the string is not a hex string
+ */
+static inline unsigned int hex2int(const std::string& s)
+{
+    unsigned int hexVal;
+    std::istringstream converter(s);
+    converter >> std::hex >> hexVal;
+    if (converter.fail())
+        throw std::invalid_argument("String argument is not a hex string!");
+    return hexVal;
+}
+
 } // namespace txt
