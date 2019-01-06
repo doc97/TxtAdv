@@ -309,4 +309,105 @@ TEST_CASE("Text - set metadata, overloaded functions", "[Text]")
     REQUIRE(metadata[0] == expected);
 }
 
+TEST_CASE("Text - emphasis compression", "[Text]")
+{
+    std::vector<TextEmphasis> em =
+    {
+        TextEmphasis{ 0, 2, Emphasis::NONE },
+        TextEmphasis{ 2, 0, Emphasis::BOLD },
+        TextEmphasis{ 2, 2, Emphasis::NONE },
+        TextEmphasis{ 4, 0, Emphasis::BOLD },
+        TextEmphasis{ 4, 1, Emphasis::NONE },
+    };
+    std::vector<TextMetadata> md =
+    {
+        TextMetadata{ 0, 5, TextSize::S1, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0} }
+    };
+    Text txt("he**ll**o", "hello", em, md, {});
+    txt.CompressEmphasisStyles();
+    std::vector<TextEmphasis> emphasis = txt.GetEmphasisStyles();
+    REQUIRE(emphasis.size() == 1);
+    REQUIRE(emphasis[0].start == 0);
+    REQUIRE(emphasis[0].len == 5);
+    REQUIRE(emphasis[0].bitmask == Emphasis::NONE);
+}
+
+TEST_CASE("Text - metadata compression", "[Text]")
+{
+    std::vector<TextEmphasis> em =
+    {
+        TextEmphasis{ 0, 5, Emphasis::NONE }
+    };
+    std::vector<TextMetadata> md =
+    {
+        TextMetadata{ 0, 3, TextSize::S1, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0} },
+        TextMetadata{ 3, 0, TextSize::S2, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0} },
+        TextMetadata{ 3, 2, TextSize::S1, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0} }
+    };
+
+    TextMetadata expected;
+    Text txt("hel!2!1lo", "hello", em, md, {});
+    txt.CompressMetadata();
+    std::vector<TextMetadata> metadata = txt.GetMetadata();
+    REQUIRE(metadata.size() == 1);
+    REQUIRE(metadata[0].start == 0);
+    REQUIRE(metadata[0].len == 5);
+    REQUIRE(metadata[0] == expected);
+}
+
+TEST_CASE("Text - tag compression", "[Text]")
+{
+    SECTION("compressed")
+    {
+        std::vector<TextEmphasis> em =
+        {
+            TextEmphasis{ 0, 5, Emphasis::NONE }
+        };
+        std::vector<TextMetadata> md =
+        {
+            TextMetadata{ 0, 5, TextSize::S1, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0} }
+        };
+        std::vector<TextTag> tagData =
+        {
+            TextTag{ 0, 3, "a"},
+            TextTag{ 3, 0, "b"},
+            TextTag{ 3, 3, "a"}
+        };
+
+        Text txt("<a>foo</a><b></b><a>bar</a>", "foobar", em, md, tagData);
+        txt.CompressTags();
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 1);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 6);
+        REQUIRE(tags[0].name == "a");
+    }
+    SECTION("not compressed")
+    {
+        std::vector<TextEmphasis> em =
+        {
+            TextEmphasis{ 0, 5, Emphasis::NONE }
+        };
+        std::vector<TextMetadata> md =
+        {
+            TextMetadata{ 0, 5, TextSize::S1, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0} }
+        };
+        std::vector<TextTag> tagData =
+        {
+            TextTag{ 0, 3, "a"},
+            TextTag{ 3, 3, "b"}
+        };
+
+        Text txt("<a>foo</a><b>bar</b>", "foobar", em, md, tagData);
+        txt.CompressTags();
+        std::vector<TextTag> tags = txt.GetTags();
+        REQUIRE(tags.size() == 2);
+        REQUIRE(tags[0].start == 0);
+        REQUIRE(tags[0].len == 3);
+        REQUIRE(tags[0].name == "a");
+        REQUIRE(tags[1].start == 3);
+        REQUIRE(tags[1].len == 3);
+        REQUIRE(tags[1].name == "b");
+    }
+}
 } // namespace txt

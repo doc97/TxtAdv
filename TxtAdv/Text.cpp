@@ -361,6 +361,9 @@ std::vector<TextEmphasis> Text::CompressEmphasisStyles(const std::vector<TextEmp
 
     for (; cur != styles.end(); ++last, ++cur)
     {
+        if (cur->len == 0)
+            continue;
+
         if (cur->bitmask == lastStyle.bitmask)
         {
             lastStyle.len += cur->len;
@@ -386,6 +389,9 @@ std::vector<TextMetadata> Text::CompressMetadata(const std::vector<TextMetadata>
 
     for (; cur != metadata.end(); ++last, ++cur)
     {
+        if (cur->len == 0)
+            continue;
+
         if (*cur == lastMetadata)
         {
             lastMetadata.len += cur->len;
@@ -411,6 +417,9 @@ std::vector<TextTag> Text::CompressTags(const std::vector<TextTag>& tags) const
 
     for (; cur != tags.end(); ++last, ++cur)
     {
+        if (cur->len == 0)
+            continue;
+
         if (lastTag.start + lastTag.len == cur->start && cur->name == lastTag.name)
         {
             lastTag.len += cur->len;
