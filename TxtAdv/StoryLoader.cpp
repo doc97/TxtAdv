@@ -23,6 +23,11 @@ std::vector<StoryPoint> StoryLoader::Load(const std::string& filename)
     TxtInfo txtInfo = m_txtReader.Read(filename);
     MetaInfo metaInfo = m_metaReader.Read(txtInfo.meta_filename);
     MergeMetadataWithStoryPoints(txtInfo, metaInfo);
+    if (!txtInfo.style_filename.empty())
+    {
+        TextStyleSheet sheet = m_styleReader.Read(txtInfo.style_filename);
+        MergeStyleSheetWithStoryPoints(txtInfo, sheet);
+    }
     return txtInfo.story_points;
 }
 
@@ -51,6 +56,16 @@ void StoryLoader::MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Met
         ));
     }
     point.SetHandlers(handlers);
+}
+
+void StoryLoader::MergeStyleSheetWithStoryPoints(TxtInfo& txtInfo, TextStyleSheet style) const
+{
+    for (StoryPoint& point : txtInfo.story_points)
+    {
+        Text text = point.GetText();
+        style.Apply(text);
+        point.SetText(text);
+    }
 }
 
 } // namespace txt

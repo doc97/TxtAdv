@@ -9,6 +9,7 @@
 #include "StoryPoint.h"
 #include "TxtFileReader.h"
 #include "MetaFileReader.h"
+#include "StyleFileReader.h"
 
 namespace txt
 {
@@ -37,9 +38,11 @@ public:
 private:
     TxtFileReader m_txtReader;
     MetaFileReader m_metaReader;
+    StyleFileReader m_styleReader;
 
     void MergeMetadataWithStoryPoints(TxtInfo& txtInfo, MetaInfo& metaInfo) const;
     void MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Metadata>& metadata) const;
+    void MergeStyleSheetWithStoryPoints(TxtInfo& txtInfo, TextStyleSheet style) const;
 };
 
 } // namespace txt

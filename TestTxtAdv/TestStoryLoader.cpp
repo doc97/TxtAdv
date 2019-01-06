@@ -104,4 +104,27 @@ TEST_CASE("StoryLoader - comments", "[StoryLoader]")
     REQUIRE(points[1].GetTextStr() == "ipsum");
 }
 
+TEST_CASE("StoryLoader - style file", "[StoryLoader]")
+{
+    StoryLoader loader;
+    std::vector<StoryPoint> points = loader.Load("Content/style.txt");
+    REQUIRE(points.size() == 1);
+
+    Text text = points[0].GetText();
+    std::vector<TextEmphasis> emphasis = text.GetEmphasisStyles();
+    std::vector<TextMetadata> metadata = text.GetMetadata();
+    REQUIRE(emphasis.size() == 3);
+    REQUIRE(emphasis[0].bitmask == Emphasis::NONE);
+    REQUIRE(emphasis[1].start == 5);
+    REQUIRE(emphasis[1].len == 10);
+    REQUIRE(emphasis[1].bitmask == Emphasis::BOLD);
+    REQUIRE(emphasis[2].bitmask == Emphasis::NONE);
+    REQUIRE(metadata.size() == 3);
+    REQUIRE(metadata[0].size == TextSize::S1);
+    REQUIRE(metadata[1].start == 23);
+    REQUIRE(metadata[1].len == 4);
+    REQUIRE(metadata[1].size == TextSize::S2);
+    REQUIRE(metadata[2].size == TextSize::S1);
+}
+
 } // namespace txt

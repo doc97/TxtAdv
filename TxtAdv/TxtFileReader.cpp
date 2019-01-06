@@ -26,6 +26,7 @@ TxtInfo TxtFileReader::Read(const std::string& filename)
         TxtInfo info;
         if (!GetKeyValue(file, "Meta", info.meta_filename, false))
             throw std::runtime_error("FileFormatError: No Meta-field found!");
+        GetKeyValue(file, "Style", info.style_filename, true);
         info.story_points = GetStoryPoints(file);
 
         file.close();

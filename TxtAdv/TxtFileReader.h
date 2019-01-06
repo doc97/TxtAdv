@@ -18,6 +18,7 @@ namespace txt
 struct TxtInfo
 {
     std::string meta_filename;
+    std::string style_filename;
     std::vector<StoryPoint> story_points;
 };
 

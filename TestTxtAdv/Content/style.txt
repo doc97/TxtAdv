@@ -1,0 +1,5 @@
+Meta: Content/style.meta
+Style: Content/basic.style
+
+Story: Styled
+    I am <bold>a piece of</bold> styled <big>text</big>.
