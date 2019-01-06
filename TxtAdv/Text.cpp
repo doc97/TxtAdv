@@ -11,10 +11,18 @@
 namespace txt
 {
 
-Text::Text(const std::string& text)
-    : m_raw(text)
+Text::Text(const std::string& raw)
+    : m_raw(raw)
 {
-    m_str = Parse(text);
+    m_str = Parse(raw);
+}
+
+Text::Text(const std::string& raw, const std::string& text,
+    const std::vector<TextEmphasis>& emphasis,
+    const std::vector<TextMetadata> metadata,
+    const std::vector<TextTag> tags)
+    : m_raw(raw), m_str(text), m_emphasis(emphasis), m_metadata(metadata), m_tags(tags)
+{
 }
 
 Text::~Text()

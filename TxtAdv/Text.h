@@ -165,9 +165,25 @@ public:
      *
      * Parameters:
      *
-     *    text - The raw markup text
+     *    raw - The raw markup text
      */
-    Text(const std::string& text);
+    Text(const std::string& raw);
+
+    /* Constructor: Text
+     * Create text from the parameters.
+     *
+     * Parameters:
+     *
+     *    raw - The raw markup text
+     *    text - The parsed text
+     *    emphasis - The parsed emphasis styles
+     *    metadata - The parsed metadata
+     *    tags - The parsed tags
+     */
+    Text(const std::string& raw, const std::string& text,
+        const std::vector<TextEmphasis>& emphasis,
+        const std::vector<TextMetadata> metadata,
+        const std::vector<TextTag> tags);
     ~Text();
 
     /* Function: SetEmphasisStyle
