@@ -4,12 +4,13 @@
 **********************************************************/
 
 #include "StoryPoint.h"
+#include "TextMarkup.h"
 
 namespace txt
 {
 
 StoryPoint::StoryPoint(const std::string& name)
-    : m_name(name), m_text("")
+    : m_name(name)
 {
 }
 
@@ -19,7 +20,8 @@ StoryPoint::~StoryPoint()
 
 void StoryPoint::SetTextStr(const std::string& text)
 {
-    m_text = Text(text);
+    TextMarkup markup(text);
+    m_text = markup.GetText();
 }
 
 void StoryPoint::SetParser(std::shared_ptr<TextParser> parser)

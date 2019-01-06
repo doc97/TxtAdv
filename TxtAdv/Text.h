@@ -161,13 +161,9 @@ class Text
 {
 public:
     /* Constructor: Text
-     * Parses the raw text into styles.
-     *
-     * Parameters:
-     *
-     *    raw - The raw markup text
+     * Creates an empty text.
      */
-    Text(const std::string& raw);
+    Text();
 
     /* Constructor: Text
      * Create text from the parameters.
@@ -289,6 +285,14 @@ public:
      */
     void SetMetadataBgColor(size_t start, size_t len, const Color& bg);
 
+    /* Function: CompressEmphasisStyles
+     */
+    void CompressEmphasisStyles();
+
+    void CompressMetadata();
+
+    void CompressTags();
+
     /* Function: Str
      * Returns the cleaned text.
      *
@@ -359,82 +363,14 @@ public:
      */
     std::vector<TextTag> GetTags() const;
 private:
-    /* Struct: TextRemoveRange
-     * Represents a range in the string to remove.
-     */
-    struct TextRemoveRange
-    {
-        size_t idx = 0;
-        size_t len = 0;
-    };
-
-    struct TextEmphasisChange
-    {
-        size_t idx = 0;
-        size_t len = 1;
-        std::bitset<EmphasisBits::BIT_COUNT> mask;
-    };
-
-    struct TextMetadataChange
-    {
-        size_t idx = 0;
-        size_t len = 2;
-        TextMetadata data;
-        std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT> changeMask;
-    };
-
-    struct TextTagChange
-    {
-        size_t idx = 0;
-        size_t len = 0;
-        std::string name;
-    };
-
     std::string m_raw;
     std::string m_str;
     std::vector<TextEmphasis> m_emphasis;
     std::vector<TextMetadata> m_metadata;
     std::vector<TextTag> m_tags;
 
-    std::string Parse(const std::string& raw);
-    void RemoveMarkupCharacters(std::string& str,
-        std::vector<TextEmphasisChange>& emphasisChanges,
-        std::vector<TextMetadataChange>& metadataChanges,
-        std::vector<TextRemoveRange>& removals,
-        std::vector<TextTagChange>& tagChanges) const;
-
-    /* Emphasis styles*/
-    std::vector<TextEmphasisChange> ParseEmphasisChanges(const std::string& str) const;
-    std::vector<TextEmphasisChange> ParseEmphasisChange(const std::string& str, const std::string& styleId,
-        Emphasis emphasis) const;
-    void CombineEmphasisChanges(std::vector<TextEmphasisChange>& orig,
-        const std::vector<TextEmphasisChange>& append) const;
-    void SortEmphasisChanges(std::vector<TextEmphasisChange>& changes) const;
-    std::vector<TextEmphasis> ExtractEmphasisStyles(const std::vector<TextEmphasisChange>& changes,
-        const size_t strLen) const;
     std::vector<TextEmphasis> CompressEmphasisStyles(const std::vector<TextEmphasis>& styles) const;
-
-    /* Metadata */
-    std::vector<TextMetadataChange> ParseMetadataChanges(const std::string& str) const;
-    std::vector<TextMetadataChange> ParseSizeChanges(const std::string& str) const;
-    std::vector<TextMetadataChange> ParseColorChanges(const std::string& str) const;
-    void CombineMetadataChanges(std::vector<TextMetadataChange>& orig,
-        const std::vector<TextMetadataChange>& append) const;
-    void SortMetadataChanges(std::vector<TextMetadataChange>& changes) const;
-    std::vector<TextMetadata> ExtractMetadata(const std::vector<TextMetadataChange>& changes,
-        const size_t strLen) const;
     std::vector<TextMetadata> CompressMetadata(const std::vector<TextMetadata>& metadata) const;
-
-    /* Remove ranges */
-    std::vector<TextRemoveRange> ParseRemoveRanges(const std::string& str) const;
-    std::vector<TextRemoveRange> ParseEscapeSequences(const std::string& str) const;
-    void CombineRemoveRanges(std::vector<TextRemoveRange>& orig,
-        const std::vector<TextRemoveRange>& append) const;
-    void SortRemoveRanges(std::vector<TextRemoveRange>& points) const;
-
-    /* Tags */
-    std::vector<TextTagChange> ParseTagChanges(const std::string& str) const;
-    std::vector<TextTag> ExtractTags(const std::vector<TextTagChange>& changes);
     std::vector<TextTag> CompressTags(const std::vector<TextTag>& tags) const;
 };
 

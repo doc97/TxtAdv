@@ -144,6 +144,7 @@
     <ClCompile Include="TestStoryLoader.cpp" />
     <ClCompile Include="TestStoryPoint.cpp" />
     <ClCompile Include="TestText.cpp" />
+    <ClCompile Include="TestTextMarkup.cpp" />
     <ClCompile Include="TestTxtParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
