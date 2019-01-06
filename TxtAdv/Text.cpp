@@ -176,7 +176,7 @@ void Text::ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBit
 }
 
 void Text::SetMetadata(size_t start, size_t len, const TextSize& size,
-    const Color& outline, const Color& fill, const Color& background,
+    const Color& outline, const Color& fill, const Color& bg,
     const std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT>& changeMask)
 {
     if (start >= m_str.length())
@@ -211,7 +211,7 @@ void Text::SetMetadata(size_t start, size_t len, const TextSize& size,
     metadata.size = changeMask[MetadataChangeBits::SIZE_CHANGE_BIT] ? size : lower->size;
     metadata.outline_color = changeMask[MetadataChangeBits::OUT_COLOR_CHANGE_BIT] ? outline : lower->outline_color;
     metadata.fill_color = changeMask[MetadataChangeBits::FILL_COLOR_CHANGE_BIT] ? fill : lower->fill_color;
-    metadata.bg_color = changeMask[MetadataChangeBits::BG_COLOR_CHANGE_BIT] ? background : lower->bg_color;
+    metadata.bg_color = changeMask[MetadataChangeBits::BG_COLOR_CHANGE_BIT] ? bg : lower->bg_color;
 
     size_t toRemove = 0;
     TextSize rightSize = lower->size;

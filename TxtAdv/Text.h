@@ -171,23 +171,23 @@ public:
     ~Text();
 
     /* Function: SetEmphasisStyle
-     * Sets an emphasis style at a position of the string.
+     * Sets an emphasis style for the range [start, start+len).
      *
      * Parameters:
      *
      *    start - The starting index, if < string length it throws std::out_of_range
-     *    len - The number of characters that the style spans, it is clamped to span to the end of the string
+     *    len - The length of the range, it is clamped to span to the end of the string
      *    mask - The style to set, overrides any existing style in [start, start + len)
      */
     void SetEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask);
 
     /* Function: ToggleEmphasisStyle
-     * Toggles an emphasis style at a position of the string.
+     * Toggles an emphasis style for the range [start, start+len).
      *
      * Parameters:
      *
      *    start - The starting index, if < string length it throws std::out_of_range
-     *    len - The number of characters that the style spans, it is clamped to span to the end of the string
+     *    len - The length of the range, it is clamped to span to the end of the string
      *    mask - The style to toggle
      *
      * See Also:
@@ -196,12 +196,81 @@ public:
      */
     void ToggleEmphasisStyle(size_t start, size_t len, std::bitset<EmphasisBits::BIT_COUNT> mask);
 
+    /* Function: SetMetadata
+     * Sets metadata for the range [start, start+len).
+     *
+     * Parameters:
+     *
+     *    start - The start index, if < string length it throws std::out_of_range
+     *    len - The length of the range, it is clamped to span to the end of the string
+     *    size - The text size
+     *    outline - The text outline color
+     *    fill - The text fill color
+     *    bg - The text background color
+     *    changeMask - The bits decide which of the previous metadata gets applied
+     */
     void SetMetadata(size_t start, size_t len, const TextSize& size,
-        const Color& outline, const Color& fill, const Color& background,
+        const Color& outline, const Color& fill, const Color& bg,
         const std::bitset<MetadataChangeBits::CHANGE_BIT_COUNT>& changeMask);
+
+    /* Function: SetMetadataSize
+     * Sets size metadata for the range [start, start+len).
+     *
+     * Parameters:
+     *
+     *    start - The start index, if < string length it throws std::out_of_range
+     *    len - The length of the range, it is clamped to span to the end of the string
+     *    size - The text size
+     *
+     * See Also:
+     *
+     *    <SetMetadata>
+     */
     void SetMetadataSize(size_t start, size_t len, const TextSize& size);
+
+    /* Function: SetMetadataOutlineColor
+     * Sets text outline color metadata for the range [start, start+len).
+     *
+     * Parameters:
+     *
+     *    start - The start index, if < string length it throws std::out_of_range
+     *    len - The length of the range, it is clamped to span to the end of the string
+     *    outline - The text outline color
+     *
+     * See Also:
+     *
+     *    <SetMetadata>
+     */
     void SetMetadataOutlineColor(size_t start, size_t len, const Color& outline);
+
+    /* Function: SetMetadataFillColor
+     * Sets text fill color metadata for the range [start, start+len).
+     *
+     * Parameters:
+     *
+     *    start - The start index, if < string length it throws std::out_of_range
+     *    len - The length of the range, it is clamped to span to the end of the string
+     *    fill - The text fill color
+     *
+     * See Also:
+     *
+     *    <SetMetadata>
+     */
     void SetMetadataFillColor(size_t start, size_t len, const Color& fill);
+
+    /* Function: SetMetadataBgColor
+     * Sets text background color metadata for the range [start, start+len).
+     *
+     * Parameters:
+     *
+     *    start - The start index, if < string length it throws std::out_of_range
+     *    len - The length of the range, it is clamped to span to the end of the string
+     *    bg - The text background color
+     *
+     * See Also:
+     *
+     *    <SetMetadata>
+     */
     void SetMetadataBgColor(size_t start, size_t len, const Color& bg);
 
     /* Function: Str
