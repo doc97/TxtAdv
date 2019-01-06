@@ -18,6 +18,11 @@ StoryPoint::~StoryPoint()
 {
 }
 
+void StoryPoint::SetText(const Text& text)
+{
+    m_text = text;
+}
+
 void StoryPoint::SetTextStr(const std::string& text)
 {
     TextMarkup markup(text);

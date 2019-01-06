@@ -24,6 +24,14 @@ public:
     StoryPoint(const std::string& name);
     ~StoryPoint();
 
+    /* Function: SetText
+     *
+     * Parameters:
+     *
+     *    text - The new text
+     */
+    void SetText(const Text& text);
+
     /* Function: SetTextStr
      * Sets the raw text of this story point.
      *
