@@ -10,12 +10,27 @@
 namespace txt
 {
 
+/* Class: TextMarkup
+ * Handles text markup parsing, the result is a <Text>.
+ */
 class TextMarkup
 {
 public:
+    /* Constructor: TextMarkup
+     *
+     * Parameters:
+     *
+     *    raw - The raw markup text
+     */
     TextMarkup(const std::string& raw);
     ~TextMarkup();
 
+    /* Function: GetText
+     *
+     * Returns:
+     *
+     *    The parsed <Text> object
+     */
     Text GetText() const;
 private:
     Text m_text;
