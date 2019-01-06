@@ -1,0 +1,4 @@
+Multi 1,LUA/test.lua,matches_true,action_empty
+Multi 2,LUA/test.lua,matches_true,action_empty
+MultiHandler,Lua/test.lua,matches_false,action_empty
+MultiHandler,Lua/test.lua,matches_key,action_empty

@@ -377,3 +377,6 @@ ASALocalRun/
 
 # NaturalDocs
 **/Working Data/
+
+# TxtAdv Content files
+!**/Content/*.meta
