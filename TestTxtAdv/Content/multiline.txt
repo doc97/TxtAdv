@@ -1,4 +1,4 @@
-Meta: Content/multi.meta
+Ctrl: Content/multi.ctrl
 
 Story: Multiline
     I am a story point with

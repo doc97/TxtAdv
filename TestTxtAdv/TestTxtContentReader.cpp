@@ -12,7 +12,7 @@ namespace txt
 TEST_CASE("TxtContentReader - All fields correct", "[TxtContentReader]")
 {
     std::stringstream ss;
-    ss << "Meta: test.meta\n";
+    ss << "Ctrl: test.ctrl\n";
     ss << "Style: test.style\n";
     ss << "\n";
     ss << "Story: hello\n";
@@ -20,7 +20,7 @@ TEST_CASE("TxtContentReader - All fields correct", "[TxtContentReader]")
 
     TxtContentReader reader;
     TxtContentInfo info = reader.Read(ss);
-    REQUIRE(info.ctrl_filename == "test.meta");
+    REQUIRE(info.ctrl_filename == "test.ctrl");
     REQUIRE(info.style_filename == "test.style");
     REQUIRE(info.story_points.size() == 1);
     REQUIRE(info.story_points[0].GetName() == "hello");
@@ -40,7 +40,7 @@ TEST_CASE("TxtContentReader - invalid file", "[TxtContentReader]")
     }
 }
 
-TEST_CASE("TxtContentReader - Meta field", "[TxtContentReader]")
+TEST_CASE("TxtContentReader - Ctrl field", "[TxtContentReader]")
 {
     TxtContentReader reader;
     std::stringstream ss;
@@ -52,7 +52,7 @@ TEST_CASE("TxtContentReader - Meta field", "[TxtContentReader]")
         try
         {
             TxtContentInfo info = reader.Read(ss);
-            FAIL("Missing Meta-field should throw a std::runtime_error");
+            FAIL("Missing Ctrl-field should throw a std::runtime_error");
         }
         catch (std::runtime_error)
         {
@@ -62,17 +62,17 @@ TEST_CASE("TxtContentReader - Meta field", "[TxtContentReader]")
     {
         ss << "Story: hello\n";
         ss << "  text\n";
-        ss << "Meta: test.meta\n";
+        ss << "Ctrl: test.ctrl\n";
         TxtContentInfo info = reader.Read(ss);
         REQUIRE(info.story_points.size() == 0);
     }
 }
 
-TEST_CASE("TxtContentReader - Style field, before meta field", "[TxtContentReader]")
+TEST_CASE("TxtContentReader - Style field, before ctrl field", "[TxtContentReader]")
 {
     std::stringstream ss;
     ss << "Style: test.style\n";
-    ss << "Meta: test.meta\n";
+    ss << "Ctrl: test.ctrl\n";
 
     TxtContentReader reader;
     TxtContentInfo info = reader.Read(ss);
@@ -83,7 +83,7 @@ TEST_CASE("TxtContentReader - story spacing", "[TxtContentReader]")
 {
     TxtContentReader reader;
     std::stringstream ss;
-    ss << "Meta: test.meta\n";
+    ss << "Ctrl: test.ctrl\n";
 
     SECTION("single story, no spacing")
     {
@@ -110,7 +110,7 @@ TEST_CASE("TxtContentReader - story text indentation", "[TxtContentReader]")
 {
     TxtContentReader reader;
     std::stringstream ss;
-    ss << "Meta: test.meta\n";
+    ss << "Ctrl: test.ctrl\n";
     ss << "\n";
     ss << "Story: hello\n";
 

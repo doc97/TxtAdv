@@ -32,8 +32,8 @@ TxtContentInfo TxtContentReader::Read(const std::string& filename)
 TxtContentInfo TxtContentReader::Read(std::istream& stream)
 {
     TxtContentInfo info;
-    if (!GetKeyValue(stream, "Meta", info.ctrl_filename, false))
-        throw std::runtime_error("FileFormatError: No Meta-field found!");
+    if (!GetKeyValue(stream, "Ctrl", info.ctrl_filename, false))
+        throw std::runtime_error("FileFormatError: No Ctrl-field found!");
     GetKeyValue(stream, "Style", info.style_filename, true);
     info.story_points = GetStoryPoints(stream);
     return info;

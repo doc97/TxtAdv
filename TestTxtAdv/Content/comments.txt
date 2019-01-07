@@ -1,4 +1,4 @@
-Meta: Content/comments.meta
+Ctrl: Content/comments.ctrl
 
 Story: Hello world
     Lorem// ipsum

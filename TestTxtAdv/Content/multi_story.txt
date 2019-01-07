@@ -1,4 +1,4 @@
-Meta: Content/multi.meta
+Ctrl: Content/multi.ctrl
 
 Story: Multi 1
     I am one of the story points.

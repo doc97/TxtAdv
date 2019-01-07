@@ -1,4 +1,4 @@
-Meta: Content/multi.meta
+Ctrl: Content/multi.ctrl
 
 Story: MultiHandler
     I have multiple handlers

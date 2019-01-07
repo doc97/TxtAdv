@@ -1,4 +1,4 @@
-Meta: Content/escape.meta
+Ctrl: Content/escape.ctrl
 
 Story: Escape
     I am an \*escaped string\*

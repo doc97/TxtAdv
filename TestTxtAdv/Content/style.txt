@@ -1,4 +1,4 @@
-Meta: Content/style.meta
+Ctrl: Content/style.ctrl
 Style: Content/basic.style
 
 Story: Styled

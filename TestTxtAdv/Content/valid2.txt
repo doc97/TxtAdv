@@ -1,4 +1,4 @@
-Meta: Content/valid.meta
+Ctrl: Content/valid.ctrl
 
 Story: Valid 2
     I am also a valid txt file
