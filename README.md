@@ -2,18 +2,20 @@
 
 TxtAdv is a framework for creating awesome text adventure games!
 
-While the reasons for why I started this project is for me to learn more C++,
+While the reasons for why I started this project were for me to learn more C++,
 practice TDD and Agile, I am still planning on making this project a usable
 product.
 
-This project is in early development and the designs are still very loose. If
+This project is in early development and some of the designs are still very loose. If
 you'd like to help and contribute, please create a Github issue and we can talk about
 your ideas.
 
 ## Features
 
-- **Lua scripting**: Power your game by writing scripts with the easy-to-use language Lua
-- **Text markup**: Write flexible text markup with support for variables
+- **Lua scripting**: Power your game by writing scripts with the easy-to-use language
+[Lua](https://www.lua.org/manual/5.3/)
+- **Text markup**: Write flexible text markup with support for variables and
+styling
 
 ## Documentation
 
@@ -35,6 +37,9 @@ In the future I will write documentation on how to use the framework on the
 Wiki. For now, if you're interested, you can take a look at
 [AdvGame.cpp](https://github.com/doc97/TxtAdv/blob/master/TxtAdv/AdvGame.cpp)
 to see how the different components work together.
+
+I also encourage you to read some of the unit tests, as they provide invaluable
+examples on how the software works.
 
 ## Testing
 
