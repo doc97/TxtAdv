@@ -49,13 +49,13 @@ bool LineReader::HandleMultilineComment(std::string& line)
             m_isComment = false;
             if (commentEnd < line.length() - 2)
                 tmpLine += line.substr(commentEnd + 2);
-            else
+            if (tmpLine.empty())
                 return false;
+            else
+                line = tmpLine;
         }
     }
 
-    if (!tmpLine.empty())
-        line = tmpLine;
     return !m_isComment;
 }
 
