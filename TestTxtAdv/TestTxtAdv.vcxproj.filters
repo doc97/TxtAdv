@@ -66,5 +66,8 @@
     <ClCompile Include="TestLineReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestStyleContentReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
