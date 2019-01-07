@@ -71,8 +71,8 @@ std::vector<StoryPoint> TxtContentReader::GetStoryPoints(std::istream& file)
         {
             if (line.empty())
                 ss << "\n";
-            else if (line.compare(0, 4, "    ") == 0)
-                ss << line.substr(4) << " ";
+            else if (line.compare(0, 2, "  ") == 0)
+                ss << txt::trim_copy(line.substr(2)) << " ";
             else if (line.find("Story:") != std::string::npos)
             {
                 points.push_back(CreateStoryPoint(pointName, ss.str()));
@@ -88,7 +88,8 @@ std::vector<StoryPoint> TxtContentReader::GetStoryPoints(std::istream& file)
             hasStarted = true;
         }
     }
-    points.push_back(CreateStoryPoint(pointName, ss.str()));
+    if (!pointName.empty())
+        points.push_back(CreateStoryPoint(pointName, ss.str()));
 
     return points;
 }
