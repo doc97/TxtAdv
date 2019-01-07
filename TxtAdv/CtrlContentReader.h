@@ -27,7 +27,7 @@ struct CtrlContent
  */
 struct CtrlContentInfo
 {
-    std::unordered_map<std::string, std::vector<CtrlContent>> metadata;
+    std::unordered_map<std::string, std::vector<CtrlContent>> ctrl_content;
 };
 
 /* Class: CtrlContentReader

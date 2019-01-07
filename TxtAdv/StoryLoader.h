@@ -40,8 +40,8 @@ private:
     CtrlContentReader m_ctrlReader;
     StyleContentReader m_styleReader;
 
-    void MergeMetadataWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& metaInfo) const;
-    void MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrlInfo) const;
+    void MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& ctrlInfo) const;
+    void MergeCtrlInfoWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrlInfo) const;
     void MergeStyleSheetWithStoryPoints(TxtContentInfo& txtInfo, TextStyleSheet style) const;
 };
 

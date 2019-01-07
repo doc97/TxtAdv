@@ -38,16 +38,16 @@ CtrlContentInfo CtrlContentReader::Read(std::istream& stream)
     {
         std::vector<std::string> data = txt::split(line, ',');
         if (data.size() != 4)
-            throw std::runtime_error("Invalid data format in .meta file!");
+            throw std::runtime_error("Invalid data format in .ctrl file!");
         for_each(data.begin(), data.end(), txt::trim);
 
-        CtrlContent metadata;
-        metadata.storypoint = data[0];
-        metadata.script = data[1];
-        metadata.matcher_func = data[2];
-        metadata.action_func = data[3];
+        CtrlContent ctrl_content;
+        ctrl_content.storypoint = data[0];
+        ctrl_content.script = data[1];
+        ctrl_content.matcher_func = data[2];
+        ctrl_content.action_func = data[3];
 
-        info.metadata[metadata.storypoint].push_back(metadata);
+        info.ctrl_content[ctrl_content.storypoint].push_back(ctrl_content);
     }
     return info;
 }

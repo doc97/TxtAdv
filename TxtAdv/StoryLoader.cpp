@@ -22,7 +22,7 @@ std::vector<StoryPoint> StoryLoader::Load(const std::string& filename)
 {
     TxtContentInfo txtInfo = m_txtReader.Read(filename);
     CtrlContentInfo ctrlInfo = m_ctrlReader.Read(txtInfo.ctrl_filename);
-    MergeMetadataWithStoryPoints(txtInfo, ctrlInfo);
+    MergeCtrlInfoWithStoryPoints(txtInfo, ctrlInfo);
     if (!txtInfo.style_filename.empty())
     {
         TextStyleSheet sheet = m_styleReader.Read(txtInfo.style_filename);
@@ -31,28 +31,28 @@ std::vector<StoryPoint> StoryLoader::Load(const std::string& filename)
     return txtInfo.story_points;
 }
 
-void StoryLoader::MergeMetadataWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& metaInfo) const
+void StoryLoader::MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& ctrlInfo) const
 {
     for (StoryPoint& point : txtInfo.story_points)
     {
-        bool hasMetadata = metaInfo.metadata.find(point.GetName()) != metaInfo.metadata.end();
+        bool hasMetadata = ctrlInfo.ctrl_content.find(point.GetName()) != ctrlInfo.ctrl_content.end();
         if (hasMetadata)
         {
-            std::vector<CtrlContent> data = metaInfo.metadata[point.GetName()];
-            MergeMetadataWithStoryPoint(point, data);
+            std::vector<CtrlContent> data = ctrlInfo.ctrl_content[point.GetName()];
+            MergeCtrlInfoWithStoryPoint(point, data);
         }
     }
 }
 
-void StoryLoader::MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& metadata) const
+void StoryLoader::MergeCtrlInfoWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrl_content) const
 {
     std::vector<std::shared_ptr<ResponseHandler>> handlers;
-    for (const CtrlContent& meta : metadata)
+    for (const CtrlContent& ctrl : ctrl_content)
     {
         handlers.push_back(std::make_shared<LuaResponseHandler>(
-            meta.script,
-            meta.matcher_func,
-            meta.action_func
+            ctrl.script,
+            ctrl.matcher_func,
+            ctrl.action_func
         ));
     }
     point.SetHandlers(handlers);
