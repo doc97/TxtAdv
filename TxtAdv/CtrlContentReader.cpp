@@ -47,6 +47,11 @@ CtrlContentInfo CtrlContentReader::Read(std::istream& stream)
         ctrl_content.matcher_func = data[2];
         ctrl_content.action_func = data[3];
 
+        if (ctrl_content.storypoint.empty())
+            throw std::runtime_error("StoryPoint ID-field cannot be left empty");
+        if (ctrl_content.script.empty() || ctrl_content.matcher_func.empty() || ctrl_content.action_func.empty())
+            continue;
+
         info.ctrl_content[ctrl_content.storypoint].push_back(ctrl_content);
     }
     return info;
