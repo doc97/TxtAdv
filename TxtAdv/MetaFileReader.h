@@ -54,6 +54,22 @@ public:
      *    std::runtime_error if there is an error such as file format error or I/O error
      */
     MetaInfo Read(const std::string& filename);
+
+    /* Function: Read
+     *
+     * Parameters:
+     *
+     *    filename - Path to the file to read
+     *
+     * Returns:
+     *
+     *    The data in the form of a <MetaInfo> object
+     *
+     * Throws:
+     *
+     *    std::runtime_error if there is an error such as file format error or I/O error
+     */
+    MetaInfo Read(std::istream& stream);
 private:
     LineReader m_reader;
 };

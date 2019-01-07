@@ -25,9 +25,16 @@ MetaInfo MetaFileReader::Read(const std::string& filename)
     if (!file.is_open())
         throw std::runtime_error("Could not open file!");
 
+    MetaInfo info = Read(file);
+    file.close();
+    return info;
+}
+
+MetaInfo MetaFileReader::Read(std::istream& stream)
+{
     MetaInfo info;
     std::string line;
-    while (m_reader.NextLine(file, line))
+    while (m_reader.NextLine(stream, line))
     {
         std::vector<std::string> data = txt::split(line, ',');
         if (data.size() != 4)
@@ -42,7 +49,6 @@ MetaInfo MetaFileReader::Read(const std::string& filename)
 
         info.metadata[metadata.storypoint].push_back(metadata);
     }
-    file.close();
     return info;
 }
 

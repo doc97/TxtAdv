@@ -25,33 +25,33 @@ TextStyleSheet StyleFileReader::Read(const std::string& filename)
     if (!file.is_open())
         throw std::runtime_error("Could not open file!");
 
-    TextStyleSheet tss = GetTextStyleSheet(file);
+    TextStyleSheet tss = Read(file);
     file.close();
     return tss;
 }
 
-TextStyleSheet StyleFileReader::GetTextStyleSheet(std::ifstream& file)
+TextStyleSheet StyleFileReader::Read(std::istream& stream)
 {
     TextStyleSheet tss;
     std::string line;
     std::string tag;
-    while (m_reader.NextLine(file, line))
+    while (m_reader.NextLine(stream, line))
     {
         if (std::isalpha(line.at(0)))
         {
             tag = line;
-            TextStyle style = GetTextStyle(file);
+            TextStyle style = GetTextStyle(stream);
             tss.SetStyle(tag, style);
         }
     }
     return tss;
 }
 
-TextStyle StyleFileReader::GetTextStyle(std::ifstream& file)
+TextStyle StyleFileReader::GetTextStyle(std::istream& stream)
 {
     TextStyle style;
     std::string line;
-    while (m_reader.NextLine(file, line))
+    while (m_reader.NextLine(stream, line))
     {
         // At least 2 space indentation
         if (line.compare(0, 2, "  ") == 0)

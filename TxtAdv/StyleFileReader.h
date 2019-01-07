@@ -19,6 +19,7 @@ public:
     ~StyleFileReader();
 
     /* Function: Read
+     * Reads the input from a file and parses the content.
      *
      * Parameters:
      *
@@ -26,18 +27,35 @@ public:
      *
      * Returns:
      *
-     *    The data in the form of a <StyleInfo> object
+     *    The data in the form of a <TextStyleSheet> object
      *
      * Throws:
      *
-     *    std::runtime_error if there is an error such as file format error or I/O error
+     *    std::runtime_error if there is an I/O error and the file could not be opened
+     *    std::invalid_argument if there is a color format error
      */
     TextStyleSheet Read(const std::string& filename);
+
+    /* Function: Read
+     * Reads an input stream and parses the content.
+     *
+     * Parameters:
+     *
+     *    stream - The stream to read
+     *
+     * Returns:
+     *
+     *    The parsed data in the form of a <TextStyleSheet> object
+     *
+     * Throws:
+     *
+     *    std::invalid_argument if there is a color format error
+     */
+    TextStyleSheet Read(std::istream& stream);
 private:
     LineReader m_reader;
 
-    TextStyleSheet GetTextStyleSheet(std::ifstream& file);
-    TextStyle GetTextStyle(std::ifstream& file);
+    TextStyle GetTextStyle(std::istream& stream);
     void SetTextStyleAttribute(TextStyle& style, const std::string& name, const std::string& value) const;
     void SetSizeAttribute(TextStyle& style, const std::string& value) const;
     void SetEmphasisAttribute(TextStyle& style, const std::string& value) const;
