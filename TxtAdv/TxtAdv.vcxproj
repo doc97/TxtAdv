@@ -160,7 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AdvGame.cpp" />
     <ClCompile Include="ConsoleIO.cpp" />
-    <ClCompile Include="FileLineReader.cpp" />
+    <ClCompile Include="LineReader.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LambdaExpression.cpp" />
@@ -188,7 +188,7 @@
     <ClInclude Include="AdvGame.h" />
     <ClInclude Include="ConsoleIO.h" />
     <ClInclude Include="Expression.h" />
-    <ClInclude Include="FileLineReader.h" />
+    <ClInclude Include="LineReader.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LambdaExpression.h" />

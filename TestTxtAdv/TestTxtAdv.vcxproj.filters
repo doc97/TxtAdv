@@ -63,7 +63,7 @@
     <ClCompile Include="TestTextStyleSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestFileLineReader.cpp">
+    <ClCompile Include="TestLineReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

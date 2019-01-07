@@ -5,36 +5,36 @@
 
 #pragma once
 
-#include <fstream>
+#include <sstream>
 #include <string>
 
 namespace txt
 {
 
-/* Class: FileLineReader
- * Reads line from a file while ignoring comments.
+/* Class: LineReader
+ * Reads line from a stream while ignoring comments.
  *
  * One line comments start with //, multiline comments are denoted by \/* *\/.
  */
-class FileLineReader
+class LineReader
 {
 public:
-    FileLineReader();
-    ~FileLineReader();
+    LineReader();
+    ~LineReader();
     
     /* Function: NextLine
      * Reads the next non-commented line.
      *
      * Parameters:
      *
-     *    file - The opened file stream to read from, if the stream is closed this function just returns false
+     *    stream - The stream to read from
      *    line - The read line is stored here
      *
      * Returns:
      *
      *    true if there is more to read
      */
-    bool NextLine(std::ifstream& file, std::string& line);
+    bool NextLine(std::istream& stream, std::string& line);
 protected:
     bool m_isComment = false;
 

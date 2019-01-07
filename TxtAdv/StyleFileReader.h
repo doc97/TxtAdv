@@ -6,7 +6,7 @@
 #pragma once
 
 #include <unordered_map>
-#include "FileLineReader.h"
+#include "LineReader.h"
 #include "TextStyleSheet.h"
 
 namespace txt
@@ -34,7 +34,7 @@ public:
      */
     TextStyleSheet Read(const std::string& filename);
 private:
-    FileLineReader m_reader;
+    LineReader m_reader;
 
     TextStyleSheet GetTextStyleSheet(std::ifstream& file);
     TextStyle GetTextStyle(std::ifstream& file);

@@ -5,6 +5,7 @@
 
 #include "StyleFileReader.h"
 #include "StringUtil.h"
+#include <fstream>
 
 namespace txt
 {
@@ -21,13 +22,12 @@ StyleFileReader::~StyleFileReader()
 TextStyleSheet StyleFileReader::Read(const std::string& filename)
 {
     std::ifstream file(filename);
-    if (file.is_open())
-    {
-        TextStyleSheet tss = GetTextStyleSheet(file);
-        file.close();
-        return tss;
-    }
-    throw std::runtime_error("Could not open file!");
+    if (!file.is_open())
+        throw std::runtime_error("Could not open file!");
+
+    TextStyleSheet tss = GetTextStyleSheet(file);
+    file.close();
+    return tss;
 }
 
 TextStyleSheet StyleFileReader::GetTextStyleSheet(std::ifstream& file)

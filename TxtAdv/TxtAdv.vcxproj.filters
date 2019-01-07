@@ -80,10 +80,10 @@
     <ClCompile Include="MetaFileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileLineReader.cpp">
+    <ClCompile Include="StyleFileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StyleFileReader.cpp">
+    <ClCompile Include="LineReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -178,10 +178,10 @@
     <ClInclude Include="MetaFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileLineReader.h">
+    <ClInclude Include="StyleFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StyleFileReader.h">
+    <ClInclude Include="LineReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

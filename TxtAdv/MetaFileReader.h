@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include "FileLineReader.h"
 #include <unordered_map>
+#include "LineReader.h"
 
 namespace txt
 {
@@ -55,7 +55,7 @@ public:
      */
     MetaInfo Read(const std::string& filename);
 private:
-    FileLineReader m_reader;
+    LineReader m_reader;
 };
 
 } // namespace txt

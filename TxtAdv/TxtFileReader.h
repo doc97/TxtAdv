@@ -6,7 +6,7 @@
 #pragma once
 
 #include <vector>
-#include "FileLineReader.h"
+#include "LineReader.h"
 #include "StoryPoint.h"
 
 namespace txt
@@ -47,7 +47,7 @@ public:
      */
     TxtInfo Read(const std::string& filename);
 private:
-    FileLineReader m_reader;
+    LineReader m_reader;
 
     bool GetKeyValue(std::ifstream& file, const std::string& key, std::string& value, bool oneline);
     std::vector<StoryPoint> GetStoryPoints(std::ifstream& file);

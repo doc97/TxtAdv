@@ -3,24 +3,22 @@
 * https://www.github.com/doc97/TxtAdv/blob/master/LICENSE
 **********************************************************/
 
-#include "FileLineReader.h"
+#include "LineReader.h"
 
 namespace txt
 {
 
-FileLineReader::FileLineReader()
+LineReader::LineReader()
 {
 }
 
-FileLineReader::~FileLineReader()
+LineReader::~LineReader()
 {
 }
 
-bool FileLineReader::NextLine(std::ifstream& file, std::string& line)
+bool LineReader::NextLine(std::istream& stream, std::string& line)
 {
-    if (!file.is_open())
-        return false;
-    while (std::getline(file, line))
+    while (std::getline(stream, line))
     {
         if (HandleMultilineComment(line) && HandleSinglelineComment(line))
             return true;
@@ -28,7 +26,7 @@ bool FileLineReader::NextLine(std::ifstream& file, std::string& line)
     return false;
 }
 
-bool FileLineReader::HandleMultilineComment(std::string& line)
+bool LineReader::HandleMultilineComment(std::string& line)
 {
     std::string tmpLine;
     size_t commentStart = 0;
@@ -61,7 +59,7 @@ bool FileLineReader::HandleMultilineComment(std::string& line)
     return !m_isComment;
 }
 
-bool FileLineReader::HandleSinglelineComment(std::string& line)
+bool LineReader::HandleSinglelineComment(std::string& line)
 {
     size_t commentStart;
     if ((commentStart = line.find("//")) != std::string::npos)

@@ -5,7 +5,7 @@
 
 #include "TxtFileReader.h"
 #include "StringUtil.h"
-#include <sstream>
+#include <fstream>
 
 namespace txt
 {
@@ -21,18 +21,17 @@ TxtFileReader::~TxtFileReader()
 TxtInfo TxtFileReader::Read(const std::string& filename)
 {
     std::ifstream file(filename);
-    if (file.is_open())
-    {
-        TxtInfo info;
-        if (!GetKeyValue(file, "Meta", info.meta_filename, false))
-            throw std::runtime_error("FileFormatError: No Meta-field found!");
-        GetKeyValue(file, "Style", info.style_filename, true);
-        info.story_points = GetStoryPoints(file);
+    if (!file.is_open())
+        throw std::runtime_error("Could not open file!");
 
-        file.close();
-        return info;
-    }
-    throw std::runtime_error("Could not open file!");
+    TxtInfo info;
+    if (!GetKeyValue(file, "Meta", info.meta_filename, false))
+        throw std::runtime_error("FileFormatError: No Meta-field found!");
+    GetKeyValue(file, "Style", info.style_filename, true);
+    info.story_points = GetStoryPoints(file);
+
+    file.close();
+    return info;
 }
 
 bool TxtFileReader::GetKeyValue(std::ifstream& file, const std::string& key, std::string& value, bool oneline)
