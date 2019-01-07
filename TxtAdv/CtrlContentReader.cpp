@@ -3,36 +3,36 @@
 * https://www.github.com/doc97/TxtAdv/blob/master/LICENSE
 **********************************************************/
 
-#include "MetaFileReader.h"
+#include "CtrlContentReader.h"
 #include <fstream>
 #include "StringUtil.h"
 
 namespace txt
 {
 
-MetaFileReader::MetaFileReader()
+CtrlContentReader::CtrlContentReader()
 {
 }
 
 
-MetaFileReader::~MetaFileReader()
+CtrlContentReader::~CtrlContentReader()
 {
 }
 
-MetaInfo MetaFileReader::Read(const std::string& filename)
+CtrlContentInfo CtrlContentReader::Read(const std::string& filename)
 {
     std::ifstream file(filename);
     if (!file.is_open())
         throw std::runtime_error("Could not open file!");
 
-    MetaInfo info = Read(file);
+    CtrlContentInfo info = Read(file);
     file.close();
     return info;
 }
 
-MetaInfo MetaFileReader::Read(std::istream& stream)
+CtrlContentInfo CtrlContentReader::Read(std::istream& stream)
 {
-    MetaInfo info;
+    CtrlContentInfo info;
     std::string line;
     while (m_reader.NextLine(stream, line))
     {
@@ -41,7 +41,7 @@ MetaInfo MetaFileReader::Read(std::istream& stream)
             throw std::runtime_error("Invalid data format in .meta file!");
         for_each(data.begin(), data.end(), txt::trim);
 
-        Metadata metadata;
+        CtrlContent metadata;
         metadata.storypoint = data[0];
         metadata.script = data[1];
         metadata.matcher_func = data[2];

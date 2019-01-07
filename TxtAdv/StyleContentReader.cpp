@@ -3,23 +3,23 @@
 * https://www.github.com/doc97/TxtAdv/blob/master/LICENSE
 **********************************************************/
 
-#include "StyleFileReader.h"
+#include "StyleContentReader.h"
 #include "StringUtil.h"
 #include <fstream>
 
 namespace txt
 {
 
-StyleFileReader::StyleFileReader()
+StyleContentReader::StyleContentReader()
 {
 }
 
 
-StyleFileReader::~StyleFileReader()
+StyleContentReader::~StyleContentReader()
 {
 }
 
-TextStyleSheet StyleFileReader::Read(const std::string& filename)
+TextStyleSheet StyleContentReader::Read(const std::string& filename)
 {
     std::ifstream file(filename);
     if (!file.is_open())
@@ -30,7 +30,7 @@ TextStyleSheet StyleFileReader::Read(const std::string& filename)
     return tss;
 }
 
-TextStyleSheet StyleFileReader::Read(std::istream& stream)
+TextStyleSheet StyleContentReader::Read(std::istream& stream)
 {
     TextStyleSheet tss;
     std::string line;
@@ -47,7 +47,7 @@ TextStyleSheet StyleFileReader::Read(std::istream& stream)
     return tss;
 }
 
-TextStyle StyleFileReader::GetTextStyle(std::istream& stream)
+TextStyle StyleContentReader::GetTextStyle(std::istream& stream)
 {
     TextStyle style;
     std::string line;
@@ -70,7 +70,7 @@ TextStyle StyleFileReader::GetTextStyle(std::istream& stream)
     return style;
 }
 
-void StyleFileReader::SetTextStyleAttribute(TextStyle& style, const std::string& name, const std::string& value) const
+void StyleContentReader::SetTextStyleAttribute(TextStyle& style, const std::string& name, const std::string& value) const
 {
     if (name == "size")
         SetSizeAttribute(style, value);
@@ -84,7 +84,7 @@ void StyleFileReader::SetTextStyleAttribute(TextStyle& style, const std::string&
         SetBgColorAttribute(style, value);
 }
 
-void StyleFileReader::SetSizeAttribute(TextStyle& style, const std::string& value) const
+void StyleContentReader::SetSizeAttribute(TextStyle& style, const std::string& value) const
 {
     size_t size = std::stoi(value);
 
@@ -104,7 +104,7 @@ void StyleFileReader::SetSizeAttribute(TextStyle& style, const std::string& valu
         style.size = TextSize::S5;
 }
 
-void StyleFileReader::SetEmphasisAttribute(TextStyle& style, const std::string& value) const
+void StyleContentReader::SetEmphasisAttribute(TextStyle& style, const std::string& value) const
 {
     style.bitmask = Emphasis::NONE;
     if (value.find("bold") != std::string::npos)
@@ -117,7 +117,7 @@ void StyleFileReader::SetEmphasisAttribute(TextStyle& style, const std::string& 
         style.bitmask ^= Emphasis::STRIKE;
 }
 
-void StyleFileReader::SetOutlineColorAttribute(TextStyle& style, const std::string& value) const
+void StyleContentReader::SetOutlineColorAttribute(TextStyle& style, const std::string& value) const
 {
     if (value.at(0) != '#')
         throw std::invalid_argument("Argument is not a valid color, has to start with a '#'");
@@ -130,7 +130,7 @@ void StyleFileReader::SetOutlineColorAttribute(TextStyle& style, const std::stri
     style.outline_color.a = (color & 0x000000FF);
 }
 
-void StyleFileReader::SetFillColorAttribute(TextStyle& style, const std::string& value) const
+void StyleContentReader::SetFillColorAttribute(TextStyle& style, const std::string& value) const
 {
     if (value.at(0) != '#')
         throw std::invalid_argument("Argument is not a valid color, has to start with a '#'");
@@ -143,7 +143,7 @@ void StyleFileReader::SetFillColorAttribute(TextStyle& style, const std::string&
     style.fill_color.a = (color & 0x000000FF);
 }
 
-void StyleFileReader::SetBgColorAttribute(TextStyle& style, const std::string& value) const
+void StyleContentReader::SetBgColorAttribute(TextStyle& style, const std::string& value) const
 {
     if (value.at(0) != '#')
         throw std::invalid_argument("Argument is not a valid color, has to start with a '#'");

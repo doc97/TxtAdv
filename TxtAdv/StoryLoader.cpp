@@ -20,9 +20,9 @@ StoryLoader::~StoryLoader()
 
 std::vector<StoryPoint> StoryLoader::Load(const std::string& filename)
 {
-    TxtInfo txtInfo = m_txtReader.Read(filename);
-    MetaInfo metaInfo = m_metaReader.Read(txtInfo.meta_filename);
-    MergeMetadataWithStoryPoints(txtInfo, metaInfo);
+    TxtContentInfo txtInfo = m_txtReader.Read(filename);
+    CtrlContentInfo ctrlInfo = m_ctrlReader.Read(txtInfo.ctrl_filename);
+    MergeMetadataWithStoryPoints(txtInfo, ctrlInfo);
     if (!txtInfo.style_filename.empty())
     {
         TextStyleSheet sheet = m_styleReader.Read(txtInfo.style_filename);
@@ -31,23 +31,23 @@ std::vector<StoryPoint> StoryLoader::Load(const std::string& filename)
     return txtInfo.story_points;
 }
 
-void StoryLoader::MergeMetadataWithStoryPoints(TxtInfo& txtInfo, MetaInfo& metaInfo) const
+void StoryLoader::MergeMetadataWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& metaInfo) const
 {
     for (StoryPoint& point : txtInfo.story_points)
     {
         bool hasMetadata = metaInfo.metadata.find(point.GetName()) != metaInfo.metadata.end();
         if (hasMetadata)
         {
-            std::vector<Metadata> data = metaInfo.metadata[point.GetName()];
+            std::vector<CtrlContent> data = metaInfo.metadata[point.GetName()];
             MergeMetadataWithStoryPoint(point, data);
         }
     }
 }
 
-void StoryLoader::MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Metadata>& metadata) const
+void StoryLoader::MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& metadata) const
 {
     std::vector<std::shared_ptr<ResponseHandler>> handlers;
-    for (const Metadata& meta : metadata)
+    for (const CtrlContent& meta : metadata)
     {
         handlers.push_back(std::make_shared<LuaResponseHandler>(
             meta.script,
@@ -58,7 +58,7 @@ void StoryLoader::MergeMetadataWithStoryPoint(StoryPoint& point, std::vector<Met
     point.SetHandlers(handlers);
 }
 
-void StoryLoader::MergeStyleSheetWithStoryPoints(TxtInfo& txtInfo, TextStyleSheet style) const
+void StoryLoader::MergeStyleSheetWithStoryPoints(TxtContentInfo& txtInfo, TextStyleSheet style) const
 {
     for (StoryPoint& point : txtInfo.story_points)
     {

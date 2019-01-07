@@ -12,24 +12,24 @@
 namespace txt
 {
 
-/* Struct: TxtInfo
- * The result of the <TxtFileReader>.
+/* Struct: TxtContentInfo
+ * The result of the <TxtContentReader>.
  */
-struct TxtInfo
+struct TxtContentInfo
 {
-    std::string meta_filename;
+    std::string ctrl_filename;
     std::string style_filename;
     std::vector<StoryPoint> story_points;
 };
 
-/* Class: TxtFileReader
- * Takes care of reading and parsing a .txt file.
+/* Class: TxtContentReader
+ * Reads and parses txt content.
  */
-class TxtFileReader
+class TxtContentReader
 {
 public:
-    TxtFileReader();
-    ~TxtFileReader();
+    TxtContentReader();
+    ~TxtContentReader();
 
     /* Function: Read
      * Reads the input from a file and parses the content.
@@ -40,13 +40,13 @@ public:
      *
      * Returns:
      *
-     *    The data in the form of a <TxtInfo> object
+     *    The data in the form of a <TxtContentInfo> object
      *
      * Throws:
      *
      *    std::runtime_error if there is an error such as file format error or I/O error
      */
-    TxtInfo Read(const std::string& filename);
+    TxtContentInfo Read(const std::string& filename);
 
     /* Function: Read
      * Reads an input stream and parses the content.
@@ -57,13 +57,13 @@ public:
      *
      * Returns:
      *
-     *    The data in the form of a <TxtInfo> object
+     *    The data in the form of a <TxtContentInfo> object
      *
      * Throws:
      *
      *    std::runtime_error if there is a file format error
      */
-    TxtInfo Read(std::istream& stream);
+    TxtContentInfo Read(std::istream& stream);
 private:
     LineReader m_reader;
 

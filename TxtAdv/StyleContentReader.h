@@ -12,11 +12,14 @@
 namespace txt
 {
 
-class StyleFileReader
+/* Class: StyleContentReader
+ * Reads and parses style content.
+ */
+class StyleContentReader
 {
 public:
-    StyleFileReader();
-    ~StyleFileReader();
+    StyleContentReader();
+    ~StyleContentReader();
 
     /* Function: Read
      * Reads the input from a file and parses the content.

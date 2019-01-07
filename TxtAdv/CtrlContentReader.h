@@ -11,10 +11,10 @@
 namespace txt
 {
 
-/* Struct: Metadata
+/* Struct: CtrlContent
  * Represents <LuaResponseHandler> data about one <StoryPoint>.
  */
-struct Metadata
+struct CtrlContent
 {
     std::string storypoint;
     std::string script;
@@ -22,22 +22,22 @@ struct Metadata
     std::string action_func;
 };
 
-/* Struct: MetaInfo
- * The result of <MetaFileReader>.
+/* Struct: CtrlContentInfo
+ * The result of <CtrlContentReader>.
  */
-struct MetaInfo
+struct CtrlContentInfo
 {
-    std::unordered_map<std::string, std::vector<Metadata>> metadata;
+    std::unordered_map<std::string, std::vector<CtrlContent>> metadata;
 };
 
-/* Class: MetaFileReader
- * Takes care of reading and parsing a .meta file.
+/* Class: CtrlContentReader
+ * Reads and parses control content.
  */
-class MetaFileReader
+class CtrlContentReader
 {
 public:
-    MetaFileReader();
-    ~MetaFileReader();
+    CtrlContentReader();
+    ~CtrlContentReader();
 
     /* Function: Read
      *
@@ -47,13 +47,13 @@ public:
      *
      * Returns:
      *
-     *    The data in the form of a <MetaInfo> object
+     *    The data in the form of a <CtrlContentInfo> object
      *
      * Throws:
      *
      *    std::runtime_error if there is an error such as file format error or I/O error
      */
-    MetaInfo Read(const std::string& filename);
+    CtrlContentInfo Read(const std::string& filename);
 
     /* Function: Read
      *
@@ -63,13 +63,13 @@ public:
      *
      * Returns:
      *
-     *    The data in the form of a <MetaInfo> object
+     *    The data in the form of a <CtrlContentInfo> object
      *
      * Throws:
      *
      *    std::runtime_error if there is an error such as file format error or I/O error
      */
-    MetaInfo Read(std::istream& stream);
+    CtrlContentInfo Read(std::istream& stream);
 private:
     LineReader m_reader;
 };

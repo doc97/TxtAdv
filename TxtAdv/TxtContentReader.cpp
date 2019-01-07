@@ -3,43 +3,43 @@
 * https://www.github.com/doc97/TxtAdv/blob/master/LICENSE
 **********************************************************/
 
-#include "TxtFileReader.h"
+#include "TxtContentReader.h"
 #include "StringUtil.h"
 #include <fstream>
 
 namespace txt
 {
 
-TxtFileReader::TxtFileReader()
+TxtContentReader::TxtContentReader()
 {
 }
 
-TxtFileReader::~TxtFileReader()
+TxtContentReader::~TxtContentReader()
 {
 }
 
-TxtInfo TxtFileReader::Read(const std::string& filename)
+TxtContentInfo TxtContentReader::Read(const std::string& filename)
 {
     std::ifstream file(filename);
     if (!file.is_open())
         throw std::runtime_error("Could not open file!");
 
-    TxtInfo info = Read(file);
+    TxtContentInfo info = Read(file);
     file.close();
     return info;
 }
 
-TxtInfo TxtFileReader::Read(std::istream& stream)
+TxtContentInfo TxtContentReader::Read(std::istream& stream)
 {
-    TxtInfo info;
-    if (!GetKeyValue(stream, "Meta", info.meta_filename, false))
+    TxtContentInfo info;
+    if (!GetKeyValue(stream, "Meta", info.ctrl_filename, false))
         throw std::runtime_error("FileFormatError: No Meta-field found!");
     GetKeyValue(stream, "Style", info.style_filename, true);
     info.story_points = GetStoryPoints(stream);
     return info;
 }
 
-bool TxtFileReader::GetKeyValue(std::istream& file, const std::string& key, std::string& value, bool oneline)
+bool TxtContentReader::GetKeyValue(std::istream& file, const std::string& key, std::string& value, bool oneline)
 {
     std::string line;
     std::string prefix = key + ":";
@@ -57,7 +57,7 @@ bool TxtFileReader::GetKeyValue(std::istream& file, const std::string& key, std:
     return false;
 }
 
-std::vector<StoryPoint> TxtFileReader::GetStoryPoints(std::istream& file)
+std::vector<StoryPoint> TxtContentReader::GetStoryPoints(std::istream& file)
 {
     bool hasStarted = false;
     std::string line;
@@ -93,7 +93,7 @@ std::vector<StoryPoint> TxtFileReader::GetStoryPoints(std::istream& file)
     return points;
 }
 
-StoryPoint TxtFileReader::CreateStoryPoint(const std::string& name, const std::string& txt) const
+StoryPoint TxtContentReader::CreateStoryPoint(const std::string& name, const std::string& txt) const
 {
     std::string str = txt;
     txt::trim(str);
