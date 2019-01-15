@@ -1,1 +1,0 @@
-NDFramePage.OnPageTitleLoaded("CClass:MetaFileReader","MetaFileReader");NDSummary.OnSummaryLoaded("CClass:MetaFileReader",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[213,0,0,"MetaFileReader"],[214,0,2,"Functions","Functions"],[215,0,1,"Read","Read"]]);

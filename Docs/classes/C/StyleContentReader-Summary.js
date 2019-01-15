@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:StyleContentReader","StyleContentReader");NDSummary.OnSummaryLoaded("CClass:StyleContentReader",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[177,0,0,"StyleContentReader"],[178,0,2,"Functions","Functions"],[179,0,1,"Read","Read"],[180,0,1,"Read","Read(2)"]]);

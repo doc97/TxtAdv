@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:CtrlContentReader","CtrlContentReader");NDSummary.OnSummaryLoaded("CClass:CtrlContentReader",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[184,0,0,"CtrlContentReader"],[187,0,2,"Functions","Functions"],[211,0,1,"Read","Read"],[212,0,1,"Read","Read(2)"]]);

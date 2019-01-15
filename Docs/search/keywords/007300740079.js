@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("sty",["Class"],[["StyleContentReader",,[[,,,,0,"File:StyleContentReader.h:StyleContentReader","CClass:StyleContentReader"]]]]);

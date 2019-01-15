@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("CClass:CtrlContent",{181:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">Represents LuaResponseHandler data about one StoryPoint.</div></div>"});

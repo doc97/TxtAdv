@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("lin",["Class"],[["LineReader",,[[,,,,0,"File:LineReader.h:LineReader","CClass:LineReader"]]]]);

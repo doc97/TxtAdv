@@ -1,1 +1,0 @@
-NDContentPage.OnToolTipsLoaded({212:"<div class=\"NDToolTip TStruct LC\"><div class=\"TTSummary\">The result of MetaFileReader.</div></div>"});

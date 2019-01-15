@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:CtrlContent","CtrlContent");NDSummary.OnSummaryLoaded("CClass:CtrlContent",[["C/C++","C"]],[["Structs","Struct"]],[[181,0,0,"CtrlContent"]]);

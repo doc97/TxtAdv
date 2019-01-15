@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("fil",["Class","Constant"],[["FileLineReader",,[[,,,,0,"File:FileLineReader.h:FileLineReader","CClass:FileLineReader"]]],["FILL_COLOR_CHANGE_BIT",,[["TextMetadata",,,,1,"File:Text.h:TextMetadata.FILL_COLOR_CHANGE_BIT","CClass:TextMetadata:FILL_COLOR_CHANGE_BIT"]]]]);
+NDSearch.OnPrefixDataLoaded("fil",["Constant"],[["FILL_COLOR_CHANGE_BIT",,[["TextMetadata",,,,0,"File:Text.h:TextMetadata.FILL_COLOR_CHANGE_BIT","CClass:TextMetadata:FILL_COLOR_CHANGE_BIT"]]]]);

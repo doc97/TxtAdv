@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("ctr",["Struct","Class"],[["CtrlContent",,[[,,,,0,"File:CtrlContentReader.h:CtrlContent","CClass:CtrlContent"]]],["CtrlContentInfo",,[[,,,,0,"File:CtrlContentReader.h:CtrlContentInfo","CClass:CtrlContentInfo"]]],["CtrlContentReader",,[[,,,,1,"File:CtrlContentReader.h:CtrlContentReader","CClass:CtrlContentReader"]]]]);

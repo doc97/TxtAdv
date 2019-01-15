@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:LineReader.h","LineReader.h");NDSummary.OnSummaryLoaded("File:LineReader.h",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[213,0,0,"LineReader","LineReader"],[214,0,2,"Functions","LineReader.Functions"],[215,0,1,"NextLine","LineReader.NextLine"]]);

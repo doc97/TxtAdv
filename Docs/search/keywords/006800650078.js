@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("hex",["Function"],[["hex2int",,[[,,,,0,"File:StringUtil.h:hex2int"]]]]);

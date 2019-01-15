@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("CClass:TxtContentInfo","TxtContentInfo");NDSummary.OnSummaryLoaded("CClass:TxtContentInfo",[["C/C++","C"]],[["Structs","Struct"]],[[123,0,0,"TxtContentInfo"]]);
