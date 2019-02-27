@@ -1,5 +1,8 @@
 # TxtAdv
 
+**The project development has halted for now due to me concentrating on my
+studies. I plan on continuing this project once I have more time.**
+
 TxtAdv is a framework for creating awesome text adventure games!
 
 While the reasons for why I started this project were for me to learn more C++,
@@ -70,4 +73,4 @@ simple Kanban workflow. The project boards can found
 [here](https://github.com/doc97/TxtAdv/projects).
 
 - [Epics Board](https://github.com/doc97/TxtAdv/projects/2)
-- [Current Sprint Board](https://github.com/doc97/TxtAdv/projects/5)
+- [Current Sprint Board](https://github.com/doc97/TxtAdv/projects/5) (out-of-date)
