@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("is_",["Function"],[["is_at_end",,[["LuaStoryBranch",,,,0,"File:LuaStoryBranch.h:LuaStoryBranch.is_at_end","CClass:LuaStoryBranch:is_at_end"]]],["is_at_start",,[["LuaStoryBranch",,,,0,"File:LuaStoryBranch.h:LuaStoryBranch.is_at_start","CClass:LuaStoryBranch:is_at_start"]]]]);

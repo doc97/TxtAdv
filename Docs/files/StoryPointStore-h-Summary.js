@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:StoryPointStore.h","StoryPointStore.h");NDSummary.OnSummaryLoaded("File:StoryPointStore.h",[["C/C++","C"]],[["Functions","Function"],["Groups","Group"]],[[199,0,1,"Functions","Functions"],[200,0,0,"Add","Add"],[278,0,0,"Get","Get"]]);

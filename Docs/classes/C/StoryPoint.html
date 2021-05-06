@@ -18,22 +18,34 @@
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="SetText"></a><a name="Topic216"></a><div class="CTopic TFunction LC">
+<a name="SetText"></a><a name="Topic169"></a><div class="CTopic TFunction LC">
  <div class="CTitle">SetText</div>
- <div id="NDPrototype216" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetText(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType"><a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">text</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">text<div class="CDLParameterType"><span class="SHKeyword">const</span> <a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a>&amp;</div></td><td class="CDLDefinition"><p>The new text</p></td></tr></table></div>
+ <div id="NDPrototype169" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetText(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType"><a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">text</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>If the markup is set using <a href="../../index.html#CClass:StoryPoint:SetMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,283);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SetMarkup</a>, the markup in this text object will be ignored.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">text<div class="CDLParameterType"><span class="SHKeyword">const</span> <a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a>&amp;</div></td><td class="CDLDefinition"><p>The new text object</p></td></tr></table></div>
 </div>
 
-<a name="SetTextStr"></a><a name="Topic194"></a><div class="CTopic TFunction LC">
+<a name="SetTextStr"></a><a name="Topic280"></a><div class="CTopic TFunction LC">
  <div class="CTitle">SetTextStr</div>
- <div id="NDPrototype194" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetTextStr(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">text</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><p>Sets the raw text of this story point.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">text<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The text to set</p></td></tr></table><div class="CHeading">See Also</div><p>&lt;SetMarkup&gt;</p></div>
+ <div id="NDPrototype280" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetTextStr(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span> std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PNamePrefix">&amp;</td><td class="PName last">raw</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">raw<div class="CDLParameterType"><span class="SHKeyword">const</span> std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>The raw text string</p></td></tr></table></div>
 </div>
 
-<a name="SetParser"></a><a name="Topic195"></a><div class="CTopic TFunction LC">
+<a name="SetStyleSheet"></a><a name="Topic281"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">SetStyleSheet</div>
+ <div id="NDPrototype281" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetStyleSheet(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType">TextStyleSheet&nbsp;</td><td class="PName last">style</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">style<div class="CDLParameterType"><span class="SHKeyword">const</span> TextStyleSheet</div></td><td class="CDLDefinition"><p>The text style sheet</p></td></tr></table></div>
+</div>
+
+<a name="SetParser"></a><a name="Topic282"></a><div class="CTopic TFunction LC">
  <div class="CTitle">SetParser</div>
- <div id="NDPrototype195" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetParser(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType">shared_ptr&lt;<a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a>&gt;&nbsp;</td><td class="PName last">parser</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><p>Sets the <a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a> to use to parse the markup text.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">parser<div class="CDLParameterType">std::shared_ptr&lt;<a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a>&gt;</div></td><td class="CDLDefinition"><p>The parser</p></td></tr></table></div>
+ <div id="NDPrototype282" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetParser(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a>&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">parser</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Sets the <a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a> to use to parse the text.&nbsp; It will only be used if <a href="../../index.html#CClass:StoryPoint:SetMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,283);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SetMarkup</a> has been used.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">parser<div class="CDLParameterType"><a href="../../index.html#CClass:TextParser" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,116);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextParser</a>*</div></td><td class="CDLDefinition"><p>The parser</p></td></tr></table></div>
+</div>
+
+<a name="SetMarkup"></a><a name="Topic283"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">SetMarkup</div>
+ <div id="NDPrototype283" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> SetMarkup(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><a href="../../index.html#CClass:TextMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,197);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextMarkup</a>&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">markup</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Sets the <a href="../../index.html#CClass:TextMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,197);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextMarkup</a> to use to parse the text.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">markup<div class="CDLParameterType"><a href="../../index.html#CClass:TextMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,197);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >TextMarkup</a>*</div></td><td class="CDLDefinition"><p>The markup</p></td></tr></table></div>
 </div>
 
 <a name="SetHandlers"></a><a name="Topic150"></a><div class="CTopic TFunction LC">
@@ -51,13 +63,13 @@
 <a name="GetTextStr"></a><a name="Topic196"></a><div class="CTopic TFunction LC">
  <div class="CTitle">GetTextStr</div>
  <div id="NDPrototype196" class="NDPrototype NoParameterForm">std::<span class="SHKeyword">string</span> GetTextStr() <span class="SHKeyword">const</span></div>
- <div class="CBody"><div class="CHeading">Returns</div><p>Get the parsed text string</p><div class="CHeading">See Also</div><p>&lt;SetMarkup&gt;</p></div>
+ <div class="CBody"><div class="CHeading">Returns</div><p>Get the parsed text string</p><div class="CHeading">See Also</div><p><a href="../../index.html#CClass:StoryPoint:SetMarkup" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,283);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SetMarkup</a></p></div>
 </div>
 
-<a name="GetText"></a><a name="Topic221"></a><div class="CTopic TFunction LC">
+<a name="GetText"></a><a name="Topic284"></a><div class="CTopic TFunction LC">
  <div class="CTitle">GetText</div>
- <div id="NDPrototype221" class="NDPrototype NoParameterForm"><a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a> GetText() <span class="SHKeyword">const</span></div>
- <div class="CBody"><div class="CHeading">Returns</div><p>The underlying <a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a> object</p></div>
+ <div id="NDPrototype284" class="NDPrototype NoParameterForm"><a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a> GetText() <span class="SHKeyword">const</span></div>
+ <div class="CBody"><div class="CHeading">Returns</div><p>The parsed <a href="../../index.html#CClass:Text" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,252);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >Text</a> object</p></div>
 </div>
 
 <a name="GetHandlerCount"></a><a name="Topic153"></a><div class="CTopic TFunction LC">

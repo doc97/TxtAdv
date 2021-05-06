@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("hea",["Function"],[["Head",,[["LuaStoryBranch","head",,,0,"File:LuaStoryBranch.h:LuaStoryBranch.head","CClass:LuaStoryBranch:head"],["LuaStoryBranch",,,,0,"File:LuaStoryBranch.h:LuaStoryBranch.Head","CClass:LuaStoryBranch:Head"],["StoryBranch",,,,0,"File:StoryBranch.h:StoryBranch.Head","CClass:StoryBranch:Head"]]]]);
