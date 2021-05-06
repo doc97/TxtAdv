@@ -28,6 +28,21 @@ public:
     GameState();
     ~GameState();
 
+    /* Function: Init
+     * Initializes the state.
+     *
+     * Parameters:
+     *
+     *    intState - The integer key-values
+     *    floatState - The floating-point key-values
+     *    stringState - The string key-values
+     */
+    void Init(
+        std::unordered_map<std::string, int> intState,
+        std::unordered_map<std::string, float> floatState,
+        std::unordered_map<std::string, std::string> stringState
+    );
+
     /* Function: Reset
      * Resets the state, a.k.a. removes all key-value pairs.
      */
@@ -265,9 +280,9 @@ public:
     bool HasString(const std::string& key) const;
 
 private:
-    std::unordered_map<std::string, int> m_intState;
-    std::unordered_map<std::string, float> m_floatState;
-    std::unordered_map<std::string, std::string> m_stringState;
+    std::unordered_map<std::string, int> m_intState{};
+    std::unordered_map<std::string, float> m_floatState{};
+    std::unordered_map<std::string, std::string> m_stringState{};
 };
 
 } // namespace txt

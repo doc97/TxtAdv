@@ -16,6 +16,16 @@ GameState::~GameState()
 {
 }
 
+void GameState::Init(
+    std::unordered_map<std::string, int> intState,
+    std::unordered_map<std::string, float> floatState,
+    std::unordered_map<std::string, std::string> stringState
+) {
+    m_intState = intState;
+    m_floatState = floatState;
+    m_stringState = stringState;
+}
+
 void GameState::Reset()
 {
     m_intState.clear();
