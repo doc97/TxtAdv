@@ -5,6 +5,7 @@
 
 #include "catch.hpp"
 #include "StoryLoader.h"
+#include "TextMarkup.h"
 
 namespace txt
 {
@@ -14,7 +15,7 @@ TEST_CASE("StoryLoader - load non-existent file", "[StoryLoader]")
     StoryLoader loader;
     try
     {
-        std::vector<StoryPoint> points = loader.Load("Content/doesnotexist.txt");
+        std::vector<StoryPoint> points = loader.Load("Content/doesnotexist.txt", nullptr, nullptr);
         FAIL("Loading a non-existent file should throw a std::runtime_error");
     }
     catch (std::runtime_error)
@@ -27,7 +28,7 @@ TEST_CASE("StoryLoader - load file with invalid format", "[StoryLoader]")
     StoryLoader loader;
     try
     {
-        std::vector<StoryPoint> points = loader.Load("Content/invalid.txt");
+        std::vector<StoryPoint> points = loader.Load("Content/invalid.txt", nullptr, nullptr);
         FAIL("Loading an invalid file should throw a std::runtime_error");
     }
     catch (std::runtime_error)
@@ -40,7 +41,7 @@ TEST_CASE("StoryLoader - load valid txt", "[StoryLoader]")
     StoryLoader loader;
     SECTION("file 1")
     {
-        std::vector<StoryPoint> points = loader.Load("Content/valid1.txt");
+        std::vector<StoryPoint> points = loader.Load("Content/valid1.txt", nullptr, nullptr);
         REQUIRE(points.size() == 1);
         REQUIRE(points[0].GetName() == "Valid 1");
         REQUIRE(points[0].GetTextStr() == "I am a valid txt file");
@@ -48,7 +49,7 @@ TEST_CASE("StoryLoader - load valid txt", "[StoryLoader]")
     }
     SECTION("file 2")
     {
-        std::vector<StoryPoint> points = loader.Load("Content/valid2.txt");
+        std::vector<StoryPoint> points = loader.Load("Content/valid2.txt", nullptr, nullptr);
         REQUIRE(points.size() == 1);
         REQUIRE(points[0].GetName() == "Valid 2");
         REQUIRE(points[0].GetTextStr() == "I am also a valid txt file");
@@ -59,7 +60,7 @@ TEST_CASE("StoryLoader - load valid txt", "[StoryLoader]")
 TEST_CASE("StoryLoader - multiple story points", "[StoryLoader]")
 {
     StoryLoader loader;
-    std::vector<StoryPoint> points = loader.Load("Content/multi_story.txt");
+    std::vector<StoryPoint> points = loader.Load("Content/multi_story.txt", nullptr, nullptr);
     REQUIRE(points.size() == 2);
     REQUIRE(points[0].GetName() == "Multi 1");
     REQUIRE(points[0].GetTextStr() == "I am one of the story points.");
@@ -72,7 +73,7 @@ TEST_CASE("StoryLoader - multiple story points", "[StoryLoader]")
 TEST_CASE("StoryLoader - multiple handlers", "[StoryLoader]")
 {
     StoryLoader loader;
-    std::vector<StoryPoint> points = loader.Load("Content/multi_handler.txt");
+    std::vector<StoryPoint> points = loader.Load("Content/multi_handler.txt", nullptr, nullptr);
     REQUIRE(points.size() == 1);
     REQUIRE(points[0].GetHandlerCount() == 2);
 }
@@ -80,15 +81,16 @@ TEST_CASE("StoryLoader - multiple handlers", "[StoryLoader]")
 TEST_CASE("StoryLoader - newlines", "[StoryLoader]")
 {
     StoryLoader loader;
-    std::vector<StoryPoint> points = loader.Load("Content/multiline.txt");
+    std::vector<StoryPoint> points = loader.Load("Content/multiline.txt", nullptr, nullptr);
     REQUIRE(points.size() == 1);
-    REQUIRE(points[0].GetTextStr() == "I am a story point with multiple lines.\nIsn't this very cool?");
+    REQUIRE(points[0].GetTextStr() == "I am a story point with\nmultiple lines.\n\nIsn't this very cool?");
 }
 
 TEST_CASE("StoryLoader - escape character", "[StoryLoader]")
 {
+    TextMarkup markup;
     StoryLoader loader;
-    std::vector<StoryPoint> points = loader.Load("Content/escape.txt");
+    std::vector<StoryPoint> points = loader.Load("Content/escape.txt", &markup, nullptr);
     REQUIRE(points.size() == 1);
     REQUIRE(points[0].GetTextStr() == "I am an *escaped string*");
 }
@@ -96,7 +98,7 @@ TEST_CASE("StoryLoader - escape character", "[StoryLoader]")
 TEST_CASE("StoryLoader - comments", "[StoryLoader]")
 {
     StoryLoader loader;
-    std::vector<StoryPoint> points = loader.Load("Content/comments.txt");
+    std::vector<StoryPoint> points = loader.Load("Content/comments.txt", nullptr, nullptr);
     REQUIRE(points.size() == 2);
     REQUIRE(points[0].GetName() == "Hello world");
     REQUIRE(points[0].GetTextStr() == "Lorem");
@@ -106,8 +108,9 @@ TEST_CASE("StoryLoader - comments", "[StoryLoader]")
 
 TEST_CASE("StoryLoader - style file", "[StoryLoader]")
 {
+    TextMarkup markup;
     StoryLoader loader;
-    std::vector<StoryPoint> points = loader.Load("Content/style.txt");
+    std::vector<StoryPoint> points = loader.Load("Content/style.txt", &markup, nullptr);
     REQUIRE(points.size() == 1);
 
     Text text = points[0].GetText();

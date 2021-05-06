@@ -18,20 +18,24 @@ StoryLoader::~StoryLoader()
 {
 }
 
-std::vector<StoryPoint> StoryLoader::Load(const std::string& filename)
+std::vector<StoryPoint> StoryLoader::Load(const std::string& filename, TextMarkup* markup, LuaManager* lua)
 {
     TxtContentInfo txtInfo = m_txtReader.Read(filename);
     CtrlContentInfo ctrlInfo = m_ctrlReader.Read(txtInfo.ctrl_filename);
-    MergeCtrlInfoWithStoryPoints(txtInfo, ctrlInfo);
+    MergeCtrlInfoWithStoryPoints(txtInfo, ctrlInfo, lua);
     if (!txtInfo.style_filename.empty())
     {
         TextStyleSheet sheet = m_styleReader.Read(txtInfo.style_filename);
         MergeStyleSheetWithStoryPoints(txtInfo, sheet);
     }
+
+    for (auto& point : txtInfo.story_points) {
+        point.SetMarkup(markup);
+    }
     return txtInfo.story_points;
 }
 
-void StoryLoader::MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& ctrlInfo) const
+void StoryLoader::MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& ctrlInfo, LuaManager* lua) const
 {
     for (StoryPoint& point : txtInfo.story_points)
     {
@@ -39,17 +43,18 @@ void StoryLoader::MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlCont
         if (hasMetadata)
         {
             std::vector<CtrlContent> data = ctrlInfo.ctrl_content[point.GetName()];
-            MergeCtrlInfoWithStoryPoint(point, data);
+            MergeCtrlInfoWithStoryPoint(point, data, lua);
         }
     }
 }
 
-void StoryLoader::MergeCtrlInfoWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrl_content) const
+void StoryLoader::MergeCtrlInfoWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrl_content, LuaManager* lua) const
 {
     std::vector<std::shared_ptr<ResponseHandler>> handlers;
     for (const CtrlContent& ctrl : ctrl_content)
     {
         handlers.push_back(std::make_shared<LuaResponseHandler>(
+            lua,
             ctrl.script,
             ctrl.matcher_func,
             ctrl.action_func
@@ -62,9 +67,7 @@ void StoryLoader::MergeStyleSheetWithStoryPoints(TxtContentInfo& txtInfo, TextSt
 {
     for (StoryPoint& point : txtInfo.story_points)
     {
-        Text text = point.GetText();
-        style.Apply(text);
-        point.SetText(text);
+        point.SetStyleSheet(style);
     }
 }
 

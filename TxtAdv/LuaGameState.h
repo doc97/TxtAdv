@@ -183,8 +183,6 @@ public:
     int hasInt(lua_State* L);
 private:
     GameState* m_state;
-
-    static LuaGameState* GetObj(lua_State* L, int index);
 };
 
 }

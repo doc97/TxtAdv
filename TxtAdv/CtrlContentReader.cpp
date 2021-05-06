@@ -36,6 +36,8 @@ CtrlContentInfo CtrlContentReader::Read(std::istream& stream)
     std::string line;
     while (m_reader.NextLine(stream, line))
     {
+        if (line.empty())
+            continue;
         std::vector<std::string> data = txt::split(line, ',');
         if (data.size() != 4)
             throw std::runtime_error("Invalid data format in .ctrl file!");

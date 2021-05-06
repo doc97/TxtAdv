@@ -145,6 +145,7 @@
     <ClCompile Include="TestStoryBranch.cpp" />
     <ClCompile Include="TestStoryLoader.cpp" />
     <ClCompile Include="TestStoryPoint.cpp" />
+    <ClCompile Include="TestStoryPointStore.cpp" />
     <ClCompile Include="TestStyleContentReader.cpp" />
     <ClCompile Include="TestText.cpp" />
     <ClCompile Include="TestTextMarkup.cpp" />

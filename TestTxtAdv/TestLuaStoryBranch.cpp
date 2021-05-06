@@ -51,7 +51,7 @@ TEST_CASE("LuaStoryBranch - next/prev", "[LuaStoryBranch]")
     {
         wrapper.Prev();
         REQUIRE(branch.GetHead()->GetTextStr() == "1");
-        branch.SetCurrentPoint(2);
+        branch.SetHead(2);
         wrapper.Prev();
         REQUIRE(branch.GetHead()->GetTextStr() == "2");
         wrapper.Prev();

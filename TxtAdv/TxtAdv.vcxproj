@@ -164,6 +164,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LambdaExpression.cpp" />
+    <ClCompile Include="LuaConsoleIO.cpp" />
     <ClCompile Include="LuaExpression.cpp" />
     <ClCompile Include="LuaGameState.cpp" />
     <ClCompile Include="LuaManager.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="StoryBranch.cpp" />
     <ClCompile Include="StoryLoader.cpp" />
     <ClCompile Include="StoryPoint.cpp" />
+    <ClCompile Include="StoryPointStore.cpp" />
     <ClCompile Include="StyleContentReader.cpp" />
     <ClCompile Include="TextStyleSheet.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -188,10 +190,12 @@
     <ClInclude Include="AdvGame.h" />
     <ClInclude Include="ConsoleIO.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="LuaUtils.h" />
     <ClInclude Include="LineReader.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LambdaExpression.h" />
+    <ClInclude Include="LuaConsoleIO.h" />
     <ClInclude Include="LuaExpression.h" />
     <ClInclude Include="CtrlContentReader.h" />
     <ClInclude Include="ResponseHandler.h" />
@@ -209,6 +213,7 @@
     <ClInclude Include="StoryBranch.h" />
     <ClInclude Include="StoryLoader.h" />
     <ClInclude Include="StoryPoint.h" />
+    <ClInclude Include="StoryPointStore.h" />
     <ClInclude Include="StringUtil.h" />
     <ClInclude Include="StyleContentReader.h" />
     <ClInclude Include="TextStyleSheet.h" />

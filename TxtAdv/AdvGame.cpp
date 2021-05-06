@@ -18,7 +18,7 @@ namespace txt
 {
 
 AdvGame::AdvGame(std::unique_ptr<IO> io)
-    : m_io(std::move(io))
+    : m_io(std::move(io)), m_parser(&m_state)
 {
 }
 
@@ -114,8 +114,7 @@ void AdvGame::InitPointTwo()
             }
         }
     ));
-    std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(m_state);
-    parser->AddExpression("stats", std::make_unique<LambdaExpression>([this]()
+    m_parser.AddExpression("stats", std::make_unique<LambdaExpression>([this]()
     {
         std::unordered_map<std::string, int> intMap = this->GetState().GetAllInts();
         std::unordered_map<std::string, float> floatMap = this->GetState().GetAllFloats();
@@ -136,7 +135,7 @@ void AdvGame::InitPointTwo()
             ss << sIt->first << ": " << sIt->second << std::endl;
         return ss.str();
     }));
-    m_branch.AddPoint("2", "Current state:\n{x_stats}", parser, handlers);
+    m_branch.AddPoint("2", "Current state:\n{x_stats}", &m_parser, handlers);
 }
 
 void AdvGame::InitPointThree()
@@ -151,12 +150,11 @@ void AdvGame::InitPointThree()
         &m_manager,
         "LUA/3.lua"
     ));
-    std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(m_state);
-    parser->AddExpression("0", std::make_unique<LambdaExpression>([this]()
+    m_parser.AddExpression("0", std::make_unique<LambdaExpression>([this]()
     {
         return this->GetState().ReadString("text", "<Default text>");
     }));
-    m_branch.AddPoint("3", "{x_0}", parser, handlers);
+    m_branch.AddPoint("3", "{x_0}", &m_parser, handlers);
 }
 
 void AdvGame::Update()

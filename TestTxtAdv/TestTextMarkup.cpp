@@ -14,14 +14,14 @@ TEST_CASE("TextMarkup - no markup", "[TextMarkup]")
     SECTION("test 1")
     {
         std::string raw = "hello world";
-        TextMarkup markup(raw);
-        REQUIRE(markup.GetText().RawStr() == raw);
+        TextMarkup markup;
+        REQUIRE(markup.ParseText(raw).RawStr() == raw);
     }
     SECTION("test 2")
     {
         std::string raw = "foobar";
-        TextMarkup markup(raw);
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText(raw);
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         std::vector<TextTag> tags = txt.GetTags();
@@ -41,8 +41,8 @@ TEST_CASE("TextMarkup - no markup", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("hello");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         std::vector<TextTag> tags = txt.GetTags();
@@ -65,23 +65,23 @@ TEST_CASE("TextMarkup - raw str", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("_italics_");
-        REQUIRE(markup.GetText().RawStr() == "_italics_");
+        TextMarkup markup;
+        REQUIRE(markup.ParseText("_italics_").RawStr() == "_italics_");
     }
     SECTION("test 2")
     {
-        TextMarkup markup("*bold*");
-        REQUIRE(markup.GetText().RawStr() == "*bold*");
+        TextMarkup markup;
+        REQUIRE(markup.ParseText("*bold*").RawStr() == "*bold*");
     }
     SECTION("test 3")
     {
-        TextMarkup markup("~strike~");
-        REQUIRE(markup.GetText().RawStr() == "~strike~");
+        TextMarkup markup;
+        REQUIRE(markup.ParseText("~strike~").RawStr() == "~strike~");
     }
     SECTION("test 4")
     {
-        TextMarkup markup("__under__");
-        REQUIRE(markup.GetText().RawStr() == "__under__");
+        TextMarkup markup;
+        REQUIRE(markup.ParseText("__under__").RawStr() == "__under__");
     }
 }
 
@@ -89,8 +89,8 @@ TEST_CASE("TextMarkup - italics", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("_hello world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("_hello world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "_hello world");
         REQUIRE(styles.size() == 1);
@@ -100,8 +100,8 @@ TEST_CASE("TextMarkup - italics", "[TextMarkup]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("_hello_ _world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("_hello_ _world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello _world");
         REQUIRE(styles.size() == 2);
@@ -114,8 +114,8 @@ TEST_CASE("TextMarkup - italics", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("_hello world_");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("_hello world_");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
@@ -125,8 +125,8 @@ TEST_CASE("TextMarkup - italics", "[TextMarkup]")
     }
     SECTION("test 4")
     {
-        TextMarkup markup("__normal");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("__normal");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
@@ -134,25 +134,14 @@ TEST_CASE("TextMarkup - italics", "[TextMarkup]")
         REQUIRE(styles[0].len == 6);
         REQUIRE(styles[0].bitmask == Emphasis::NONE);
     }
-    SECTION("test 5")
-    {
-        TextMarkup markup("___italic_");
-        Text txt = markup.GetText();
-        std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
-        REQUIRE(txt.Str() == "italic");
-        REQUIRE(styles.size() == 1);
-        REQUIRE(styles[0].start == 0);
-        REQUIRE(styles[0].len == 6);
-        REQUIRE(styles[0].bitmask == Emphasis::ITALIC);
-    }
 }
 
 TEST_CASE("TextMarkup - bold", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("*hello world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*hello world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "*hello world");
         REQUIRE(styles.size() == 1);
@@ -162,8 +151,8 @@ TEST_CASE("TextMarkup - bold", "[TextMarkup]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("*hello* *world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*hello* *world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello *world");
         REQUIRE(styles.size() == 2);
@@ -176,8 +165,8 @@ TEST_CASE("TextMarkup - bold", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("*hello world*");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*hello world*");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
@@ -187,8 +176,8 @@ TEST_CASE("TextMarkup - bold", "[TextMarkup]")
     }
     SECTION("test 4")
     {
-        TextMarkup markup("**normal");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("**normal");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
@@ -198,8 +187,8 @@ TEST_CASE("TextMarkup - bold", "[TextMarkup]")
     }
     SECTION("test 5")
     {
-        TextMarkup markup("***bold*");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("***bold*");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "bold");
         REQUIRE(styles.size() == 1);
@@ -213,8 +202,8 @@ TEST_CASE("TextMarkup - strikethrough", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("~hello world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~hello world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "~hello world");
         REQUIRE(styles.size() == 1);
@@ -224,8 +213,8 @@ TEST_CASE("TextMarkup - strikethrough", "[TextMarkup]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("~hello~ ~world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~hello~ ~world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello ~world");
         REQUIRE(styles.size() == 2);
@@ -238,8 +227,8 @@ TEST_CASE("TextMarkup - strikethrough", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("~hello world~");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~hello world~");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
@@ -249,8 +238,8 @@ TEST_CASE("TextMarkup - strikethrough", "[TextMarkup]")
     }
     SECTION("test 4")
     {
-        TextMarkup markup("normal");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("normal");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
@@ -260,8 +249,8 @@ TEST_CASE("TextMarkup - strikethrough", "[TextMarkup]")
     }
     SECTION("test 5")
     {
-        TextMarkup markup("~strikethrough~");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~strikethrough~");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "strikethrough");
         REQUIRE(styles.size() == 1);
@@ -275,8 +264,8 @@ TEST_CASE("TextMarkup - underline", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("__hello world__");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("__hello world__");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
@@ -286,8 +275,8 @@ TEST_CASE("TextMarkup - underline", "[TextMarkup]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("__hello__ __world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("__hello__ __world");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 2);
@@ -300,8 +289,8 @@ TEST_CASE("TextMarkup - underline", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("~hello world~");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~hello world~");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(styles.size() == 1);
@@ -311,8 +300,8 @@ TEST_CASE("TextMarkup - underline", "[TextMarkup]")
     }
     SECTION("test 4")
     {
-        TextMarkup markup("~~normal");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~~normal");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "normal");
         REQUIRE(styles.size() == 1);
@@ -322,8 +311,8 @@ TEST_CASE("TextMarkup - underline", "[TextMarkup]")
     }
     SECTION("test 5")
     {
-        TextMarkup markup("~~~strikethrough~");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("~~~strikethrough~");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(txt.Str() == "strikethrough");
         REQUIRE(styles.size() == 1);
@@ -337,8 +326,8 @@ TEST_CASE("TextMarkup markup style combination", "[TextMarkup]")
 {
     SECTION("bold + italics")
     {
-        TextMarkup markup("*_hello world_*");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*_hello world_*");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
@@ -347,8 +336,8 @@ TEST_CASE("TextMarkup markup style combination", "[TextMarkup]")
     }
     SECTION("underline + italics")
     {
-        TextMarkup markup("___hello world___");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("___hello world___");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
@@ -357,8 +346,8 @@ TEST_CASE("TextMarkup markup style combination", "[TextMarkup]")
     }
     SECTION("underline + bold + italics")
     {
-        TextMarkup markup("__*_hello world_*__");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("__*_hello world_*__");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
@@ -367,8 +356,8 @@ TEST_CASE("TextMarkup markup style combination", "[TextMarkup]")
     }
     SECTION("underline + bold + strike")
     {
-        TextMarkup markup("__*~hello world~*__");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("__*~hello world~*__");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 1);
         REQUIRE(styles[0].start == 0);
@@ -377,8 +366,8 @@ TEST_CASE("TextMarkup markup style combination", "[TextMarkup]")
     }
     SECTION("mix")
     {
-        TextMarkup markup("__*hello__ ~world~*");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("__*hello__ ~world~*");
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 3);
         REQUIRE(styles[0].start == 0);
@@ -395,8 +384,8 @@ TEST_CASE("TextMarkup markup style combination", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - emphasis all", "[TextMarkup]")
 {
-    TextMarkup markup("_*__~hello~__*_");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("_*__~hello~__*_");
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 1);
     REQUIRE(styles[0].start == 0);
@@ -407,8 +396,8 @@ TEST_CASE("TextMarkup - emphasis all", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - emphasis mixed", "[TextMarkup]")
 {
-    TextMarkup markup("_*__~hello___*~");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("_*__~hello___*~");
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 1);
     REQUIRE(styles[0].start == 0);
@@ -420,8 +409,8 @@ TEST_CASE("TextMarkup - size metadata", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("!2hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("!2hello");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(metadata.size() == 1);
         REQUIRE(metadata[0].start == 0);
@@ -430,8 +419,8 @@ TEST_CASE("TextMarkup - size metadata", "[TextMarkup]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("!2hello world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("!2hello world");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(metadata.size() == 1);
         REQUIRE(metadata[0].start == 0);
@@ -440,8 +429,8 @@ TEST_CASE("TextMarkup - size metadata", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("!3hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("!3hello");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(metadata.size() == 1);
         REQUIRE(metadata[0].start == 0);
@@ -455,8 +444,8 @@ TEST_CASE("TextMarkup - color metadata", "[TextMarkup]")
     SECTION("single color")
     {
         Color color = { 0x33, 0xFF, 0xEE, 0xFF };
-        TextMarkup markup("#33FFEEFFhello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("#33FFEEFFhello");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(txt.Str() == "hello");
         REQUIRE(metadata.size() == 1);
@@ -469,8 +458,8 @@ TEST_CASE("TextMarkup - color metadata", "[TextMarkup]")
         Color color0 = { 0xFF, 0xFF, 0xFF, 0xFF };
         Color color1 = { 0x11, 0x22, 0x33, 0x44 };
         Color color2 = { 0x55, 0x66, 0x77, 0x88 };
-        TextMarkup markup("he#11223344llo#55667788 world");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("he#11223344llo#55667788 world");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(txt.Str() == "hello world");
         REQUIRE(metadata.size() == 3);
@@ -488,8 +477,8 @@ TEST_CASE("TextMarkup - color metadata", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - no tags", "[TextMarkup]")
 {
-    TextMarkup markup("hello");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("hello");
     std::vector<TextTag> tags = txt.GetTags();
     REQUIRE(tags.size() == 0);
     REQUIRE(txt.Str() == "hello");
@@ -500,8 +489,8 @@ TEST_CASE("TextMarkup - one invalid tag", "[TextMarkup]")
 {
     SECTION("unclosed tag")
     {
-        TextMarkup markup("<open>hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<open>hello");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<open>hello");
@@ -509,8 +498,8 @@ TEST_CASE("TextMarkup - one invalid tag", "[TextMarkup]")
     }
     SECTION("non-matching tag 1")
     {
-        TextMarkup markup("<open>hello</opened>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<open>hello</opened>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<open>hello</opened>");
@@ -522,8 +511,8 @@ TEST_CASE("TextMarkup - one valid tag", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("<test>hello</test>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<test>hello</test>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 0);
@@ -534,8 +523,8 @@ TEST_CASE("TextMarkup - one valid tag", "[TextMarkup]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("hello <best>world!</best>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("hello <best>world!</best>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 6);
@@ -546,8 +535,8 @@ TEST_CASE("TextMarkup - one valid tag", "[TextMarkup]")
     }
     SECTION("test 3")
     {
-        TextMarkup markup("hello <testing>world!</testing>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("hello <testing>world!</testing>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 6);
@@ -560,8 +549,8 @@ TEST_CASE("TextMarkup - one valid tag", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - nested tags not allowed", "[TextMarkup]")
 {
-    TextMarkup markup("<a>hello <b>world</b></a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello <b>world</b></a>");
     std::vector<TextTag> tags = txt.GetTags();
     REQUIRE(tags.size() == 1);
     REQUIRE(tags[0].start == 0);
@@ -572,8 +561,8 @@ TEST_CASE("TextMarkup - nested tags not allowed", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - multiple same tags", "[TextMarkup]")
 {
-    TextMarkup markup("<a>hello</a> <a>world</a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello</a> <a>world</a>");
     std::vector<TextTag> tags = txt.GetTags();
     REQUIRE(tags.size() == 2);
     REQUIRE(tags[0].start == 0);
@@ -587,8 +576,8 @@ TEST_CASE("TextMarkup - multiple same tags", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - multiple different tags", "[TextMarkup]")
 {
-    TextMarkup markup("<a>hello</a> <b>world</b> <c>to you</c>!");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello</a> <b>world</b> <c>to you</c>!");
     std::vector<TextTag> tags = txt.GetTags();
     REQUIRE(tags.size() == 3);
     REQUIRE(tags[0].start == 0);
@@ -607,8 +596,8 @@ TEST_CASE("TextMarkup - tag + bold markup", "[TextMarkup]")
 {
     SECTION("tag out, bold in")
     {
-        TextMarkup markup("<a>*hello*</a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a>*hello*</a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 0);
@@ -625,8 +614,8 @@ TEST_CASE("TextMarkup - tag + bold markup", "[TextMarkup]")
     }
     SECTION("tag in, bold out")
     {
-        TextMarkup markup("*<a>hello</a>*");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*<a>hello</a>*");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 0);
@@ -643,8 +632,8 @@ TEST_CASE("TextMarkup - tag + bold markup", "[TextMarkup]")
     }
     SECTION("tag and bold mix 1")
     {
-        TextMarkup markup("*<a>hello*</a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*<a>hello*</a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 0);
@@ -661,8 +650,8 @@ TEST_CASE("TextMarkup - tag + bold markup", "[TextMarkup]")
     }
     SECTION("tag and bold mix 2")
     {
-        TextMarkup markup("*<a>h*e*llo</a>*");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*<a>h*e*llo</a>*");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 0);
@@ -687,8 +676,8 @@ TEST_CASE("TextMarkup - tag + bold markup", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - escape emphasis", "[TextMarkup]")
 {
-    TextMarkup markup("he\\*llo*");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("he\\*llo*");
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 1);
     REQUIRE(txt.RawStr() == "he\\*llo*");
@@ -699,8 +688,8 @@ TEST_CASE("TextMarkup - escape metadata", "[TextMarkup]")
 {
     SECTION("color metadata")
     {
-        TextMarkup markup("he\\#11223344llo");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("he\\#11223344llo");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(metadata.size() == 1);
         REQUIRE(txt.RawStr() == "he\\#11223344llo");
@@ -708,8 +697,8 @@ TEST_CASE("TextMarkup - escape metadata", "[TextMarkup]")
     }
     SECTION("size metadata")
     {
-        TextMarkup markup("he\\!2llo");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("he\\!2llo");
         std::vector<TextMetadata> metadata = txt.GetMetadata();
         REQUIRE(metadata.size() == 1);
         REQUIRE(txt.RawStr() == "he\\!2llo");
@@ -721,16 +710,16 @@ TEST_CASE("TextMarkup - escape start tag", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("\\<a>hello</a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("\\<a>hello</a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<a>hello</a>");
     }
     SECTION("test 2")
     {
-        TextMarkup markup("<a\\>hello</a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a\\>hello</a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<a>hello</a>");
@@ -741,24 +730,24 @@ TEST_CASE("TextMarkup - escape end tag", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("<a>hello\\</a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a>hello\\</a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<a>hello</a>");
     }
     SECTION("test 2")
     {
-        TextMarkup markup("<a>hello<\\/a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a>hello<\\/a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<a>hello</a>");
     }
     SECTION("test 3")
     {
-        TextMarkup markup("<a>hello</a\\>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a>hello</a\\>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 0);
         REQUIRE(txt.Str() == "<a>hello</a>");
@@ -767,8 +756,8 @@ TEST_CASE("TextMarkup - escape end tag", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - escape and saved tag", "[TextMarkup]")
 {
-    TextMarkup markup("<a>hello\\</a></a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello\\</a></a>");
     std::vector<TextTag> tags = txt.GetTags();
     REQUIRE(tags.size() == 1);
     REQUIRE(txt.Str() == "hello</a>");
@@ -778,22 +767,22 @@ TEST_CASE("TextMarkup - Escape escape", "[TextMarkup]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("\\hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("\\hello");
         REQUIRE(txt.RawStr() == "\\hello");
         REQUIRE(txt.Str() == "hello");
     }
     SECTION("test 2")
     {
-        TextMarkup markup("\\\\hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("\\\\hello");
         REQUIRE(txt.RawStr() == "\\\\hello");
         REQUIRE(txt.Str() == "\\hello");
     }
     SECTION("test 3")
     {
-        TextMarkup markup("\\\\\\hello");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("\\\\\\hello");
         REQUIRE(txt.RawStr() == "\\\\\\hello");
         REQUIRE(txt.Str() == "\\hello");
     }
@@ -801,8 +790,8 @@ TEST_CASE("TextMarkup - Escape escape", "[TextMarkup]")
 
 TEST_CASE("TextMarkup - emphasis compression", "[TextMarkup]")
 {
-    TextMarkup markup("he**ll**o");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("he**ll**o");
     std::vector<TextEmphasis> emphasis = txt.GetEmphasisStyles();
     REQUIRE(emphasis.size() == 1);
     REQUIRE(emphasis[0].start == 0);
@@ -813,8 +802,8 @@ TEST_CASE("TextMarkup - emphasis compression", "[TextMarkup]")
 TEST_CASE("TextMarkup - metadata compression", "[TextMarkup]")
 {
     TextMetadata expected;
-    TextMarkup markup("hel!1lo");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("hel!1lo");
     std::vector<TextMetadata> metadata = txt.GetMetadata();
     REQUIRE(metadata.size() == 1);
     REQUIRE(metadata[0].start == 0);
@@ -826,8 +815,8 @@ TEST_CASE("TextMarkup - tag compression", "[TextMarkup]")
 {
     SECTION("compressed")
     {
-        TextMarkup markup("<a>foo</a><a>bar</a>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a>foo</a><a>bar</a>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 1);
         REQUIRE(tags[0].start == 0);
@@ -836,8 +825,8 @@ TEST_CASE("TextMarkup - tag compression", "[TextMarkup]")
     }
     SECTION("not compressed")
     {
-        TextMarkup markup("<a>foo</a><b>bar</b>");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("<a>foo</a><b>bar</b>");
         std::vector<TextTag> tags = txt.GetTags();
         REQUIRE(tags.size() == 2);
         REQUIRE(tags[0].start == 0);

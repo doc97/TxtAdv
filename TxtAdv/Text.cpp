@@ -28,10 +28,16 @@ Text::Text(const std::string& text)
 }
 
 Text::Text(const std::string& raw, const std::string& text,
-    const std::vector<TextEmphasis>& emphasis,
+    const std::vector<TextEmphasis> emphasis,
     const std::vector<TextMetadata> metadata,
     const std::vector<TextTag> tags)
     : m_raw(raw), m_str(text), m_emphasis(emphasis), m_metadata(metadata), m_tags(tags)
+{
+}
+
+Text::Text(const Text& other)
+    : m_raw(other.m_raw), m_str(other.m_str),
+    m_emphasis(other.m_emphasis), m_metadata(other.m_metadata), m_tags(other.m_tags)
 {
 }
 

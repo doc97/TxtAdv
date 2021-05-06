@@ -39,6 +39,31 @@ public:
      */
     void Prev();
 
+    /* Function: Head
+     * Wrapper for <StoryBranch::Head>
+     */
+    int Head();
+
+    /* Function: SetHead
+     * Wrapper for <StoryBranch::SetHead>
+     */
+    void SetHead(unsigned int index);
+
+    /* Function: SetHead
+     * Wrapper for <StoryBranch::SetHead>
+     */
+    void SetHeadByName(const std::string& name);
+
+    /* Function: IsAtStart
+     * Wrapper for <StoryBranch::IsAtStart>
+     */
+    bool IsAtStart();
+
+    /* Function: IsAtEnd
+     * Wrapper for <StoryBranch::IsAtEnd>
+     */
+    bool IsAtEnd();
+
     /********** LUA INTERFACE **********/
 
     /* Constant: className
@@ -82,10 +107,53 @@ public:
      *    L - the Lua state
      */
     int prev(lua_State* L);
+
+    /* Function: head
+     * Expose <Head> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
+    int head(lua_State* L);
+
+    /* Function: setHead
+     * Expose <SetHead> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
+    int setHead(lua_State* L);
+
+    /* Function: setHeadByName
+     * Expose <SetHeadByName> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
+    int setHeadByName(lua_State* L);
+
+    /* Function: is_at_start
+     * Expose <IsAtStart> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
+    int isAtStart(lua_State* L);
+
+    /* Function: is_at_end
+     * Expose <IsAtEnd> to Lua.
+     *
+     * Parameters:
+     *
+     *    L - the Lua state
+     */
+    int isAtEnd(lua_State* L);
 private:
     StoryBranch* m_branch;
-
-    static LuaStoryBranch* GetObj(lua_State* L, int index);
 };
 
 } // namespace txt

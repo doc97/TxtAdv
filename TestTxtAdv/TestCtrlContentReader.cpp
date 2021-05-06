@@ -111,4 +111,19 @@ TEST_CASE("CtrlContentReader - multiple definitions", "[CtrlContentReader]")
     REQUIRE(info.ctrl_content["Title"][1].action_func == "action2_func");
 }
 
+TEST_CASE("CtrlContentReader - empty new lines skipped", "[CtrlContentReader]")
+{
+    CtrlContentReader reader;
+    std::stringstream ss;
+    ss << "Title,test.lua,matcher_func,action_func\n";
+    ss << "\n";
+    ss << "Title,test.lua,matcher2_func,action2_func\n";
+    CtrlContentInfo info = reader.Read(ss);
+    REQUIRE(info.ctrl_content["Title"].size() == 2);
+    REQUIRE(info.ctrl_content["Title"][0].matcher_func == "matcher_func");
+    REQUIRE(info.ctrl_content["Title"][0].action_func == "action_func");
+    REQUIRE(info.ctrl_content["Title"][1].matcher_func == "matcher2_func");
+    REQUIRE(info.ctrl_content["Title"][1].action_func == "action2_func");
+}
+
 } // namespace txt

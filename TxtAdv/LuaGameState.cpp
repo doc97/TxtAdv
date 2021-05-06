@@ -4,6 +4,7 @@
 **********************************************************/
 
 #include "LuaGameState.h"
+#include "LuaUtils.h"
 
 namespace txt
 {
@@ -90,7 +91,7 @@ bool LuaGameState::HasInt(const std::string& key)
 
 int LuaGameState::setStr(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     const char* val = luaL_checkstring(L, 3);
     s->SetStr(key, val);
@@ -99,7 +100,7 @@ int LuaGameState::setStr(lua_State* L)
 
 int LuaGameState::getStr(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     const char* val = s->GetStr(key).c_str();
     lua_pushstring(L, val);
@@ -108,7 +109,7 @@ int LuaGameState::getStr(lua_State* L)
 
 int LuaGameState::hasStr(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     bool exists     = s->HasStr(key);
     lua_pushboolean(L, (int)exists);
@@ -117,7 +118,7 @@ int LuaGameState::hasStr(lua_State* L)
 
 int LuaGameState::setFloat(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     double value    = luaL_checknumber(L, 3);
     s->SetFloat(key, (float)value);
@@ -126,7 +127,7 @@ int LuaGameState::setFloat(lua_State* L)
 
 int LuaGameState::getFloat(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     float value    = s->GetFloat(key);
     lua_pushnumber(L, (double)value);
@@ -135,7 +136,7 @@ int LuaGameState::getFloat(lua_State* L)
 
 int LuaGameState::hasFloat(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     bool exists     = s->HasFloat(key);
     lua_pushboolean(L, (int)exists);
@@ -144,7 +145,7 @@ int LuaGameState::hasFloat(lua_State* L)
 
 int LuaGameState::setInt(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     long long value = luaL_checkinteger(L, 3);
     s->SetInt(key, (int)value);
@@ -153,7 +154,7 @@ int LuaGameState::setInt(lua_State* L)
 
 int LuaGameState::getInt(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     int value       = s->GetInt(key);
     lua_pushinteger(L, (long long)value);
@@ -162,23 +163,11 @@ int LuaGameState::getInt(lua_State* L)
 
 int LuaGameState::hasInt(lua_State* L)
 {
-    LuaGameState* s = GetObj(L, 1);
+    LuaGameState* s = GetObj<LuaGameState>(L, 1, className);
     const char* key = luaL_checkstring(L, 2);
     bool exists     = s->HasInt(key);
     lua_pushboolean(L, (int)exists);
     return 1;
-}
-
-LuaGameState* LuaGameState::GetObj(lua_State* L, int index)
-{
-    luaL_checktype(L, index, LUA_TUSERDATA);
-    void* data = luaL_checkudata(L, index, className);
-    if (!data)
-    {
-        luaL_error(L, "Invalid userdata");  // Never returns, 'return nullptr' is redundant
-        return nullptr;
-    }
-    return *(LuaGameState**)data;  // unbox pointer
 }
 
 } // namespace txt

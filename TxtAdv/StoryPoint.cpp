@@ -4,13 +4,17 @@
 **********************************************************/
 
 #include "StoryPoint.h"
-#include "TextMarkup.h"
 
 namespace txt
 {
 
+StoryPoint::StoryPoint()
+    : m_name(""), m_text("")
+{
+}
+
 StoryPoint::StoryPoint(const std::string& name)
-    : m_name(name)
+    : m_name(name), m_text("")
 {
 }
 
@@ -18,20 +22,29 @@ StoryPoint::~StoryPoint()
 {
 }
 
-void StoryPoint::SetText(const Text& text)
+void StoryPoint::SetText(const Text& other)
 {
-    m_text = text;
+    m_text = other;
 }
 
 void StoryPoint::SetTextStr(const std::string& text)
 {
-    TextMarkup markup(text);
-    m_text = markup.GetText();
+    m_text = Text{ text };
 }
 
-void StoryPoint::SetParser(std::shared_ptr<TextParser> parser)
+void StoryPoint::SetStyleSheet(const TextStyleSheet style)
+{
+    m_style = style;
+}
+
+void StoryPoint::SetParser(TextParser* parser)
 {
     m_parser = parser;
+}
+
+void StoryPoint::SetMarkup(TextMarkup* markup)
+{
+    m_markup = markup;
 }
 
 void StoryPoint::SetHandlers(const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
@@ -46,14 +59,19 @@ std::string StoryPoint::GetName() const
 
 std::string StoryPoint::GetTextStr() const
 {
-    if (!m_parser)
-        return m_text.Str();
-    return m_parser->ParseText(m_text.Str());
+    return GetText().Str();
 }
 
 Text StoryPoint::GetText() const
 {
-    return m_text;
+    Text parsed = m_text; // copy assignment
+    if (m_markup)
+        parsed = m_markup->ParseText(m_parser ? m_parser->ParseText(m_text.Str()) : m_text.Str());
+    else if (m_parser)
+        parsed = m_parser->ParseText(m_text.Str());
+
+    m_style.Apply(parsed);
+    return parsed;
 }
 
 size_t StoryPoint::GetHandlerCount() const

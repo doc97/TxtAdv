@@ -44,22 +44,13 @@ TEST_CASE("StoryPoint - get text", "[StoryPoint]")
     }
     SECTION("with markup")
     {
+        TextMarkup markup;
         point.SetTextStr("_a_");
+        point.SetMarkup(&markup);
         REQUIRE(point.GetText().Str() == "a");
         point.SetTextStr("~b~");
         REQUIRE(point.GetText().Str() == "b");
     }
-}
-
-TEST_CASE("StoryPoint - get text, ignore parser", "[StoryPoint]")
-{
-    GameState state;
-    std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-    parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
-    StoryPoint point("1");
-    point.SetParser(parser);
-    point.SetTextStr("{x_a}");
-    REQUIRE(point.GetText().Str() == "{x_a}");
 }
 
 TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
@@ -69,10 +60,10 @@ TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
 
     SECTION("static expressions")
     {
-        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
-        parser->AddExpression("b", std::make_unique<LambdaExpression>([]() { return "B"; }));
-        point.SetParser(parser);
+        TxtParser parser{&state};
+        parser.AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
+        parser.AddExpression("b", std::make_unique<LambdaExpression>([]() { return "B"; }));
+        point.SetParser(&parser);
 
         point.SetTextStr("{x_a}");
         REQUIRE(point.GetTextStr() == "A");
@@ -82,9 +73,9 @@ TEST_CASE("StoryPoint - set text parser", "[StoryPoint]")
     SECTION("dynamic expression")
     {
         std::string var = "a";
-        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("0", std::make_unique<LambdaExpression>([&var]() { return var; }));
-        point.SetParser(parser);
+        TxtParser parser{&state};
+        parser.AddExpression("0", std::make_unique<LambdaExpression>([&var]() { return var; }));
+        point.SetParser(&parser);
 
         point.SetTextStr("{x_0}");
         REQUIRE(point.GetTextStr() == var);

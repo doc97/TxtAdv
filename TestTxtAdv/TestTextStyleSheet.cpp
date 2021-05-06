@@ -93,8 +93,8 @@ TEST_CASE("TextStyleSheet - has style", "[TextStyleSheet]")
 
 TEST_CASE("TextStyleSheet - apply default style sheet", "[TextStyleSheet]")
 {
-    TextMarkup markup("<a>hello</a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello</a>");
     TextStyleSheet tss;
     tss.Apply(txt);
     std::vector<TextEmphasis> emphasis = txt.GetEmphasisStyles();
@@ -111,8 +111,8 @@ TEST_CASE("TextStyleSheet - apply style sheet to text without matching tags", "[
     style.size = TextSize::S2;
     TextStyleSheet tss;
     tss.SetStyle("b", style);
-    TextMarkup markup("<a>hello</a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello</a>");
     tss.Apply(txt);
     std::vector<TextEmphasis> emphasis = txt.GetEmphasisStyles();
     std::vector<TextMetadata> metadata = txt.GetMetadata();
@@ -128,8 +128,8 @@ TEST_CASE("TextStyleSheet - apply style sheet to text with matching tag", "[Text
     style.size = TextSize::S2;
     TextStyleSheet tss;
     tss.SetStyle("a", style);
-    TextMarkup markup("<a>hello</a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("<a>hello</a>");
     tss.Apply(txt);
     std::vector<TextEmphasis> emphasis = txt.GetEmphasisStyles();
     std::vector<TextMetadata> metadata = txt.GetMetadata();
@@ -146,8 +146,8 @@ TEST_CASE("TextStyleSheet - apply style sheet to text with mixed styles", "[Text
     style.bitmask = Emphasis::BOLD;
     TextStyleSheet tss;
     tss.SetStyle("a", style);
-    TextMarkup markup("hel_lo <a>wo_rld</a>");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("hel_lo <a>wo_rld</a>");
     tss.Apply(txt);
     std::vector<TextEmphasis> emphasis = txt.GetEmphasisStyles();
     std::vector<TextMetadata> metadata = txt.GetMetadata();

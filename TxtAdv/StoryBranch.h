@@ -53,7 +53,7 @@ public:
      *    parser - See <StoryPoint>
      *    handlers - See <StoryPoint>
      */
-    void AddPoint(const std::string& name, const std::string& text, std::shared_ptr<TextParser> parser,
+    void AddPoint(const std::string& name, const std::string& text, TextParser* parser,
         const std::vector<std::shared_ptr<ResponseHandler>>& handlers);
 
     /* Function: Next
@@ -70,14 +70,39 @@ public:
      */
     void Prev();
 
-    /* Function: SetCurrentPoint
-     * Moves to a certain point in the story line.
+    /* Function: Head
+     * Returns the position of the head, 0 is at the start.
+     */
+    int Head();
+
+    /* Function: IsAtStart
+     * Returns true, if at the beginning of the branch.
+     */
+    bool IsAtStart();
+
+    /* Function: IsAtEnd
+     * Returns true, if at the end of the branch.
+     */
+    bool IsAtEnd();
+
+    /* Function: SetHead
+     * Moves the head to a certain point in the story line.
      *
      * Parameters:
      *
      *    index - The index of the point in the storyline.
      */
-    void SetCurrentPoint(unsigned int index);
+    void SetHead(unsigned int index);
+
+    /* Function: SetHeadByName
+     * Moves the head to a certain point in the story line by its name.
+     * Does nothing if no story point with that name exists.
+     *
+     * Parameters:
+     *
+     *    name - The name of the story point
+     */
+    void SetHeadByName(const std::string& name);
 
     /* Function: SetParentBranch
      *

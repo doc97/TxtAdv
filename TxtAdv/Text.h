@@ -186,9 +186,19 @@ public:
      *    tags - The parsed tags
      */
     Text(const std::string& raw, const std::string& text,
-        const std::vector<TextEmphasis>& emphasis,
+        const std::vector<TextEmphasis> emphasis,
         const std::vector<TextMetadata> metadata,
         const std::vector<TextTag> tags);
+
+    /* Constructor: Text
+     * Copy constructor.
+     *
+     * Parameters:
+     *
+     *    other - The other text to copy
+     */
+    Text(const Text& other);
+
     ~Text();
 
     /* Function: SetEmphasisStyle

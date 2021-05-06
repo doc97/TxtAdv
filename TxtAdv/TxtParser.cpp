@@ -11,7 +11,7 @@
 namespace txt
 {
 
-TxtParser::TxtParser(const GameState& state)
+TxtParser::TxtParser(GameState* state)
     : m_state(state)
 {
 }
@@ -75,11 +75,11 @@ std::string TxtParser::GetVariableString(const std::string& type, const std::str
     try
     {
         if (type == "i_")
-            return std::to_string(m_state.GetInt(name));
+            return std::to_string(m_state->GetInt(name));
         else if (type == "f_")
-            return FloatToString(m_state.GetFloat(name), 2);
+            return FloatToString(m_state->GetFloat(name), 2);
         else if (type == "s_")
-            return m_state.GetString(name);
+            return m_state->GetString(name);
         else if (type == "x_")
             return ExprToString(name);
         else

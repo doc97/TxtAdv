@@ -11,21 +11,7 @@
 namespace txt
 {
 
-TextMarkup::TextMarkup(const std::string& raw)
-{
-    Parse(raw);
-}
-
-TextMarkup::~TextMarkup()
-{
-}
-
-Text TextMarkup::GetText() const
-{
-    return m_text;
-}
-
-void TextMarkup::Parse(const std::string& raw)
+Text TextMarkup::ParseText(const std::string& raw) const
 {
     std::string res = raw;
     std::vector<TextEmphasisChange> emphasisChanges = ParseEmphasisChanges(res);
@@ -43,10 +29,12 @@ void TextMarkup::Parse(const std::string& raw)
     std::vector<TextMetadata> metadata = ExtractMetadata(metadataChanges, res.length());
     std::vector<TextTag> tags = ExtractTags(tagChanges);
 
-    m_text = Text(raw, res, emphasis, metadata, tags);
-    m_text.CompressEmphasisStyles();
-    m_text.CompressMetadata();
-    m_text.CompressTags();
+    Text text{ raw, res, emphasis, metadata, tags };
+    text.CompressEmphasisStyles();
+    text.CompressMetadata();
+    text.CompressTags();
+
+    return text;
 }
 
 void TextMarkup::RemoveMarkupCharacters(std::string& str,
@@ -498,7 +486,7 @@ std::vector<TextMarkup::TextTagChange> TextMarkup::ParseTagChanges(const std::st
     return changes;
 }
 
-std::vector<TextTag> TextMarkup::ExtractTags(const std::vector<TextTagChange>& changes)
+std::vector<TextTag> TextMarkup::ExtractTags(const std::vector<TextTagChange>& changes) const
 {
     std::vector<TextTag> tags;
     for (auto it = changes.begin(); it != changes.end() && (it + 1) != changes.end(); it += 2)

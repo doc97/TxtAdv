@@ -140,4 +140,19 @@ TEST_CASE("TxtContentReader - story text indentation", "[TxtContentReader]")
     }
 }
 
+TEST_CASE("TxtContentReader - story text spacing", "[TxtContentReader]")
+{
+    TxtContentReader reader;
+    std::stringstream ss;
+    ss << "Ctrl: test.ctrl\n";
+    ss << "\n";
+    ss << "Story: hello\n";
+    ss << "  First line\n";
+    ss << "  \n";
+    ss << "  new line\n";
+
+    TxtContentInfo info = reader.Read(ss);
+    REQUIRE(info.story_points[0].GetTextStr() == "First line\n\nnew line");
+}
+
 } // namespace txt

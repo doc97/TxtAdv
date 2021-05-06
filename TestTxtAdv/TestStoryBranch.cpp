@@ -44,19 +44,34 @@ TEST_CASE("StoryBranch - set head", "[StoryBranch]")
     branch.AddPoint("2", "2", {}, {});
     branch.AddPoint("3", "3", {}, {});
 
-    SECTION("normal")
+    SECTION("by index")
     {
-        branch.SetCurrentPoint(1);
-        REQUIRE(branch.GetHead()->GetTextStr() == "2");
-    }
-    SECTION("out of range")
-    {
-        try
+        SECTION("normal")
         {
-            branch.SetCurrentPoint(3);
-            FAIL("Trying to set index out of range should throw std::out_of_range");
+            branch.SetHead(1);
+            REQUIRE(branch.GetHead()->GetTextStr() == "2");
         }
-        catch (std::out_of_range) {}
+        SECTION("out of range")
+        {
+            try
+            {
+                branch.SetHead(3);
+                FAIL("Trying to set index out of range should throw std::out_of_range");
+            } catch (std::out_of_range) {}
+        }
+    }
+    SECTION("by name")
+    {
+        SECTION("name exists")
+        {
+            branch.SetHeadByName("3");
+            REQUIRE(branch.GetHead()->GetTextStr() == "3");
+        }
+        SECTION("name does not exist")
+        {
+            branch.SetHeadByName("4");
+            REQUIRE(branch.GetHead()->GetTextStr() == "1");
+        }
     }
 }
 
@@ -104,13 +119,13 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
     {
         GameState state;
         state.SetString("b", "B");
-        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
+        TxtParser parser{&state};
+        parser.AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
 
-        branch.AddPoint("a", "text {x_a}", parser, {});
+        branch.AddPoint("a", "text {x_a}", &parser, {});
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetTextStr() == "text A");
-        branch.AddPoint("b", "text {s_b}", parser, {});
+        branch.AddPoint("b", "text {s_b}", &parser, {});
         REQUIRE(branch.Length() == 2);
         REQUIRE(branch.GetPointAt(1)->GetTextStr() == "text B");
     }
@@ -147,8 +162,8 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
     {
         GameState state;
         state.SetString("b", "B");
-        std::shared_ptr<TxtParser> parser = std::make_shared<TxtParser>(state);
-        parser->AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
+        TxtParser parser{&state};
+        parser.AddExpression("a", std::make_unique<LambdaExpression>([]() { return "A"; }));
 
         std::vector<std::shared_ptr<ResponseHandler>> handlers;
         handlers.emplace_back(std::make_shared<LambdaResponseHandler>(
@@ -156,11 +171,11 @@ TEST_CASE("StoryBranch - add points", "[StoryBranch]")
             [](const ResponseMatch& match) {}
         ));
 
-        branch.AddPoint("a", "text {x_a}", parser, handlers);
+        branch.AddPoint("a", "text {x_a}", &parser, handlers);
         REQUIRE(branch.Length() == 1);
         REQUIRE(branch.GetPointAt(0)->GetTextStr() == "text A");
         REQUIRE(branch.GetPointAt(0)->GetHandlerCount() == 1);
-        branch.AddPoint("b", "text {s_b}", parser, handlers);
+        branch.AddPoint("b", "text {s_b}", &parser, handlers);
         REQUIRE(branch.Length() == 2);
         REQUIRE(branch.GetPointAt(1)->GetTextStr() == "text B");
         REQUIRE(branch.GetPointAt(1)->GetHandlerCount() == 1);

@@ -25,8 +25,8 @@ TEST_CASE("Text - change emphasis style", "[Text]")
 {
     SECTION("test 1")
     {
-        TextMarkup markup("*hello* _world_");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("*hello* _world_");
         txt.SetEmphasisStyle(3, 6, Emphasis::UNDERL);
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 3);
@@ -42,8 +42,8 @@ TEST_CASE("Text - change emphasis style", "[Text]")
     }
     SECTION("test 2")
     {
-        TextMarkup markup("hello _world_");
-        Text txt = markup.GetText();
+        TextMarkup markup;
+        Text txt = markup.ParseText("hello _world_");
         txt.SetEmphasisStyle(3, 6, Emphasis::UNDERL);
         std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
         REQUIRE(styles.size() == 3);
@@ -61,8 +61,8 @@ TEST_CASE("Text - change emphasis style", "[Text]")
 
 TEST_CASE("Text - replace emphasis style", "[Text]")
 {
-    TextMarkup markup("hel*lo wo*rld");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("hel*lo wo*rld");
     txt.SetEmphasisStyle(3, 5, Emphasis::ITALIC);
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 3);
@@ -92,8 +92,8 @@ TEST_CASE("Text - set emphasis style, invalid start", "[Text]")
 
 TEST_CASE("Text - set emphasis style, invalid length", "[Text]")
 {
-    TextMarkup markup("~hello *world*~");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("~hello *world*~");
 
     SECTION("len == 0")
     {
@@ -123,8 +123,8 @@ TEST_CASE("Text - set emphasis style, invalid length", "[Text]")
 
 TEST_CASE("Text - set emphasis style, compression", "[Text]")
 {
-    TextMarkup markup("hello *world*");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("hello *world*");
     txt.SetEmphasisStyle(6, 5, Emphasis::NONE);
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 1);
@@ -152,8 +152,8 @@ TEST_CASE("Text - toggle emphasis style, no existing style", "[Text]")
 
 TEST_CASE("Text - toggle emphasis style, existing style", "[Text]")
 {
-    TextMarkup markup("*hello* world");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("*hello* world");
     txt.ToggleEmphasisStyle(3, 5, Emphasis::ITALIC);
     std::vector<TextEmphasis> styles = txt.GetEmphasisStyles();
     REQUIRE(styles.size() == 4);
@@ -190,8 +190,8 @@ TEST_CASE("Text - set new metadata", "[Text]")
 
 TEST_CASE("Text - change metadata", "[Text]")
 {
-    TextMarkup markup("!2hello !3world");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("!2hello !3world");
     txt.SetMetadata(3, 6, TextSize::S4, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0 },
         MetadataChangeBits::ALL_CHANGED);
     std::vector<TextMetadata> metadata = txt.GetMetadata();
@@ -223,8 +223,8 @@ TEST_CASE("Text - set metadata, invalid start", "[Text]")
 
 TEST_CASE("Text - set metadata, invalid length", "[Text]")
 {
-    TextMarkup markup("!2hello world");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("!2hello world");
 
     SECTION("len == 0")
     {
@@ -253,8 +253,8 @@ TEST_CASE("Text - set metadata, invalid length", "[Text]")
 
 TEST_CASE("Text - set metadata, compression", "[Text]")
 {
-    TextMarkup markup("hello !2world");
-    Text txt = markup.GetText();
+    TextMarkup markup;
+    Text txt = markup.ParseText("hello !2world");
     txt.SetMetadata(6, 5, TextSize::S1, { 255, 255, 255, 255 }, { 255, 255, 255, 255 }, { 0, 0, 0, 0 },
         MetadataChangeBits::ALL_CHANGED);
     std::vector<TextMetadata> metadata = txt.GetMetadata();

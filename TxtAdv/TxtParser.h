@@ -46,7 +46,7 @@ public:
      *
      *    state - The state from where to retrieve variables
      */
-    TxtParser(const GameState& state);
+    TxtParser(GameState* state);
     ~TxtParser();
 
     /* Function: AddExpression
@@ -60,7 +60,7 @@ public:
     void AddExpression(const std::string& name, std::unique_ptr<Expression> expr);
 private:
     static const size_t DEPTH_MAX = 8;
-    GameState m_state;
+    GameState* m_state;
     std::unordered_map<std::string, std::unique_ptr<Expression>> m_expressions;
 
     std::string ParseTextImpl(const std::string& text) override;

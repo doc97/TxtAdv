@@ -16,25 +16,14 @@ namespace txt
 class TextMarkup
 {
 public:
-    /* Constructor: TextMarkup
+    /* Function: ParseText
      *
      * Parameters:
      *
      *    raw - The raw markup text
      */
-    TextMarkup(const std::string& raw);
-    ~TextMarkup();
-
-    /* Function: GetText
-     *
-     * Returns:
-     *
-     *    The parsed <Text> object
-     */
-    Text GetText() const;
+    Text ParseText(const std::string& raw) const;
 private:
-    Text m_text;
-
     /* Struct: TextRemoveRange
      * Represents a range in the string to remove.
      */
@@ -66,7 +55,6 @@ private:
         std::string name;
     };
 
-    void Parse(const std::string& raw);
     void RemoveMarkupCharacters(std::string& str,
         std::vector<TextEmphasisChange>& emphasisChanges,
         std::vector<TextMetadataChange>& metadataChanges,
@@ -102,7 +90,7 @@ private:
 
     /* Tags */
     std::vector<TextTagChange> ParseTagChanges(const std::string& str) const;
-    std::vector<TextTag> ExtractTags(const std::vector<TextTagChange>& changes);
+    std::vector<TextTag> ExtractTags(const std::vector<TextTagChange>& changes) const;
 };
 
 } // namespace txt

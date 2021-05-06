@@ -5,6 +5,7 @@
 
 #include "StoryBranch.h"
 #include "LambdaResponseHandler.h"
+#include <algorithm>
 
 namespace txt
 {
@@ -27,7 +28,7 @@ void StoryBranch::AddPoint(const StoryPoint& point)
     m_points.push_back(std::make_shared<StoryPoint>(point));
 }
 
-void StoryBranch::AddPoint(const std::string& name, const std::string& text, std::shared_ptr<TextParser> parser,
+void StoryBranch::AddPoint(const std::string& name, const std::string& text, TextParser* parser,
     const std::vector<std::shared_ptr<ResponseHandler>>& handlers)
 {
     StoryPoint point(name);
@@ -49,11 +50,37 @@ void StoryBranch::Prev()
         --m_head;
 }
 
-void StoryBranch::SetCurrentPoint(unsigned int index)
+int StoryBranch::Head()
+{
+    return m_head;
+}
+
+bool StoryBranch::IsAtStart()
+{
+    return m_head == 0;
+}
+
+bool StoryBranch::IsAtEnd()
+{
+    return m_head == m_points.size() - 1;
+}
+
+void StoryBranch::SetHead(unsigned int index)
 {
     if (index >= m_points.size())
         throw std::out_of_range("index is out of bounds");
     m_head = index;
+}
+
+void StoryBranch::SetHeadByName(const std::string& name)
+{
+    auto it = std::find_if(m_points.begin(), m_points.end(), [name](std::shared_ptr<StoryPoint> point) {
+        return name == point->GetName();
+    });
+    if (it != m_points.end())
+    {
+        m_head = std::distance(m_points.begin(), it);
+    }
 }
 
 void StoryBranch::SetParentBranch(const StoryBranch& parent)

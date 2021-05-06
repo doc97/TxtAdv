@@ -12,6 +12,7 @@
 #include "StoryBranch.h"
 #include "GameState.h"
 #include "LuaManager.h"
+#include "TxtParser.h"
 
 namespace txt
 {
@@ -79,6 +80,7 @@ private:
     ResponseSystem m_response;
     StoryBranch m_branch;
     GameState m_state;
+    TxtParser m_parser;
     LuaManager m_manager;
 
     void Init() override;

@@ -10,6 +10,8 @@
 #include "TxtContentReader.h"
 #include "CtrlContentReader.h"
 #include "StyleContentReader.h"
+#include "LuaManager.h"
+#include "TextMarkup.h"
 
 namespace txt
 {
@@ -29,19 +31,21 @@ public:
      * Parameters:
      *
      *    filename - The path to the .txt file
+     *    markup - TextMarkup for handling text markup
+     *    lua - LuaManager used for response handlers
      *
      * Returns:
      *
      *    A vector of the loaded story points.
      */
-    std::vector<StoryPoint> Load(const std::string& filename);
+    std::vector<StoryPoint> Load(const std::string& filename, TextMarkup* markup, LuaManager* lua);
 private:
     TxtContentReader m_txtReader;
     CtrlContentReader m_ctrlReader;
     StyleContentReader m_styleReader;
 
-    void MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& ctrlInfo) const;
-    void MergeCtrlInfoWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrlInfo) const;
+    void MergeCtrlInfoWithStoryPoints(TxtContentInfo& txtInfo, CtrlContentInfo& ctrlInfo, LuaManager* lua) const;
+    void MergeCtrlInfoWithStoryPoint(StoryPoint& point, std::vector<CtrlContent>& ctrlInfo, LuaManager* lua) const;
     void MergeStyleSheetWithStoryPoints(TxtContentInfo& txtInfo, TextStyleSheet style) const;
 };
 

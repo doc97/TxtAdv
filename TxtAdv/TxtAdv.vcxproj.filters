@@ -86,6 +86,12 @@
     <ClCompile Include="CtrlContentReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StoryPointStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaConsoleIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvGame.h">
@@ -182,6 +188,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CtrlContentReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StoryPointStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaConsoleIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
